@@ -1,0 +1,26 @@
+<!DOCTYPE>
+<html ng-app>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<script src="js/myfood.js"></script>
+		<link rel="stylesheet" href="css/myfood.css">
+	</head>
+	<body>
+		<h2>Grocery List</h2>
+		<div ng-controller="GroceryListCtrl">
+			<span>{{remaining()}} of {{groceryList.length}} remaining</span>
+			[ <a href="" ng-click="archive()">archive</a> ]
+			<ul class="unstyled">
+				<li ng-repeat="item in groceryList">
+					<input type="checkbox" ng-model="item.done">
+					<span class="done-{{item.done}}">{{item.name}}</span>
+				</li>
+			</ul>
+			<form ng-submit="addItem()">
+				<input type="text" ng-model="itemName"  size="30"
+				   placeholder="add new item here">
+				<input class="btn-primary" type="submit" value="add">
+			</form>
+		</div>
+	</body>
+</html>
