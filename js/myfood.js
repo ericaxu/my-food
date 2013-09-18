@@ -6,13 +6,11 @@ function NavBarCtrl($scope) {
 }
 
 function GroceryListCtrl($scope) {
-	$scope.groceryList = [
-		{ name: "Potato", done: false },
-		{ name: "Fish", done: false }
-	];
+	$scope.groceryList = getLocalStorage("groceryList") || [];
 
 	$scope.addItem = function() {
 		$scope.groceryList.push({ name: $scope.itemName, done: false });
+		setLocalStorage("groceryList", $scope.groceryList);
 		$scope.itemName = "";
 		return false;
 	};
@@ -33,3 +31,5 @@ function GroceryListCtrl($scope) {
 		});
 	};
 }
+
+localStorageInit();
