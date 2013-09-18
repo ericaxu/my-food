@@ -1,3 +1,10 @@
+function NavBarCtrl($scope) {
+	$scope.selection = "";
+	$scope.switchPanel = function (newPanel) {
+		$scope.selection = newPanel;
+	}
+}
+
 function GroceryListCtrl($scope) {
 	$scope.groceryList = [
 		{ name: "Potato", done: false },
@@ -7,6 +14,7 @@ function GroceryListCtrl($scope) {
 	$scope.addItem = function() {
 		$scope.groceryList.push({ name: $scope.itemName, done: false });
 		$scope.itemName = "";
+		return false;
 	};
 
 	$scope.remaining = function() {
