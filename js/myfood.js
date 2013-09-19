@@ -10,6 +10,7 @@ function NavBarCtrl($scope) {
 	$scope.switchPanel = function (newPanel) {
 		$scope.selection = newPanel;
 		$scope.heading = headerMapping[newPanel];
+		$("#slide-menu").panel("close");
 	}
 }
 
