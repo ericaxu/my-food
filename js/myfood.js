@@ -1,8 +1,27 @@
 function NavBarCtrl($scope) {
+	var headerMapping = {
+		myFridge: "My Fridge",
+		groceryList: "Grocery List",
+		mealPlanner: "Meal Planner",
+		myDishes: "My Dishes"
+	}
 	$scope.selection = "";
+	$scope.heading = "Main Page";
 	$scope.switchPanel = function (newPanel) {
 		$scope.selection = newPanel;
+		$scope.heading = headerMapping[newPanel];
 	}
+}
+
+function MyFridgeCtrl($scope) {
+	$scope.fridgeItems = getLocalStorage("myFridge") || [];
+
+	$scope.addItem = function() {
+		$scope.fridgeItems.push($scope.itemName);
+		setLocalStorage("myFridge", $scope.fridgeItems);
+		$scope.itemName = "";
+		return false;
+	};
 }
 
 function GroceryListCtrl($scope) {
@@ -15,21 +34,6 @@ function GroceryListCtrl($scope) {
 		return false;
 	};
 
-	$scope.remaining = function() {
-		var count = 0;
-		angular.forEach($scope.groceryList, function(item) {
-			count += item.done ? 0 : 1;
-		});
-		return count;
-	};
-
-	$scope.archive = function() {
-		var oldGroceryList = $scope.groceryList;
-		$scope.groceryList = [];
-		angular.forEach(oldGroceryList, function(item) {
-			if (!item.done) $scope.groceryList.push(item);
-		});
-	};
 }
 
 localStorageInit();

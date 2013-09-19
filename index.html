@@ -14,26 +14,40 @@
 		<link rel="stylesheet" href="css/myfood.css">
 	</head>
 	<body>
-		<div data-role="navbar" ng-controller="NavBarCtrl">
-			<ul>
-				<li><a ng-click="switchPanel('myFridge')">My Fridge</a></li>
-				<li><a ng-click="switchPanel('groceryList')">Grocery List</a></li>
-				<li><a ng-click="switchPanel('mealPlanner')">Meal Planner</a></li>
-				<li><a ng-click="switchPanel('myDishes')">My Dishes</a></li>
-			</ul>
+		<div data-role="page" ng-controller="NavBarCtrl">
+			<div data-role="panel" data-display="overlay" id="slide-menu">
+				<ul>
+					<li><a ng-click="switchPanel('myFridge')">My Fridge</a></li>
+					<li><a ng-click="switchPanel('groceryList')">Grocery List</a></li>
+					<li><a ng-click="switchPanel('mealPlanner')">Meal Planner</a></li>
+					<li><a ng-click="switchPanel('myDishes')">My Dishes</a></li>
+				</ul>
+			</div><!-- slide-menu -->
 
 			<div class="animate-switch-container" ng-switch on="selection">
-				<div ng-switch-default id="mainPage"></div>
-				<div ng-switch-when="myFridge" id="myFridge"></div>
-				<div ng-switch-when="groceryList" id="groceryList">
-					<div data-role="header">
-						<a href="index.html" data-icon="bars">Menu</a>
-						<h1>Grocery List</h1>
-						<a href="index.html" data-icon="plus">Add</a>
+				<div data-role="header">
+					<a href="#slide-menu" data-icon="bars">Menu</a>
+					<h1>{{ heading }}</h1>
+					<a href="index.html" data-icon="plus">Add</a>
+				</div>
+				<div id="mainPage"></div>
+
+				<div ng-switch-when="myFridge" id="myFridge">
+					<div ng-controller="MyFridgeCtrl">
+						<ul class="unstyled">
+							<li ng-repeat="item in fridgeItems">
+								<span>{{item}}</span>
+							</li>
+						</ul>
+						<form ng-submit="addItem()">
+							<input type="text" ng-model="itemName" size="30" placeholder="Add new item here">
+							<input class="btn-primary" type="submit" data-ajax="false" value="add">
+						</form>
 					</div>
+				</div><!-- myFridge -->
+
+				<div ng-switch-default id="groceryList">
 					<div ng-controller="GroceryListCtrl">
-						<span>{{remaining()}} of {{groceryList.length}} remaining</span>
-						[ <a href="" ng-click="archive()">archive</a> ]
 						<ul class="unstyled">
 							<li ng-repeat="item in groceryList">
 								<input type="checkbox" ng-model="item.done">
@@ -41,14 +55,27 @@
 							</li>
 						</ul>
 						<form ng-submit="addItem()">
-							<input type="text" ng-model="itemName"  size="30"
-							   placeholder="Add new item here">
+							<input type="text" ng-model="itemName" size="30" placeholder="Add new item here">
 							<input class="btn-primary" type="submit" data-ajax="false" value="add">
 						</form>
 					</div>
-				<div>
-				<div ng-switch-when="mealPlanner" id="mealPlanner"></div>
-				<div ng-switch-when="myDishes" id="myDishes"></div>
+				<div><!-- groceryList -->
+
+				<div ng-switch-when="mealPlanner" id="mealPlanner">
+					<div data-role="header">
+						<a href="#slide-menu" data-icon="bars">Menu</a>
+						<h1>Meal Planner</h1>
+						<a href="index.html" data-icon="plus">Add</a>
+					</div>
+				</div>
+
+				<div ng-switch-when="myDishes" id="myDishes">
+					<div data-role="header">
+						<a href="#slide-menu" data-icon="bars">Menu</a>
+						<h1>My Dishes</h1>
+						<a href="index.html" data-icon="plus">Add</a>
+					</div>
+				</div>
 
 			</div>
 		</div>
