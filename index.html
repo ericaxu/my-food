@@ -10,7 +10,8 @@
 		<script src="js/vendor/jquery-1.10.2.js"></script>
 		<script src="js/vendor/jquery.mobile-1.3.2.js"></script>
 		<script src="js/util.js"></script>
-		<script src="js/myfood.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/ui.js"></script>
 		<link rel="stylesheet" href="css/myfood.css">
 	</head>
 	<body>
@@ -32,11 +33,11 @@
 				</div>
 				<div id="mainPage"></div>
 
-				<div ng-switch-when="myFridge" id="myFridge">
+				<div ng-switch-default id="myFridge">
 					<div ng-controller="MyFridgeCtrl">
 						<ul class="unstyled">
-							<li ng-repeat="item in fridgeItems" draggable="true">
-								<span>{{item}}</span>
+							<li ng-repeat="item in fridgeItems">
+								<span draggable="true">{{item}}</span>
 							</li>
 						</ul>
 						<form ng-submit="addItem()">
@@ -46,7 +47,7 @@
 					</div>
 				</div><!-- myFridge -->
 
-				<div ng-switch-default id="groceryList">
+				<div ng-switch-when="myFridge" id="groceryList">
 					<div ng-controller="GroceryListCtrl">
 						<ul class="unstyled">
 							<li ng-repeat="item in groceryList">
@@ -62,9 +63,13 @@
 				<div><!-- groceryList -->
 
 				<div ng-switch-when="mealPlanner" id="mealPlanner">
+					<div ng-controller="MealPlannerCtrl">
+					</div>
 				</div>
 
 				<div ng-switch-when="myDishes" id="myDishes">
+					<div ng-controller="MyDishesCtrl">
+					</div>
 				</div>
 
 			</div>
