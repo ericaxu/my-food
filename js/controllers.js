@@ -37,4 +37,28 @@ function GroceryListCtrl($scope) {
 
 }
 
+function MealPlannerCtrl($scope) {
+	$scope.toCook = getLocalStorage("mealPlanner") || [];
+
+	$scope.addItem = function() {
+		$scope.toCook.push({ name: $scope.itemName, done: false });
+		setLocalStorage("mealPlanner", $scope.toCook);
+		$scope.itemName = "";
+		return false;
+	};
+
+}
+
+function MyDishesCtrl($scope) {
+	$scope.myDishes = getLocalStorage("myDishes") || [];
+
+	$scope.addItem = function() {
+		$scope.myDishes.push({ name: $scope.itemName, done: false });
+		setLocalStorage("mealPlanner", $scope.myDishes);
+		$scope.itemName = "";
+		return false;
+	};
+
+}
+
 localStorageInit();
