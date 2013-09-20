@@ -5,6 +5,7 @@
 		<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" /> -->
 		<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
 		<!-- <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="css/vendor/jquery.mobile-1.3.2.css" />
 		<script src="js/vendor/jquery-1.10.2.js"></script>
 		<script src="js/vendor/jquery.mobile-1.3.2.js"></script>
@@ -18,13 +19,11 @@
 
 		<!-- My Fridge -->
 		<div id="myFridge" data-role="page">
-			<div data-role="panel" id="mf-slide-menu">
-				<ul>
-					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
-					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
-					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
-					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
-				</ul>
+			<div data-role="panel" id="mf-slide-menu" class="slide-menu">
+				<div class="link myFridge"><a href="#myFridge" data-transition="slide">My Fridge</a></div>
+				<div class="link groceryList"><a href="#groceryList" data-transition="slide">Grocery List</a></div>
+				<div class="link mealPlanner"><a href="#mealPlanner" data-transition="slide">Meal Planner</a></div>
+				<div class="link myDishes"><a href="#myDishes" data-transition="slide">My Dishes</a></div>
 			</div>
 			<div data-role="header">
 				<a href="#mf-slide-menu" data-transition="slide" data-direction="reverse" data-icon="bars">Menu</a>
@@ -46,13 +45,11 @@
 
 		<!-- Grocery List -->
 		<div id="groceryList" data-role="page">
-			<div data-role="panel" id="gl-slide-menu">
-				<ul>
-					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
-					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
-					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
-					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
-				</ul>
+			<div data-role="panel" id="gl-slide-menu" class="slide-menu">
+				<div class="link myFridge"><a href="#myFridge" data-transition="slide">My Fridge</a></div>
+				<div class="link groceryList"><a href="#groceryList" data-transition="slide">Grocery List</a></div>
+				<div class="link mealPlanner"><a href="#mealPlanner" data-transition="slide">Meal Planner</a></div>
+				<div class="link myDishes"><a href="#myDishes" data-transition="slide">My Dishes</a></div>
 			</div>
 			<div data-role="header">
 				<a href="#gl-slide-menu" data-icon="bars">Menu</a>
@@ -74,13 +71,11 @@
 
 		<!-- Meal Planner -->
 		<div id="mealPlanner" data-role="page">
-			<div data-role="panel" id="mp-slide-menu">
-				<ul>
-					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
-					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
-					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
-					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
-				</ul>
+			<div data-role="panel" id="mp-slide-menu" class="slide-menu">
+				<div class="link myFridge"><a href="#myFridge" data-transition="slide">My Fridge</a></div>
+				<div class="link groceryList"><a href="#groceryList" data-transition="slide">Grocery List</a></div>
+				<div class="link mealPlanner"><a href="#mealPlanner" data-transition="slide">Meal Planner</a></div>
+				<div class="link myDishes"><a href="#myDishes" data-transition="slide">My Dishes</a></div>
 			</div>
 			<div data-role="header">
 				<a href="#mp-slide-menu" data-icon="bars">Menu</a>
@@ -94,13 +89,11 @@
 
 		<!-- My Dishes -->
 		<div id="myDishes" data-role="page">
-			<div data-role="panel" id="md-slide-menu">
-				<ul>
-					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
-					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
-					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
-					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
-				</ul>
+			<div data-role="panel" id="md-slide-menu" class="slide-menu">
+				<div class="link myFridge"><a href="#myFridge" data-transition="slide">My Fridge</a></div>
+				<div class="link groceryList"><a href="#groceryList" data-transition="slide">Grocery List</a></div>
+				<div class="link mealPlanner"><a href="#mealPlanner" data-transition="slide">Meal Planner</a></div>
+				<div class="link myDishes"><a href="#myDishes" data-transition="slide">My Dishes</a></div>
 			</div>
 			<div data-role="header">
 				<a href="#md-slide-menu" data-icon="bars">Menu</a>

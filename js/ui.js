@@ -27,6 +27,11 @@ $(document).on("submit", "form", function(e) {
 	$("#" + currentPage).find(".submit").click();
 	e.preventDefault();
 	e.stopImmediatePropagation();
+}).on("click", ".link", function() {
+	
 }).bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
+}).ready(function() {
+	var documentHeight = $(document).height();
+	$(".slide-menu, .ui-panel-inner").height(documentHeight);
 });
