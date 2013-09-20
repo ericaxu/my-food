@@ -17,7 +17,7 @@
 	<body ng-controller="MyFoodCtrl">
 		<!-- Main Page -->
 		<!-- <div id="mainPage" data-role="page"> -->
-		<div data-role="panel" data-display="overlay" id="slide-menu">
+		<div data-role="panel" id="slide-menu">
 			<ul>
 				<li><a href="#myFridge">My Fridge</a></li>
 				<li><a href="#groceryList">Grocery List</a></li>
@@ -31,8 +31,16 @@
 
 			<!-- My Fridge -->
 			<div id="myFridge" data-role="page">
+						<div data-role="panel" id="slide-menu">
+			<ul>
+				<li><a href="#myFridge">My Fridge</a></li>
+				<li><a href="#groceryList">Grocery List</a></li>
+				<li><a href="#mealPlanner">Meal Planner</a></li>
+				<li><a href="#myDishes">My Dishes</a></li>
+			</ul>
+		</div><!-- slide-menu -->
 				<div data-role="header">
-					<a href="#slide-menu" data-icon="bars">Menu</a>
+					<a href="#slide-menu" data-transition="slide" data-direction="reverse" data-icon="bars">Menu</a>
 					<h1>My Fridge</h1>
 					<a href="index.html" data-icon="plus">Add</a>
 				</div>
