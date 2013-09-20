@@ -15,89 +15,100 @@
 		<link rel="stylesheet" href="css/myfood.css">
 	</head>
 	<body ng-controller="MyFoodCtrl">
-		<!-- Main Page -->
-		<!-- <div id="mainPage" data-role="page"> -->
-		<div data-role="panel" id="slide-menu">
-			<ul>
-				<li><a href="#myFridge">My Fridge</a></li>
-				<li><a href="#groceryList">Grocery List</a></li>
-				<li><a href="#mealPlanner">Meal Planner</a></li>
-				<li><a href="#myDishes">My Dishes</a></li>
-			</ul>
-		</div><!-- slide-menu -->
 
-
-		<!-- </div> -->
-
-			<!-- My Fridge -->
-			<div id="myFridge" data-role="page">
-						<div data-role="panel" id="slide-menu">
-			<ul>
-				<li><a href="#myFridge">My Fridge</a></li>
-				<li><a href="#groceryList">Grocery List</a></li>
-				<li><a href="#mealPlanner">Meal Planner</a></li>
-				<li><a href="#myDishes">My Dishes</a></li>
-			</ul>
-		</div><!-- slide-menu -->
-				<div data-role="header">
-					<a href="#slide-menu" data-transition="slide" data-direction="reverse" data-icon="bars">Menu</a>
-					<h1>My Fridge</h1>
-					<a href="index.html" data-icon="plus">Add</a>
-				</div>
-				<div data-role="content">
-					<form>
-						<input type="text" ng-model="myFridgeItemName" size="30" placeholder="Add new item here">
-						<a class="submit" data-role="button" data-icon="plus" ng-click="addToMyFridge()">Add</a>
-					</form>
-					<ul class="listview" data-role="listview">
-						<li ng-repeat="item in fridgeItems">
-							<a>{{item}}</a>
-						</li>
-					</ul>
-				</div>
+		<!-- My Fridge -->
+		<div id="myFridge" data-role="page">
+			<div data-role="panel" id="mf-slide-menu">
+				<ul>
+					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
+					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
+					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
+					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
+				</ul>
 			</div>
-
-			<!-- Grocery List -->
-			<div id="groceryList" data-role="page">
-				<div data-role="header">
-					<a href="#slide-menu" data-icon="bars">Menu</a>
-					<h1>Grocery List</h1>
-					<a href="index.html" data-icon="plus">Add</a>
-				</div>
-				<div data-role="content">
-					<form>
-						<input type="text" ng-model="groceryListItemName" size="30" placeholder="Add new item here">
-						<a class="submit" data-role="button" data-icon="plus" ng-click="addToGroceryList()">Add</a>
-					</form>
-					<ul class="listview" data-role="listview">
-						<li ng-repeat="item in groceryList">
-							<span>{{item}}</span>
-						</li>
-					</ul>
-				</div>
-			<div>
-
-			<!-- Meal Planner -->
-			<div id="mealPlanner" data-role="page">
-				<div data-role="header">
-					<a href="#slide-menu" data-icon="bars">Menu</a>
-					<h1>Meal Planner</h1>
-					<a href="index.html" data-icon="plus">Add</a>
-				</div>
-				<div data-role="content">
-				</div>
+			<div data-role="header">
+				<a href="#mf-slide-menu" data-transition="slide" data-direction="reverse" data-icon="bars">Menu</a>
+				<h1>My Fridge</h1>
+				<a href="index.html" data-icon="plus">Add</a>
 			</div>
-
-
-			<!-- My Dishes -->
-			<div id="myDishes" data-role="page">
-				<div data-role="header">
-					<a href="#slide-menu" data-icon="bars">Menu</a>
-					<h1>My Dishes</h1>
-					<a href="index.html" data-icon="plus">Add</a>
-				</div>
-				<div data-role="content">
-				</div>
+			<div data-role="content">
+				<form>
+					<input type="text" ng-model="myFridgeItemName" size="30" placeholder="Add new item here">
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToMyFridge()">Add</a>
+				</form>
+				<ul class="listview" data-role="listview">
+					<li ng-repeat="item in fridgeItems">
+						<a>{{item}}</a>
+					</li>
+				</ul>
 			</div>
+		</div>
+
+		<!-- Grocery List -->
+		<div id="groceryList" data-role="page">
+			<div data-role="panel" id="gl-slide-menu">
+				<ul>
+					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
+					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
+					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
+					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
+				</ul>
+			</div>
+			<div data-role="header">
+				<a href="#gl-slide-menu" data-icon="bars">Menu</a>
+				<h1>Grocery List</h1>
+				<a href="index.html" data-icon="plus">Add</a>
+			</div>
+			<div data-role="content">
+				<form>
+					<input type="text" ng-model="groceryListItemName" size="30" placeholder="Add new item here">
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToGroceryList()">Add</a>
+				</form>
+				<ul class="listview" data-role="listview">
+					<li ng-repeat="item in groceryList">
+						<span>{{item}}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Meal Planner -->
+		<div id="mealPlanner" data-role="page">
+			<div data-role="panel" id="mp-slide-menu">
+				<ul>
+					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
+					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
+					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
+					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
+				</ul>
+			</div>
+			<div data-role="header">
+				<a href="#mp-slide-menu" data-icon="bars">Menu</a>
+				<h1>Meal Planner</h1>
+				<a href="index.html" data-icon="plus">Add</a>
+			</div>
+			<div data-role="content">
+			</div>
+		</div>
+
+
+		<!-- My Dishes -->
+		<div id="myDishes" data-role="page">
+			<div data-role="panel" id="md-slide-menu">
+				<ul>
+					<li><a href="#myFridge" data-transition="slide">My Fridge</a></li>
+					<li><a href="#groceryList" data-transition="slide">Grocery List</a></li>
+					<li><a href="#mealPlanner" data-transition="slide">Meal Planner</a></li>
+					<li><a href="#myDishes" data-transition="slide">My Dishes</a></li>
+				</ul>
+			</div>
+			<div data-role="header">
+				<a href="#md-slide-menu" data-icon="bars">Menu</a>
+				<h1>My Dishes</h1>
+				<a href="index.html" data-icon="plus">Add</a>
+			</div>
+			<div data-role="content">
+			</div>
+		</div>
 	</body>
 </html>

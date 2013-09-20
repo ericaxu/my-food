@@ -27,4 +27,6 @@ $(document).on("submit", "form", function(e) {
 	$("#" + currentPage).find(".submit").click();
 	e.preventDefault();
 	e.stopImmediatePropagation();
+}).bind("mobileinit", function () {
+    $.mobile.ajaxEnabled = false;
 });
