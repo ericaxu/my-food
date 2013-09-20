@@ -21,7 +21,6 @@ function MyFridgeCtrl($scope) {
 		$scope.fridgeItems.push($scope.itemName);
 		setLocalStorage("myFridge", $scope.fridgeItems);
 		$scope.itemName = "";
-		return false;
 	};
 }
 
@@ -32,7 +31,6 @@ function GroceryListCtrl($scope) {
 		$scope.groceryList.push({ name: $scope.itemName, done: false });
 		setLocalStorage("groceryList", $scope.groceryList);
 		$scope.itemName = "";
-		return false;
 	};
 
 }
