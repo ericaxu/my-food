@@ -21,3 +21,10 @@ function detectDragAndDrop () {
 }
 
 detectDragAndDrop();
+
+$(document).on("submit", "form", function(e) {
+	var currentPage = $.mobile.activePage.attr('id')
+	$("#" + currentPage).find(".submit").click();
+	e.preventDefault();
+	e.stopImmediatePropagation();
+});
