@@ -35,7 +35,7 @@
 				<div ng-switch-when="myFridge" id="myFridge">
 					<div ng-controller="MyFridgeCtrl">
 						<ul class="unstyled">
-							<li ng-repeat="item in fridgeItems">
+							<li ng-repeat="item in fridgeItems" draggable="true">
 								<span>{{item}}</span>
 							</li>
 						</ul>
@@ -62,19 +62,9 @@
 				<div><!-- groceryList -->
 
 				<div ng-switch-when="mealPlanner" id="mealPlanner">
-					<div data-role="header">
-						<a href="#slide-menu" data-icon="bars">Menu</a>
-						<h1>Meal Planner</h1>
-						<a href="index.html" data-icon="plus">Add</a>
-					</div>
 				</div>
 
 				<div ng-switch-when="myDishes" id="myDishes">
-					<div data-role="header">
-						<a href="#slide-menu" data-icon="bars">Menu</a>
-						<h1>My Dishes</h1>
-						<a href="index.html" data-icon="plus">Add</a>
-					</div>
 				</div>
 
 			</div>
