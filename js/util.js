@@ -17,8 +17,6 @@ function getLocalStorage(name) {
 
 function setLocalStorage(name, data) {
 	var myFood = JSON.parse(localStorage.getItem("myFood"));
-	console.log(data);//t
 	myFood[name] = data;
-	console.log(myFood);//t
 	localStorage.setItem("myFood", JSON.stringify(myFood));
 }

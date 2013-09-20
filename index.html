@@ -1,7 +1,6 @@
 <!DOCTYPE>
 <html ng-app>
 	<head>
-		<script src="js/vendor/angular.js"></script>
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> -->
 		<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" /> -->
 		<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
@@ -9,6 +8,7 @@
 		<link rel="stylesheet" href="css/vendor/jquery.mobile-1.3.2.css" />
 		<script src="js/vendor/jquery-1.10.2.js"></script>
 		<script src="js/vendor/jquery.mobile-1.3.2.js"></script>
+		<script src="js/vendor/angular.js"></script>
 		<script src="js/util.js"></script>
 		<script src="js/controllers.js"></script>
 		<script src="js/ui.js"></script>
@@ -31,15 +31,15 @@
 					<h1>{{ heading }}</h1>
 					<a href="index.html" data-icon="plus">Add</a>
 				</div>
-				<div id="mainPage"></div>
+				<div id="mainPage" data-role="page"></div>
 
-				<div ng-switch-default id="myFridge">
-					<div ng-controller="MyFridgeCtrl">
+				<div ng-switch-when="myFridge" id="myFridge" data-role="page">
+					<div ng-controller="MyFridgeCtrl" data-role="content">
 						<form ng-submit="addItem()">
 							<input type="text" ng-model="itemName" size="30" placeholder="Add new item here">
 							<a data-role="button" data-icon="plus" ng-click="addItem()">Add</a>
 						</form>
-						<ul class="unstyled" data-role="listview">
+						<ul class="listview" data-role="listview">
 							<li ng-repeat="item in fridgeItems">
 								<a>{{item}}</a>
 							</li>
@@ -47,28 +47,27 @@
 					</div>
 				</div><!-- myFridge -->
 
-				<div ng-switch-when="myFridge" id="groceryList">
-					<div ng-controller="GroceryListCtrl">
-						<ul class="unstyled">
-							<li ng-repeat="item in groceryList">
-								<input type="checkbox" ng-model="item.done">
-								<span class="done-{{item.done}}">{{item.name}}</span>
-							</li>
-						</ul>
+				<div ng-switch-default id="groceryList" data-role="page">
+					<div ng-controller="GroceryListCtrl" data-role="content">
 						<form ng-submit="addItem()">
 							<input type="text" ng-model="itemName" size="30" placeholder="Add new item here">
-							<input class="btn-primary" type="submit" data-ajax="false" value="add">
+							<a data-role="button" data-icon="plus" ng-click="addItem()">Add</a>
 						</form>
+						<ul class="listview" data-role="listview">
+							<li ng-repeat="item in groceryList">
+								<span>{{item}}</span>
+							</li>
+						</ul>
 					</div>
 				<div><!-- groceryList -->
 
-				<div ng-switch-when="mealPlanner" id="mealPlanner">
-					<div ng-controller="MealPlannerCtrl">
+				<div ng-switch-when="mealPlanner" id="mealPlanner" data-role="page">
+					<div ng-controller="MealPlannerCtrl" data-role="content">
 					</div>
 				</div>
 
-				<div ng-switch-when="myDishes" id="myDishes">
-					<div ng-controller="MyDishesCtrl">
+				<div ng-switch-when="myDishes" id="myDishes" data-role="page">
+					<div ng-controller="MyDishesCtrl" data-role="content">
 					</div>
 				</div>
 

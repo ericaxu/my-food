@@ -12,6 +12,9 @@ function NavBarCtrl($scope) {
 		$scope.heading = headerMapping[newPanel];
 		$("#slide-menu").panel("close");
 	}
+	// $("[data-role='page']").on("pageinit", function (evt) {
+	// 	$(".listview").listview().listview("refresh");
+	// });
 }
 
 function MyFridgeCtrl($scope) {
@@ -28,7 +31,7 @@ function GroceryListCtrl($scope) {
 	$scope.groceryList = getLocalStorage("groceryList") || [];
 
 	$scope.addItem = function() {
-		$scope.groceryList.push({ name: $scope.itemName, done: false });
+		$scope.groceryList.push($scope.itemName);
 		setLocalStorage("groceryList", $scope.groceryList);
 		$scope.itemName = "";
 	};
