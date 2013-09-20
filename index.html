@@ -1,4 +1,4 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html ng-app>
 	<head>
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> -->
@@ -14,64 +14,82 @@
 		<script src="js/ui.js"></script>
 		<link rel="stylesheet" href="css/myfood.css">
 	</head>
-	<body>
-		<div data-role="page" ng-controller="NavBarCtrl">
-			<div data-role="panel" data-display="overlay" id="slide-menu">
-				<ul>
-					<li><a ng-click="switchPanel('myFridge')">My Fridge</a></li>
-					<li><a ng-click="switchPanel('groceryList')">Grocery List</a></li>
-					<li><a ng-click="switchPanel('mealPlanner')">Meal Planner</a></li>
-					<li><a ng-click="switchPanel('myDishes')">My Dishes</a></li>
-				</ul>
-			</div><!-- slide-menu -->
+	<body ng-controller="MyFoodCtrl">
+		<!-- Main Page -->
+		<!-- <div id="mainPage" data-role="page"> -->
+		<div data-role="panel" data-display="overlay" id="slide-menu">
+			<ul>
+				<li><a href="#myFridge">My Fridge</a></li>
+				<li><a href="#groceryList">Grocery List</a></li>
+				<li><a href="#mealPlanner">Meal Planner</a></li>
+				<li><a href="#myDishes">My Dishes</a></li>
+			</ul>
+		</div><!-- slide-menu -->
 
-			<div class="animate-switch-container" ng-switch on="selection">
+
+		<!-- </div> -->
+
+			<!-- My Fridge -->
+			<div id="myFridge" data-role="page">
 				<div data-role="header">
 					<a href="#slide-menu" data-icon="bars">Menu</a>
-					<h1>{{ heading }}</h1>
+					<h1>My Fridge</h1>
 					<a href="index.html" data-icon="plus">Add</a>
 				</div>
-				<div id="mainPage" data-role="page"></div>
-
-				<div ng-switch-when="myFridge" id="myFridge" data-role="page">
-					<div ng-controller="MyFridgeCtrl" data-role="content">
-						<form ng-submit="addItem()">
-							<input type="text" ng-model="itemName" size="30" placeholder="Add new item here">
-							<a data-role="button" data-icon="plus" ng-click="addItem()">Add</a>
-						</form>
-						<ul class="listview" data-role="listview">
-							<li ng-repeat="item in fridgeItems">
-								<a>{{item}}</a>
-							</li>
-						</ul>
-					</div>
-				</div><!-- myFridge -->
-
-				<div ng-switch-default id="groceryList" data-role="page">
-					<div ng-controller="GroceryListCtrl" data-role="content">
-						<form ng-submit="addItem()">
-							<input type="text" ng-model="itemName" size="30" placeholder="Add new item here">
-							<a data-role="button" data-icon="plus" ng-click="addItem()">Add</a>
-						</form>
-						<ul class="listview" data-role="listview">
-							<li ng-repeat="item in groceryList">
-								<span>{{item}}</span>
-							</li>
-						</ul>
-					</div>
-				<div><!-- groceryList -->
-
-				<div ng-switch-when="mealPlanner" id="mealPlanner" data-role="page">
-					<div ng-controller="MealPlannerCtrl" data-role="content">
-					</div>
+				<div data-role="content">
+					<form>
+						<input type="text" ng-model="myFridgeItemName" size="30" placeholder="Add new item here">
+						<a data-role="button" data-icon="plus" ng-click="addToMyFridge()">Add</a>
+					</form>
+					<ul class="listview" data-role="listview">
+						<li ng-repeat="item in fridgeItems">
+							<a>{{item}}</a>
+						</li>
+					</ul>
 				</div>
-
-				<div ng-switch-when="myDishes" id="myDishes" data-role="page">
-					<div ng-controller="MyDishesCtrl" data-role="content">
-					</div>
-				</div>
-
 			</div>
-		</div>
+
+			<!-- Grocery List -->
+			<div id="groceryList" data-role="page">
+				<div data-role="header">
+					<a href="#slide-menu" data-icon="bars">Menu</a>
+					<h1>Grocery List</h1>
+					<a href="index.html" data-icon="plus">Add</a>
+				</div>
+				<div data-role="content">
+					<form>
+						<input type="text" ng-model="groceryListItemName" size="30" placeholder="Add new item here">
+						<a data-role="button" data-icon="plus" ng-click="addToGroceryList()">Add</a>
+					</form>
+					<ul class="listview" data-role="listview">
+						<li ng-repeat="item in groceryList">
+							<span>{{item}}</span>
+						</li>
+					</ul>
+				</div>
+			<div>
+
+			<!-- Meal Planner -->
+			<div id="mealPlanner" data-role="page">
+				<div data-role="header">
+					<a href="#slide-menu" data-icon="bars">Menu</a>
+					<h1>Meal Planner</h1>
+					<a href="index.html" data-icon="plus">Add</a>
+				</div>
+				<div data-role="content">
+				</div>
+			</div>
+
+
+			<!-- My Dishes -->
+			<div id="myDishes" data-role="page">
+				<div data-role="header">
+					<a href="#slide-menu" data-icon="bars">Menu</a>
+					<h1>My Dishes</h1>
+					<a href="index.html" data-icon="plus">Add</a>
+				</div>
+				<div data-role="content">
+				</div>
+			</div>
 	</body>
 </html>
