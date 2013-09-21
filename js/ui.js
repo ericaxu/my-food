@@ -24,6 +24,7 @@ function expandPanel() {
 }
 
 function initDraggables() {
+	var originalWidth = 0;
 	$(".listItem").draggable({
 		cursor: "move",
 		distance: 10,
@@ -31,7 +32,15 @@ function initDraggables() {
 		stack: "*",
 		zIndex: 99999,
 		revert: "invalid",
-		revertDuration: 100
+		revertDuration: 100,
+		start: function (evt, ui) {
+			originalWidth = $(this).width();
+			$(this).width(100);
+		},
+		stop: function (evt, ui) {
+			$(this).width(originalWidth);
+		},
+		cursorAt: { top: 20, left: 50 }
 	});
 }
 
@@ -44,8 +53,9 @@ function initDroppables() {
 }
 
 function initPage() {
+	var listItemWidth = $(".listItem").eq(0).width();
 	expandPanel();
-	initDraggables();
+	initDraggables(listItemWidth);
 	initDroppables();
 	updateForms();
 }

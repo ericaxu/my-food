@@ -54,7 +54,7 @@ input[type="checkbox"] {
 }
 
 .bucket {
-    display: none;
+    // display: none;
     position: absolute;
     top: 250px;
     @include square(200px);
