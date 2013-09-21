@@ -28,6 +28,15 @@ function initPage() {
 	$(".groceryListItem").each(function() {
 		$(this).attr("draggable", "true");
 	});	
+	updateForms();
+}
+
+function updateForms() {
+	setTimeout(function(){
+		if($.mobile.activePage){
+			$.mobile.activePage.trigger("create");
+		}
+	}, 0);
 }
 
 detectDragAndDrop();

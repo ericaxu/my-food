@@ -6,18 +6,6 @@ function MyFoodCtrl($scope) {
 	$scope.groceryNames = [];
 	$scope.recipes = getLocalStorage("recipes") || [];
 
-	// Overall
-
-	// Menu updates
-	$scope.updateAllForms = function() {
-		$timeout(function(){
-			$("#fridge").trigger("create");
-			$("#groceryList").trigger("create");
-			$("#mealPlanner").trigger("create");
-			$("#recipes").trigger("create");
-		});
-	}
-
 	// Ingredients
 
 	$scope.addIngredient = function(ingredient) {
@@ -27,6 +15,9 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.addOrGetIngredient = function(ingredient) {
+		if(!$scope.isString(ingredient)) {
+			return -1;
+		}
 		var index = $scope.getIngredientIndex(ingredient);
 		if(index < 0) {
 			index = $scope.addIngredient(ingredient);
@@ -48,13 +39,17 @@ function MyFoodCtrl($scope) {
 	// Fridge
 
 	$scope.addToFridge = function() {
-		var index = $scope.addOrGetIngredient($scope.fridgeItemName);
+		var text = $scope.fridgeItemName;
+		if(!$scope.isString(text)) {
+			return;
+		}
 		$scope.fridgeItemName = "";
+		var index = $scope.addOrGetIngredient(text);
 		if(getItemIndex($scope.fridge, index) < 0) {
 			$scope.fridge.push(index);
 			$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
 			setLocalStorage("fridge", $scope.fridge);
-			$scope.updateAllForms();
+			updateForms();
 		}
 	}
 
@@ -63,13 +58,18 @@ function MyFoodCtrl($scope) {
 	// Grocery
 
 	$scope.addToGrocery = function() {
-		var index = $scope.addOrGetIngredient($scope.groceryListItemName);
+		var text = $scope.groceryListItemName;
+		if(!$scope.isString(text)) {
+			return;
+		}
+		$scope.fridgeItemName = "";
+		var index = $scope.addOrGetIngredient(text);
 		$scope.groceryListItemName = "";
 		if(getItemIndex($scope.grocery, index) < 0) {
 			$scope.grocery.push(index);
 			$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
 			setLocalStorage("grocery", $scope.grocery);
-			$scope.updateAllForms();
+			updateForms();
 		}
 	}
 
@@ -78,14 +78,23 @@ function MyFoodCtrl($scope) {
 	// Dishes
 
 	$scope.addToRecipe = function() {
-		var data = {"name": $scope.recipeInput};
+		var text = $scope.recipeInput;
+		if(!$scope.isString(text)) {
+			return;
+		}
 		$scope.recipeInput = "";
+		var data = {"name": text};
 		var index = getItemIndex($scope.recipes, data, function(item1, item2){ return item1.name.toUpperCase() === item2.name.toUpperCase(); });
 		if(index < 0) {
 			$scope.recipes.push(data);
 			setLocalStorage("recipes", $scope.recipes);
-			$scope.updateAllForms();
+			updateForms();
 		}
+	}
+
+	// Util
+	$scope.isString = function (obj) {
+		return Object.prototype.toString.call(obj) == '[object String]' && obj.trim() !== "";
 	}
 }
 
