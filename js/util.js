@@ -11,12 +11,9 @@ function localStorageInit() {
 
 
 function getLocalStorage(name) {
-	var myFood = JSON.parse(localStorage.getItem("myFood"));
-	return myFood && myFood[name];
+	return JSON.parse(localStorage.getItem(name));
 }
 
 function setLocalStorage(name, data) {
-	var myFood = JSON.parse(localStorage.getItem("myFood"));
-	myFood[name] = data;
-	localStorage.setItem("myFood", JSON.stringify(myFood));
+	localStorage.setItem(name, JSON.stringify(myFood));
 }
