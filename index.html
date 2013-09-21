@@ -20,14 +20,14 @@
 		
 		<div id="drag-left"></div>
 		<div id="drag-right"></div>
-		
+
 		<!-- My Fridge -->
-		<div id="myFridge" data-role="page">
+		<div id="fridge" data-role="page">
 			<div data-role="panel" id="mf-slide-menu" class="slide-menu">
-				<div class="link myFridge"><div><span>My Fridge</span></div></div>
+				<div class="link fridge"><div><span>My Fridge</span></div></div>
 				<div class="link groceryList"><span>Grocery List</span></div>
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link myRecipe"><span>My Recipes</span></div>
+				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
 			<div data-role="header">
 				<a href="#mf-slide-menu" data-transition="slide" data-direction="reverse" data-icon="bars">Menu</a>
@@ -35,7 +35,7 @@
 			</div>
 			<div data-role="content">
 				<form>
-					<input type="text" ng-model="myFridgeItemName" size="30" placeholder="Add new item here">
+					<input type="text" ng-model="fridgeItemName" size="30" placeholder="Add new item here">
 					<a class="submit" data-role="button" data-icon="plus" ng-click="addToFridge()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup">
@@ -47,10 +47,10 @@
 		<!-- Grocery List -->
 		<div id="groceryList" data-role="page">
 			<div data-role="panel" id="gl-slide-menu" class="slide-menu">
-				<div class="link myFridge"><span>My Fridge</span></div>
+				<div class="link fridge"><span>My Fridge</span></div>
 				<div class="link groceryList"><span>Grocery List</span></div>
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link myRecipe"><span>My Recipes</span></div>
+				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
 			<div data-role="header">
 				<a href="#gl-slide-menu" data-icon="bars">Menu</a>
@@ -70,10 +70,10 @@
 		<!-- Meal Planner -->
 		<div id="mealPlanner" data-role="page">
 			<div data-role="panel" id="mp-slide-menu" class="slide-menu">
-				<div class="link myFridge"><span>My Fridge</span></div>
+				<div class="link fridge"><span>My Fridge</span></div>
 				<div class="link groceryList"><span>Grocery List</span></div>
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link myRecipe"><span>My Recipes</span></div>
+				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
 			<div data-role="header">
 				<a href="#mp-slide-menu" data-icon="bars">Menu</a>
@@ -86,12 +86,12 @@
 
 
 		<!-- My Recipes -->
-		<div id="myRecipe" data-role="page">
+		<div id="recipes" data-role="page">
 			<div data-role="panel" id="mr-slide-menu" class="slide-menu">
-				<div class="link myFridge"><span>My Fridge</span></div>
+				<div class="link fridge"><span>My Fridge</span></div>
 				<div class="link groceryList"><span>Grocery List</span></div>
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link myRecipe"><span>My Recipes</span></div>
+				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
 			<div data-role="header">
 				<a href="#mr-slide-menu" data-icon="bars">Menu</a>
@@ -102,7 +102,7 @@
 					<input type="text" ng-model="recipeInput" size="30" placeholder="Add new recipe name here">
 					<a class="submit" data-role="button" data-icon="plus" ng-click="addToRecipe()">Add</a>
 				</form>
-				<fieldset data-role="controlgroup" id="myRecipeList">
+				<fieldset data-role="controlgroup" id="recipeList">
 					<label ng-repeat="item in recipes"><input type="checkbox" name="checkbox-0" style="display:none;" />{{item.name}}</label>
 				</fieldset>
 			</div>

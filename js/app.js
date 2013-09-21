@@ -36,8 +36,8 @@ function MyFoodCtrl($scope) {
 	// Fridge
 
 	$scope.addToFridge = function() {
-		var index = $scope.addOrGetIngredient($scope.myFridgeItemName);
-		$scope.myFridgeItemName = "";
+		var index = $scope.addOrGetIngredient($scope.fridgeItemName);
+		$scope.fridgeItemName = "";
 		if(getItemIndex($scope.fridge, index) < 0) {
 			$scope.fridge.push(index);
 			$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
@@ -71,7 +71,7 @@ function MyFoodCtrl($scope) {
 			$scope.recipes.push(data);
 			setLocalStorage("recipes", $scope.recipes);
 			$scope.$apply();
-			$("#myRecipe").trigger("create");
+			$("#recipes").trigger("create");
 		}
 	}
 }
