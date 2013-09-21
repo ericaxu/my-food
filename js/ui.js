@@ -25,9 +25,15 @@ function expandPanel() {
 
 function initPage() {
 	expandPanel();
-	$(".groceryListItem").each(function() {
-		$(this).attr("draggable", "true");
-	});	
+	// Drag and drop
+	$(".listItem").draggable({
+		containment: "body",
+		cursor: "move",
+		distance: 10,
+		opacity: 0.75,
+		revert: "invalid",
+		revertDuration: 100
+	});
 	updateForms();
 }
 
@@ -56,5 +62,3 @@ $(document).on("submit", "form", function(e) {
 	});
 	initPage();
 }).on("pageinit", "*", initPage);
-
-// Drag and drop

@@ -49,6 +49,10 @@ input[type="checkbox"] {
     cursor: move;
 }
 
+.listItem {
+	cursor: move;
+}
+
 #drag-left, #drag-right {
     display: none;
     position: absolute;
