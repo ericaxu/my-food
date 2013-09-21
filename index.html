@@ -34,11 +34,9 @@
 					<input type="text" ng-model="myFridgeItemName" size="30" placeholder="Add new item here">
 					<a class="submit" data-role="button" data-icon="plus" ng-click="addToMyFridge()">Add</a>
 				</form>
-				<ul class="listview" data-role="listview">
-					<li ng-repeat="item in fridgeItems">
-						<a>{{item}}</a>
-					</li>
-				</ul>
+				<fieldset data-role="controlgroup">
+					<label ng-repeat="item in fridgeItems"><input type="checkbox" name="checkbox-0" />{{item}}</label>
+				</fieldset>
 			</div>
 		</div>
 
@@ -59,11 +57,9 @@
 					<input type="text" ng-model="groceryListItemName" size="30" placeholder="Add new item here">
 					<a class="submit" data-role="button" data-icon="plus" ng-click="addToGroceryList()">Add</a>
 				</form>
-				<ul class="listview" data-role="listview">
-					<li ng-repeat="item in groceryList">
-						<a class="groceryListItem">{{item}}</a>
-					</li>
-				</ul>
+				<fieldset data-role="controlgroup">
+					<label ng-repeat="item in groceryList"><input type="checkbox" name="checkbox-0" />{{item}}</label>
+				</fieldset>
 			</div>
 		</div>
 
