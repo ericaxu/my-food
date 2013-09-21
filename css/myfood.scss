@@ -43,7 +43,7 @@ $left-panel-width: 10em;
 }
  
 .ui-panel-position-left {
-	left: -$left-panel-width
+	left: -$left-panel-width;
 }
  
 .ui-panel-animate.ui-panel-position-left.ui-panel-display-overlay, .ui-panel-animate.ui-panel-position-left.ui-panel-display-push {
