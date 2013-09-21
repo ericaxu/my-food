@@ -23,17 +23,30 @@ function expandPanel() {
 	$(".slide-menu, .ui-panel-inner").height(documentHeight);
 }
 
-function initPage() {
-	expandPanel();
-	// Drag and drop
+function initDraggables() {
 	$(".listItem").draggable({
-		containment: "body",
 		cursor: "move",
 		distance: 10,
-		opacity: 0.75,
+		opacity: 1,
+		stack: "*",
+		zIndex: 99999,
 		revert: "invalid",
 		revertDuration: 100
 	});
+}
+
+function initDroppables() {
+	$(".bucket").droppable({
+		accept: ".listItem",
+		tolerance: "touch",
+		hoverClass: "activeBucket"
+	});
+}
+
+function initPage() {
+	expandPanel();
+	initDraggables();
+	initDroppables();
 	updateForms();
 }
 
@@ -61,4 +74,4 @@ $(document).on("submit", "form", function(e) {
 		transition: "slide"
 	});
 	initPage();
-}).on("pageinit", "*", initPage);
+}).on("pageinit", initPage);

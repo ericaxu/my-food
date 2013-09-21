@@ -53,28 +53,36 @@ input[type="checkbox"] {
 	cursor: move;
 }
 
-#drag-left, #drag-right {
+.bucket {
     display: none;
     position: absolute;
     top: 250px;
     @include square(200px);
     border: 5px #777 dashed;
     border-radius: 50px;
-    z-index: 99999;
+    z-index: 1;
+    background-color: rgba(175,175,175,.4);
+    background-repeat: no-repeat;
 }
 
-#drag-left {
+#left-bucket {
     left: -75px;
-    background: rgba(175,175,175,.4) url("../img/cart.svg") right no-repeat;
+    background-image: url("../img/cart.svg");
+    background-position: right;
     background-size: 100px;
     background-position: 75px 50px;
 }
 
-#drag-right {
+#right-bucket {
     right: -75px;
-    background: rgba(175,175,175,.4) url("../img/trash.svg") left no-repeat;
+    background-image: url("../img/trash.svg");
+    background-position: left;
     background-size: 76px 100px;
     background-position: 35px 50px;
+}
+
+.activeBucket {
+	background-color: orange;
 }
 
 
