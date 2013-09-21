@@ -5,6 +5,9 @@
 	background-position: 20% 15%;
 }
 
+
+/* Styles for menu */
+
 .ui-panel-inner {
 	padding: 0;
 }
@@ -27,6 +30,14 @@
 
 .link.myDishes {
 	@include menu-background("pot");
+}
+
+/* Styles for drag and drop */
+
+*[draggable=true] {
+	-moz-user-select:none;
+	-khtml-user-drag: element;
+	cursor: move;
 }
 
 

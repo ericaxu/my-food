@@ -1,10 +1,8 @@
 function detectDragAndDrop () {
 	var isDragging = false;
 	$("span").mousedown(function() {
-		console.log("mousedown");//t
 		$(window).mousemove(function() {
 			isDragging = true;
-			console.log("is dragging");//t
 			$(window).unbind("mousemove");
 		});
 	})
@@ -13,19 +11,23 @@ function detectDragAndDrop () {
 		isDragging = false;
 		$(window).unbind("mousemove");
 		if (!wasDragging) {
-			$("#throbble").toggle();
+			// ...
 		} else {
-			console.log("dropped");//t
+			// ...
 		}
 	});
 }
 
 function expandPanel() {
-	console.log("expandPanel");//t
 	var documentHeight = $(document).height();
-	console.log(documentHeight);//t
 	$(".slide-menu, .ui-panel-inner").height(documentHeight);
-	console.log($(".ui-panel-inner").height());//t
+}
+
+function initPage() {
+	expandPanel();
+	$(".groceryListItem").each(function() {
+		$(this).attr("draggable", "true");
+	});	
 }
 
 detectDragAndDrop();
@@ -37,11 +39,13 @@ $(document).on("submit", "form", function(e) {
 	e.stopImmediatePropagation();
 }).bind("mobileinit", function () {
 	$.mobile.ajaxEnabled = false;
-	expandPanel();
+	initPage();
 }).on("click", ".link", function() {
 	var newPage = $(this).attr("class").split(" ")[1];
 	$.mobile.changePage("#"+newPage, {
 		transition: "slide"
 	});
-	expandPanel();
-}).on("pageinit", "*", expandPanel);
+	initPage();
+}).on("pageinit", "*", initPage);
+
+// Drag and drop\
