@@ -37,6 +37,10 @@
     @include menu-background("pot");
 }
 
+input[type="checkbox"] {
+	display: none;
+}
+
 /* Styles for drag and drop */
 
 *[draggable=true] {
