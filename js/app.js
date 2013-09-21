@@ -1,12 +1,14 @@
 function MyFoodCtrl($scope) {
 	$scope.ingredients = getLocalStorage("ingredients") || [];
 	$scope.fridge = getLocalStorage("fridge") || [];
+	$scope.fridgeString = [];
 	$scope.grocery = getLocalStorage("grocery") || [];
+	$scope.groceryString = [];
 
 	$scope.fridgeItems = getLocalStorage("myFridge") || [];
 	$scope.groceryList = getLocalStorage("groceryList") || [];
 
-	//Ingredients
+	// Ingredients
 
 	$scope.addIngredient= function(ingredient) {
 		$scope.ingredients.push(ingredient);
@@ -22,12 +24,16 @@ function MyFoodCtrl($scope) {
 		return index;
 	}
 
-	//Fridge
+	$scope.getIngredientIndex = function(ingredient) {
+		return $scope.getItemIndex($scope.ingredients, ingredient, true);
+	}
+
+	// Fridge
 
 	$scope.addToFridge = function() {
 		var index = $scope.addOrGetIngredient($scope.myFridgeItemName);
 		$scope.myFridgeItemName = "";
-		if(!$scope.getItemIndex($scope.fridge, index, false)) {
+		if(!$scope.getIngredientIndex(index)) {
 			$scope.fridge.push(index);
 			$scope.cacheFridge();
 			setLocalStorage("fridge", $scope.fridge);
@@ -35,12 +41,13 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.cacheFridge = function() {
-		$scope.fridgeString = [];
 		for (var i = 0; i < $scope.fridge.length; i++) {
 			$scope.fridgeString[i] = $scope.ingredients[$scope.fridge[i]];
 		};
 	}
 	$scope.cacheFridge();
+
+	// Grocery
 
 	$scope.addToGrocery = function() {
 		
