@@ -32,10 +32,10 @@
 			<div data-role="content">
 				<form>
 					<input type="text" ng-model="myFridgeItemName" size="30" placeholder="Add new item here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="addToMyFridge()">Add</a>
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToFridge()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup">
-					<label ng-repeat="item in fridgeItems"><input type="checkbox" name="checkbox-0" />{{item}}</label>
+					<label ng-repeat="item in fridgeNames"><input type="checkbox" name="checkbox-0" />{{item}}</label>
 				</fieldset>
 			</div>
 		</div>
@@ -55,10 +55,10 @@
 			<div data-role="content">
 				<form>
 					<input type="text" ng-model="groceryListItemName" size="30" placeholder="Add new item here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="addToGroceryList()">Add</a>
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToGrocery()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup">
-					<label ng-repeat="item in groceryList"><input type="checkbox" name="checkbox-0" />{{item}}</label>
+					<label ng-repeat="item in groceryNames"><input type="checkbox" name="checkbox-0" />{{item}}</label>
 				</fieldset>
 			</div>
 		</div>
