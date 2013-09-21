@@ -21,7 +21,7 @@
     height: 25%;
 }
 
-.link.myFridge {
+.link.fridge {
     @include menu-background("eggs");
 }
 
@@ -33,7 +33,7 @@
     @include menu-background("calendar");
 }
 
-.link.myDishes {
+.link.recipes {
     @include menu-background("pot");
 }
 
