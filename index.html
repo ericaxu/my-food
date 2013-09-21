@@ -39,7 +39,7 @@
 					<a class="submit" data-role="button" data-icon="plus" ng-click="addToFridge()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup">
-					<label ng-repeat="item in fridgeNames"><input type="checkbox" name="checkbox-0" />{{item}}</label>
+					<label ng-repeat="item in fridgeNames"><input type="checkbox" name="checkbox-0" style="display:none;" />{{item}}</label>
 				</fieldset>
 			</div>
 		</div>
@@ -62,7 +62,7 @@
 					<a class="submit" data-role="button" data-icon="plus" ng-click="addToGrocery()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup">
-					<label ng-repeat="item in groceryNames"><input type="checkbox" name="checkbox-0" />{{item}}</label>
+					<label ng-repeat="item in groceryNames"><input type="checkbox" name="checkbox-0" style="display:none;" />{{item}}</label>
 				</fieldset>
 			</div>
 		</div>

@@ -6,6 +6,18 @@ function MyFoodCtrl($scope) {
 	$scope.groceryNames = [];
 	$scope.recipes = getLocalStorage("recipes") || [];
 
+	// Overall
+
+	// Menu updates
+	$scope.updateAllForms = function() {
+		$timeout(function(){
+			$("#fridge").trigger("create");
+			$("#groceryList").trigger("create");
+			$("#mealPlanner").trigger("create");
+			$("#recipes").trigger("create");
+		});
+	}
+
 	// Ingredients
 
 	$scope.addIngredient = function(ingredient) {
@@ -42,6 +54,7 @@ function MyFoodCtrl($scope) {
 			$scope.fridge.push(index);
 			$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
 			setLocalStorage("fridge", $scope.fridge);
+			$scope.updateAllForms();
 		}
 	}
 
@@ -56,6 +69,7 @@ function MyFoodCtrl($scope) {
 			$scope.grocery.push(index);
 			$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
 			setLocalStorage("grocery", $scope.grocery);
+			$scope.updateAllForms();
 		}
 	}
 
@@ -70,8 +84,7 @@ function MyFoodCtrl($scope) {
 		if(index < 0) {
 			$scope.recipes.push(data);
 			setLocalStorage("recipes", $scope.recipes);
-			$scope.$apply();
-			$("#recipes").trigger("create");
+			$scope.updateAllForms();
 		}
 	}
 }
