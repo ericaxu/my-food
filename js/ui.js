@@ -48,4 +48,4 @@ $(document).on("submit", "form", function(e) {
 	initPage();
 }).on("pageinit", "*", initPage);
 
-// Drag and drop\
+// Drag and drop
