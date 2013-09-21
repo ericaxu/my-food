@@ -18,9 +18,20 @@ function detectDragAndDrop () {
 	});
 }
 
-function expandPanel() {
-	var documentHeight = $(document).height();
-	$(".slide-menu, .ui-panel-inner").height(documentHeight);
+function onReize() {
+	console.log("resize");//t
+	var windowWidth = $(window).width();
+	var windowHeight = $(window).height();
+	var bucketWidth = $("#left-bucket").width();
+	var bucketHeight = $("#left-bucket").height();
+	console.log(windowWidth - $("#left-bucket").width());
+	$(".bucket").css("top", (windowHeight-bucketHeight)/2-5)
+	$("#right-bucket").css("left", windowWidth - 2 * $("#left-bucket").width() + 5);
+	expandPanel(windowHeight);
+}
+
+function expandPanel(height) {
+	$(".slide-menu, .ui-panel-inner").height(height);
 }
 
 function initDraggables() {
@@ -54,7 +65,7 @@ function initDroppables() {
 
 function initPage() {
 	var listItemWidth = $(".listItem").eq(0).width();
-	expandPanel();
+	onReize();
 	initDraggables(listItemWidth);
 	initDroppables();
 	updateForms();
@@ -85,3 +96,5 @@ $(document).on("submit", "form", function(e) {
 	});
 	initPage();
 }).on("pageinit", initPage);
+
+$(window).resize(onReize);

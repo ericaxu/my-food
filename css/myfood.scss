@@ -5,12 +5,6 @@
     background-position: 20% 15%;
 }
 
-@mixin square($side) {
-    width: $side;
-    height: $side;
-}
-
-
 /* Styles for menu */
 
 .ui-panel-inner {
@@ -54,31 +48,34 @@ input[type="checkbox"] {
 }
 
 .bucket {
-    // display: none;
-    position: absolute;
+    display: none;
+    position: relative;
+    float: left;
     top: 250px;
-    @include square(200px);
+    width: 125px;
+    height: 200px;
     border: 5px #777 dashed;
-    border-radius: 50px;
-    z-index: 1;
+    // z-index: 1;
     background-color: rgba(175,175,175,.4);
     background-repeat: no-repeat;
 }
 
 #left-bucket {
-    left: -75px;
     background-image: url("../img/cart.svg");
     background-position: right;
     background-size: 100px;
-    background-position: 75px 50px;
+    background-position: 10px 50px;
+    border-radius: 0 50px 50px 0;
+    border-left: none;
 }
 
 #right-bucket {
-    right: -75px;
     background-image: url("../img/trash.svg");
     background-position: left;
     background-size: 76px 100px;
     background-position: 35px 50px;
+    border-radius: 50px 0 0 50px;
+    border-right: none;
 }
 
 .activeBucket {
