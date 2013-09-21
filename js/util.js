@@ -8,24 +8,33 @@ function localStorageInit() {
 	}
 }
 
-
+function clearLocalStorage() {
+	localStorage.clear();
+}
 
 function getLocalStorage(name) {
-	return JSON.parse(localStorage.getItem(name));
+	var data = localStorage.getItem(name);
+	if(data) {
+		return JSON.parse(LZString.decompress(data));
+	}
 }
 
 function setLocalStorage(name, data) {
-	localStorage.setItem(name, JSON.stringify(data));
+	localStorage.setItem(name, LZString.compress(JSON.stringify(data)));
 }
 
-function getItemIndex(array, item, ignorecase) {
+function getItemIndex(array, item, compare) {
 	for (var i = array.length - 1; i >= 0; i--) {
-		if(ignorecase && item.toUpperCase() === array[i].toUpperCase()) {
+		if(item === array[i]) {
 			return i;
 		}
-		else if(item === array[i]) {
+		else if(compare && compare(item, array[i])) {
 			return i;
 		}
 	}
 	return -1;
+}
+
+var stringCompare = function(item1, item2) {
+	return item1.toUpperCase() === item2.toUpperCase();
 }

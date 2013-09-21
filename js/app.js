@@ -4,6 +4,7 @@ function MyFoodCtrl($scope) {
 	$scope.fridgeNames = [];
 	$scope.grocery = getLocalStorage("grocery") || [];
 	$scope.groceryNames = [];
+	$scope.recipes = getLocalStorage("recipes") || [];
 
 	// Ingredients
 
@@ -22,7 +23,7 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.getIngredientIndex = function(ingredient) {
-		return getItemIndex($scope.ingredients, ingredient, true);
+		return getItemIndex($scope.ingredients, ingredient, stringCompare);
 	}
 
 	$scope.cacheIngredientList = function(ingredients, list, output) {
@@ -59,6 +60,20 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
+
+	// Dishes
+
+	$scope.addToRecipe = function() {
+		var data = {"name": $scope.recipeInput};
+		$scope.recipeInput = "";
+		var index = getItemIndex($scope.recipes, data, function(item1, item2){ return item1.name.toUpperCase() === item2.name.toUpperCase(); });
+		if(index < 0) {
+			$scope.recipes.push(data);
+			setLocalStorage("recipes", $scope.recipes);
+			$scope.$apply();
+			$("#myRecipe").trigger("create");
+		}
+	}
 }
 
 localStorageInit();
