@@ -36,6 +36,9 @@ function MyFoodCtrl($scope) {
 	GenericList.prototype.update = function () {
 	}
 
+	GenericList.prototype.save = function () {
+	}
+
 	GenericList.prototype.idToName = function (id) {
 	}
 
@@ -48,8 +51,9 @@ function MyFoodCtrl($scope) {
 
 	GenericList.prototype.triggerUpdate = function (ignoreSave) {
 		this.cacheNames();
+		this.update();
 		if(!ignoreSave) {
-			this.update();
+			this.save(this.list);
 		}
 	}
 
@@ -145,7 +149,7 @@ function MyFoodCtrl($scope) {
 
 	function IngredientList(list, save) {
 		this.list = list;
-		this.saveFunc = save;
+		this.save = save;
 		if(list) {
 			this.triggerUpdate(true);
 		}
@@ -154,7 +158,6 @@ function MyFoodCtrl($scope) {
 	IngredientList.prototype = new GenericList();
 
 	IngredientList.prototype.update = function () {
-		this.saveFunc(this.list);
 		updateForms();
 	}
 
@@ -214,7 +217,23 @@ function MyFoodCtrl($scope) {
 
 	// Grocery
 
-	$scope.grocery = new IngredientList(
+	function GroceryIngredientList(list, save) {
+		IngredientList.call(this, list, save);
+	}
+
+	GroceryIngredientList.prototype = new IngredientList();
+
+	GroceryIngredientList.prototype.update = function () {
+		IngredientList.prototype.update.call(this);
+
+		this.inFridge = {};
+
+		for (var i = 0; i < this.names.length; i++) {
+			this.inFridge[this.names[i]] = getItemIndex($scope.fridge.names, this.names[i]) > -1;
+		}
+	}
+
+	$scope.grocery = new GroceryIngredientList(
 		getLocalStorage("grocery") || [],
 		function(list){
 			setLocalStorage("grocery", list);
@@ -254,7 +273,7 @@ function MyFoodCtrl($scope) {
 
 	function RecipeList(list, save) {
 		this.list = list;
-		this.saveFunc = save;
+		this.save = save;
 		if(list) {
 			this.triggerUpdate(true);
 		}
@@ -263,7 +282,6 @@ function MyFoodCtrl($scope) {
 	RecipeList.prototype = new GenericList();
 
 	RecipeList.prototype.update = function () {
-		this.saveFunc(this.list);
 		updateForms();
 	}
 
@@ -368,33 +386,24 @@ function MyFoodCtrl($scope) {
 	// Active Recipes
 
 	function RecipeIngredientList(list, save) {
-		this.list = list;
-		this.saveFunc = save;
+		IngredientList.call(this, list, save);
+	}
+
+	RecipeIngredientList.prototype = new IngredientList();
+
+	RecipeIngredientList.prototype.update = function () {
+		IngredientList.prototype.update.call(this);
 
 		this.inFridge = {};
 		this.inGrocery = {};
 		this.missing = {};
 
-		this.triggerUpdate(true);
-	}
-
-	RecipeIngredientList.prototype = new IngredientList();
-
-	RecipeIngredientList.prototype.cacheLists = function () {
 		for (var i = 0; i < this.names.length; i++) {
 			var inFridge = getItemIndex($scope.fridge.names, this.names[i]) > -1;
 			var inGrocery = getItemIndex($scope.grocery.names, this.names[i]) > -1;
 			this.inFridge[this.names[i]] = inFridge;
-			this.inGrocery[this.names[i]] = inGrocery;
+			this.inGrocery[this.names[i]] = (!inFridge && inGrocery);
 			this.missing[this.names[i]] = (!inFridge && !inGrocery);
-		}
-	}
-
-	RecipeIngredientList.prototype.triggerUpdate = function (ignoreSave) {
-		RecipeList.prototype.triggerUpdate.call(this, true);
-		this.cacheLists();
-		if(!ignoreSave) {
-			this.update();
 		}
 	}
 

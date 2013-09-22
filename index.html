@@ -89,7 +89,7 @@
 				</form>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in grocery.names" class="ui-checkbox">
-						<label class="listItem groceryListItem"><input type="checkbox" ng-click="groceryUpdateChecks()" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
+						<label class="listItem groceryListItem" ng-class="{inFridge: grocery.inFridge[item]}"><input type="checkbox" ng-click="groceryUpdateChecks()" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
