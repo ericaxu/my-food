@@ -40,8 +40,16 @@ fieldset[data-role="controlgroup"] {
 	@include gradient(#def2c1, #d3f7aa);
 }
 
-#recipeIngredients .inFridge .ui-icon-checkbox-off {
-	background-color: #DDD;
+#recipeIngredients .inGrocery {
+	@include gradient(#f2eecd, #f2ecb0);
+}
+
+#recipeIngredients .missing {
+	@include gradient(#ffeaea, #ffd8d8);
+}
+
+#recipeIngredients .ui-icon-checkbox-off {
+	background-color: #EEE;
 }
 
 /* Styles for menu */
