@@ -372,6 +372,7 @@ function MyFoodCtrl($scope) {
 				$scope.groceryUpdateChecks();
 			}
 		);
+		$("#recipeIngredientsTitle").text(recipe + " ingredients");
 	}
 
 	$scope.recipeIngredientsAdd = function() {

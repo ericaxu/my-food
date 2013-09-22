@@ -30,7 +30,8 @@ function onReize() {
 }
 
 function initPage() {
-	if (!$.mobile.activePage || $.mobile.activePage.attr("id") === "loading") {
+	if (!$.mobile.activePage && (window.location.hash === "" || window.location.hash === "loading") || 
+		($.mobile.activePage && $.mobile.activePage.attr("id") === "loading")) {
 		setTimeout(function(){
 			changePage("#fridge");
 		}, 0);
