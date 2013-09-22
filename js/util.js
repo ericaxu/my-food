@@ -41,3 +41,7 @@ function getItemIndex(array, item, compare) {
 var stringCompare = function(item1, item2) {
 	return item1.toUpperCase() === item2.toUpperCase();
 }
+
+var changePage = function(page) {
+	$.mobile.changePage(page, { transition: "slide" });
+}

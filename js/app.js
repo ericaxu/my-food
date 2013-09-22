@@ -1,12 +1,4 @@
 function MyFoodCtrl($scope) {
-	$scope.ingredients = getLocalStorage("ingredients") || [];
-	$scope.fridge = getLocalStorage("fridge") || [];
-	$scope.fridgeNames = [];
-	$scope.fridgeChecked = {};
-	$scope.grocery = getLocalStorage("grocery") || [];
-	$scope.groceryNames = [];
-	$scope.groceryChecked = {};
-	$scope.recipes = getLocalStorage("recipes") || [];
 
 	// Util
 
@@ -20,46 +12,90 @@ function MyFoodCtrl($scope) {
 
 	// Ingredients
 
-	var addIngredient = function(ingredient) {
+	$scope.ingredients = getLocalStorage("ingredients") || [];
+
+	$scope.ingredientAdd = function(ingredient) {
 		$scope.ingredients.push(ingredient);
 		saveComponent("ingredients");
 		return $scope.ingredients.length - 1;
 	}
 
-	var addOrGetIngredient = function(ingredient) {
+	$scope.ingredientAddOrGet = function(ingredient) {
 		if(!isString(ingredient)) {
 			return -1;
 		}
-		var index = getIngredientIndex(ingredient);
+		var index = $scope.ingredientGetIndex(ingredient);
 		if(index < 0) {
-			index = addIngredient(ingredient);
+			index = $scope.ingredientAdd(ingredient);
 		}
 		return index;
 	}
 
-	var getIngredientIndex = function(ingredient) {
+	$scope.ingredientGetIndex = function(ingredient) {
 		return getItemIndex($scope.ingredients, ingredient, stringCompare);
 	}
 
-	var cacheIngredientList = function(ingredients, list, outputNames, inputChecked) {
-		outputNames.length = 0;
-		outputChecked = {};
-		for (var i = 0; i < list.length; i++) {
-			outputNames[i] = ingredients[list[i]];
-			outputChecked[outputNames[i]] = inputChecked[outputNames[i]] || false;
-		};
+	// IngredientList
 
-		return outputChecked;
+	$scope.ingredientListCreate = function(save, list) {
+		var ingredientList = {
+			save: save,
+			list: list,
+			names: [],
+			checked: {},
+			input: "",
+		}
+		$scope.ingredientListUpdate(ingredientList);
+		return ingredientList;
 	}
 
-	$scope.removeFromIngredientList = function(list, listChecked, update) {
-		for(var key in listChecked) {
-			if(listChecked[key]) {
-				var id = getIngredientIndex(key);
-				var index = getItemIndex(list, id);
+	$scope.ingredientListCacheNames = function(ingredientList) {
+		ingredientList.names = [];
+		var oldChecked = ingredientList.checked;
+		ingredientList.checked = {};
+		for (var i = 0; i < ingredientList.list.length; i++) {
+			ingredientList.names[i] = $scope.ingredients[ingredientList.list[i]];
+			ingredientList.checked[ingredientList.names[i]] = oldChecked[ingredientList.names[i]] || false;
+		};
+	}
+
+	$scope.ingredientListUpdate = function(ingredientList) {
+		$scope.ingredientListCacheNames(ingredientList);
+		ingredientList.save(ingredientList.list);
+		updateForms();
+	}
+
+	$scope.ingredientListAddInput = function(ingredientList) {
+		$scope.ingredientListAdd(ingredientList, ingredientList.input)
+		ingredientList.input = "";
+	}
+
+	$scope.ingredientListAdd = function(ingredientList, ingredient) {
+		if(!isString(ingredient)) {
+			console.log("invalid text");
+			return;
+		}
+		var id = $scope.ingredientAddOrGet(ingredient);
+		if(getItemIndex(ingredientList.list, id) < 0) {
+			ingredientList.list.push(id);
+			$scope.ingredientListUpdate(ingredientList);
+		}
+		else {
+			console.log(ingredient+ " already exists.");
+		}
+	}
+
+	$scope.ingredientListRemove = function(ingredientList, callback, callbackArgument) {
+		for(var key in ingredientList.checked) {
+			if(ingredientList.checked[key]) {
+				var id = $scope.ingredientGetIndex(key);
+				if(callback) {
+					callback(callbackArgument, key);
+				}
+				var index = getItemIndex(ingredientList.list, id);
 				if(index > -1) {
-					list.splice(index, 1);
-					update();
+					ingredientList.list.splice(index, 1);
+					$scope.ingredientListUpdate(ingredientList);
 				}
 			}
 		}
@@ -67,68 +103,49 @@ function MyFoodCtrl($scope) {
 
 	// Fridge
 
-	$scope.updateFridge = function() {
-		$scope.fridgeChecked = cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames, $scope.fridgeChecked);
-		saveComponent("fridge");
-		updateForms();
+	$scope.fridge = $scope.ingredientListCreate(function(list){setLocalStorage("fridge", list);}, getLocalStorage("fridge") || []);
+
+	$scope.fridgeAdd = function() {
+		$scope.ingredientListAddInput($scope.fridge);
 	}
 
-	$scope.updateFridge();
+	$scope.fridgeRemove = function() {
+		$scope.ingredientListRemove($scope.fridge);
+	}
 
-	$scope.addToFridge = function() {
-		var text = $scope.fridgeItemName;
-		if(!isString(text)) {
-			console.log("invalid text");
-			return;
-		}
-		$scope.fridgeItemName = "";
-		var id = addOrGetIngredient(text);
-		if(getItemIndex($scope.fridge, id) < 0) {
-			$scope.fridge.push(id);
-			$scope.updateFridge();
-		}
-		else {
-			console.log(text + " already exists.");
-		}
+	$scope.fridgeMoveToGrocery = function() {
+		$scope.ingredientListRemove($scope.fridge, $scope.ingredientListAdd, $scope.grocery);
+		changePage("#groceryList");
 	}
 
 	// Grocery
 
-	$scope.updateGrocery = function() {
-		$scope.groceryChecked = cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames, $scope.groceryChecked);
-		setLocalStorage("grocery", $scope.grocery);
-		updateForms();
+	$scope.grocery = $scope.ingredientListCreate(function(list){setLocalStorage("grocery", list);}, getLocalStorage("grocery") || []);
+
+	$scope.groceryAdd = function() {
+		$scope.ingredientListAddInput($scope.grocery);
 	}
 
-	$scope.updateGrocery();
+	$scope.groceryRemove = function() {
+		$scope.ingredientListRemove($scope.grocery);
+	}
 
-	$scope.addToGrocery = function() {
-		var text = $scope.groceryListItemName;
-		if(!isString(text)) {
-			console.log("invalid text");
-			return;
-		}
-		$scope.fridgeItemName = "";
-		var index = addOrGetIngredient(text);
-		$scope.groceryListItemName = "";
-		if(getItemIndex($scope.grocery, index) < 0) {
-			$scope.grocery.push(index);
-			$scope.updateGrocery();
-		}
-		else {
-			console.log(text + " already exists.");
-		}
+	$scope.groceryMoveToFridge = function() {
+		$scope.ingredientListRemove($scope.grocery, $scope.ingredientListAdd, $scope.fridge);
+		changePage("#fridge");
 	}
 
 	// Recipes
 
-	$scope.addToRecipes = function() {
+	$scope.recipes = getLocalStorage("recipes") || [];
+
+	$scope.recipesAdd = function() {
 		var text = $scope.recipeInput;
 		if(!isString(text)) {
 			return;
 		}
 		$scope.recipeInput = "";
-		var data = createRecipe(text);
+		var data = recipeCreate(text);
 		var index = getItemIndex($scope.recipes, data, function(item1, item2){ return item1.name.toUpperCase() === item2.name.toUpperCase(); });
 		if(index < 0) {
 			$scope.recipes.push(data);
@@ -139,8 +156,41 @@ function MyFoodCtrl($scope) {
 			console.log(text + " already exists.");
 		}
 	}
+/*
+	$scope.activeRecipe = {};
+	$scope.activeRecipeIngredientsNames = [];
+	$scope.activeRecipeIngredientsChecked = {};
 
-	var createRecipe = function(name) {
+	$scope.activeRecipeSet = function(recipe) {
+		$scope.activeRecipe = recipe;
+		$scope.activeRecipeUpdate();
+	}
+
+	$scope.activeRecipeUpdate = function() {
+		$scope.activeRecipeIngredientsChecked = $scope.ingredientCacheList($scope.ingredients, $scope.activeRecipe, $scope.activeRecipeIngredientsNames, $scope.activeRecipeIngredientsChecked);
+		//TODO: setLocalStorage("grocery", $scope.grocery);
+		updateForms();
+	}
+	
+	$scope.activeRecipeIngredientsAdd = function() {
+		//$scope.activeRecipeIngredientsAddIngredient($scope.groceryListItemName);
+		//$scope.activeRecipeIngredientsListItemName = "";
+	}
+
+	$scope.activeRecipeIngredientsAddIngredient = function(ingredient) {
+		//$scope.ingredientListAdd(ingredient, $scope.grocery, $scope.groceryUpdate);
+	}
+
+	$scope.activeRecipeIngredientsRemove = function() {
+		//$scope.ingredientListRemove($scope.grocery, $scope.groceryChecked, $scope.groceryUpdate);
+	}
+
+	$scope.activeRecipeIngredientsCopyToGrocery = function() {
+		//$scope.ingredientListRemove($scope.grocery, $scope.groceryChecked, $scope.groceryUpdate, $scope.fridgeAddIngredient);
+		//changePage("#fridge");
+	}
+*/
+	var recipeCreate = function(name) {
 		return {
 			name : name,
 			ingredients: [],
