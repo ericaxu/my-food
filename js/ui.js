@@ -65,7 +65,7 @@ function initDroppables() {
 }
 
 function initPage() {
-	var listItemWidth = $(".listItem").eq(0).width();
+	// var listItemWidth = $(".listItem").eq(0).width();
 	onReize();
 	// initDraggables(listItemWidth);
 	// initDroppables();
@@ -78,6 +78,15 @@ function updateForms() {
 			$.mobile.activePage.trigger("create");
 		}
 	}, 0);
+}
+
+function showDialog(header, content) {
+	$("#popup h2").text(header);
+	$("#popup p").text(content);
+	$("#popup").dialog({
+		closeBtn: "right"
+	});
+	$.mobile.changePage("#popup", { role: "dialog" });
 }
 
 detectDragAndDrop();
@@ -97,5 +106,10 @@ $(document).on("submit", "form", function(e) {
 	});
 	initPage();
 }).on("pageinit", initPage);
+
+$("#popup").on("click", function () {
+	console.log("sfasdfas");//t
+	$(this).dialog("close");
+})
 
 $(window).resize(onReize);

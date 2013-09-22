@@ -34,20 +34,20 @@
 			</div>
 			<div data-role="content">
 				<form>
-					<input type="text" ng-model="fridge.input" size="30" placeholder="Add new item here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="fridgeAdd()">Add</a>
+					<input type="text" ng-model="fridgeItemName" size="30" placeholder="Add new item here">
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToFridge()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup">
-					<div ng-repeat="item in fridge.names" class="ui-checkbox">
-						<label class="listItem fridgeListItem"><input type="checkbox" ng-model="fridge.checked[item]" name="checkbox-0" />{{item}}</label>
+					<div ng-repeat="item in fridgeNames" class="ui-checkbox">
+						<label class="listItem fridgeListItem"><input type="checkbox" ng-model="fridgeChecked[item]" name="checkbox-0" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<div data-role="navbar">
 					<ul>
-						<li><a data-icon="gear" ng-click="fridgeMoveToGrocery()">Move to Grocery List</a></li>
-						<li><a data-icon="delete" ng-click="fridgeRemove()">Delete</a></li>
+						<li><a data-icon="gear">Move to Grocery List</a></li>
+						<li><a data-icon="delete" ng-click="removeFromIngredientList(fridge, fridgeChecked, updateFridge)">Delete</a></li>
 					</ul>
 				</div>
 			</div>
@@ -67,20 +67,20 @@
 			</div>
 			<div data-role="content">
 				<form>
-					<input type="text" ng-model="grocery.input" size="30" placeholder="Add new item here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="groceryAdd()">Add</a>
+					<input type="text" ng-model="groceryListItemName" size="30" placeholder="Add new item here">
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToGrocery()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup">
-					<div ng-repeat="item in grocery.names" class="ui-checkbox">
-						<label class="listItem groceryListItem"><input type="checkbox" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
+					<div ng-repeat="item in groceryNames" class="ui-checkbox">
+						<label class="listItem groceryListItem"><input type="checkbox" name="checkbox-0" ng-model="groceryChecked[item]" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<div data-role="navbar">
 					<ul>
-						<li><a data-icon="gear" ng-click="groceryMoveToFridge()">Move to Fridge</a></li>
-						<li><a data-icon="delete" ng-click="groceryRemove()">Delete</a></li>
+						<li><a data-icon="gear">Move to Fridge</a></li>
+						<li><a data-icon="delete" ng-click="removeFromIngredientList(grocery, groceryChecked, updateGrocery)">Delete</a></li>
 					</ul>
 				</div>
 			</div>
@@ -127,7 +127,7 @@
 			<div data-role="content">
 				<form>
 					<input type="text" ng-model="recipeInput" size="30" placeholder="Add new recipe name here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="recipesAdd()">Add</a>
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToRecipes()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup" id="recipeList">
 					<div ng-repeat="item in recipes" class="ui-checkbox">
@@ -145,6 +145,15 @@
 			</div>
 		</div>
 		
+		<div data-role="page" id="popup">
+			<div data-role="header">
+				<h2></h2>
+			</div>
+			<div data-role="content">
+				<p></p>
+			</div>
+		</div>
+
 		<div id="left-bucket" class="bucket"></div>
 		<div id="right-bucket" class="bucket"></div>
 	</body>
