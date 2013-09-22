@@ -12,202 +12,353 @@ function MyFoodCtrl($scope) {
 
 	// Generic
 
-	$scope.genericListAdd = function(item, callback) {
+	$scope.genericListAddWithCheck = function(item, callback) {
 		if(!isString(item)) {
-			showDialog("Error", "The input data cannot be empty.");
+			showPopup("The input data cannot be empty.");
 			return;
 		}
 		if(!callback()) {
-			showDialog("Error", item + " already exists.");
+			showPopup(item + " already exists.");
 		}
+	}
+
+	// GenericList
+
+	function GenericList() {
+		this.list = [];
+		this.names = [];
+		this.checked = {};
+		this.numChecked = 0;
+		this.input = "";
+		this.triggerUpdate(true);
+	}
+
+	GenericList.prototype.update = function () {
+	}
+
+	GenericList.prototype.idToName = function (id) {
+	}
+
+	GenericList.prototype.nameToId = function (name) {
+	}
+
+	GenericList.prototype.getOrCreate = function (item) {
+		return 0;
+	}
+
+	GenericList.prototype.triggerUpdate = function (ignoreSave) {
+		this.cacheNames();
+		if(!ignoreSave) {
+			this.update();
+		}
+	}
+
+	GenericList.prototype.cacheNames = function () {
+		this.names = [];
+		var oldChecked = this.checked;
+		this.checked = {};
+		for (var i = 0; i < this.list.length; i++) {
+			this.names[i] = this.idToName(this.list[i]);
+			this.checked[this.names[i]] = oldChecked[this.names[i]] || false;
+		}
+		this.names.sort();
+	}
+
+	GenericList.prototype.updateChecks = function() {
+		this.numChecked = 0;
+		for (var i = 0; i < this.list.length; i++) {
+			var name = this.idToName(this.list[i]);
+			if(this.checked[name]) {
+				this.numChecked++;
+			}
+		}
+	}
+
+	GenericList.prototype.clearChecks = function() {
+		for (var i = 0; i < this.list.length; i++) {
+			var name = this.idToName(this.list[i]);
+			this.checked[name] = false;
+		}
+	}
+
+	GenericList.prototype.callChecks = function(callback) {
+		for(var key in this.checked) {
+			if(this.checked[key]) {
+				callback(key);
+			}
+		}
+	}
+
+	GenericList.prototype.addFromInput = function() {
+		this.add(this.input);
+		this.input = "";
+	}
+
+	GenericList.prototype.add = function(item) {
+		var thisLocal = this;
+		$scope.genericListAddWithCheck(item, function(){
+			var id = thisLocal.getOrCreate(item);
+			if(getItemIndex(thisLocal.list, id) < 0) {
+				thisLocal.list.push(id);
+				thisLocal.triggerUpdate();
+				return true;
+			}
+		});
+	}
+
+	GenericList.prototype.remove = function() {
+		this.copy(false, true);
+	}
+
+	GenericList.prototype.move = function(destination) {
+		this.copy(destination, true);
+	}
+
+	GenericList.prototype.copy = function(destination, del) {
+		var thisLocal = this;
+		this.callChecks(function(key) {
+			if(destination) {
+				destination.add(key);
+			}
+			if(del) {
+				var id = thisLocal.nameToId(key);
+				var index = getItemIndex(thisLocal.list, id);
+				if(index > -1) {
+					thisLocal.list.splice(index, 1);
+					thisLocal.triggerUpdate();
+				}
+			}
+		});
+		this.clearChecks();
 	}
 
 	// Ingredients
 
 	$scope.ingredients = getLocalStorage("ingredients") || [];
 
-	$scope.ingredientAdd = function(ingredient) {
-		$scope.ingredients.push(ingredient);
-		saveComponent("ingredients");
-		return $scope.ingredients.length - 1;
+	function IngredientList(list, save) {
+		this.list = list;
+		this.saveFunc = save;
+		this.triggerUpdate(true);
 	}
 
-	$scope.ingredientAddOrGet = function(ingredient) {
+	IngredientList.prototype = new GenericList();
+
+	IngredientList.prototype.update = function () {
+		this.saveFunc(this.list);
+		updateForms();
+	}
+
+	IngredientList.prototype.idToName = function (id) {
+		return $scope.ingredients[id];
+	}
+
+	IngredientList.prototype.nameToId = function (ingredient) {
+		return getItemIndex($scope.ingredients, ingredient, stringCompare);
+	}
+
+	IngredientList.prototype.getOrCreate = function (ingredient) {
 		if(!isString(ingredient)) {
 			return -1;
 		}
-		var index = $scope.ingredientGetIndex(ingredient);
+		var index = this.nameToId(ingredient);
 		if(index < 0) {
-			index = $scope.ingredientAdd(ingredient);
+			$scope.ingredients.push(ingredient);
+			saveComponent("ingredients");
+			index = $scope.ingredients.length - 1;
 		}
 		return index;
 	}
 
-	$scope.ingredientGetIndex = function(ingredient) {
-		return getItemIndex($scope.ingredients, ingredient, stringCompare);
-	}
-
-	// IngredientList
-
-	$scope.ingredientListCreate = function(save, list) {
-		var ingredientList = {
-			save: save,
-			list: list,
-			names: [],
-			checked: {},
-			input: "",
-		}
-		$scope.ingredientListUpdate(ingredientList);
-		return ingredientList;
-	}
-
-	$scope.ingredientListCacheNames = function(ingredientList) {
-		ingredientList.names = [];
-		var oldChecked = ingredientList.checked;
-		ingredientList.checked = {};
-		for (var i = 0; i < ingredientList.list.length; i++) {
-			ingredientList.names[i] = $scope.ingredients[ingredientList.list[i]];
-			ingredientList.checked[ingredientList.names[i]] = oldChecked[ingredientList.names[i]] || false;
-		};
-	}
-
-	$scope.ingredientListCheckedAction = function(ingredientList, callback) {
-		for(var key in ingredientList.checked) {
-			if(ingredientList.checked[key]) {
-				callback(key);
-			}
-		}
-	}
-
-	$scope.ingredientListUpdate = function(ingredientList) {
-		$scope.ingredientListCacheNames(ingredientList);
-		ingredientList.save(ingredientList.list);
-		updateForms();
-	}
-
-	$scope.ingredientListAddInput = function(ingredientList) {
-		$scope.ingredientListAdd(ingredientList, ingredientList.input)
-		ingredientList.input = "";
-	}
-
-	$scope.ingredientListAdd = function(ingredientList, ingredient) {
-		$scope.genericListAdd(ingredient, function(){
-			var id = $scope.ingredientAddOrGet(ingredient);
-			if(getItemIndex(ingredientList.list, id) < 0) {
-				ingredientList.list.push(id);
-				$scope.ingredientListUpdate(ingredientList);
-				return true;
-			}
-		});
-	}
-
-	$scope.ingredientListRemove = function(ingredientList) {
-		$scope.ingredientListCopy(ingredientList, false, true);
-	}
-
-	$scope.ingredientListMove = function(ingredientList, destinationIngredientList) {
-		$scope.ingredientListCopy(ingredientList, destinationIngredientList, true);
-	}
-
-	$scope.ingredientListCopy = function(ingredientList, destinationIngredientList, del) {
-		$scope.ingredientListCheckedAction(ingredientList, function(key) {
-			if(destinationIngredientList) {
-				$scope.ingredientListAdd(destinationIngredientList, key);
-			}
-			if(del) {
-				var id = $scope.ingredientGetIndex(key);
-				var index = getItemIndex(ingredientList.list, id);
-				if(index > -1) {
-					ingredientList.list.splice(index, 1);
-					$scope.ingredientListUpdate(ingredientList);
-				}
-			}
-		});
-	}
-
 	// Fridge
 
-	$scope.fridge = $scope.ingredientListCreate(function(list){setLocalStorage("fridge", list);}, getLocalStorage("fridge") || []);
+	$scope.fridge = new IngredientList(
+		getLocalStorage("fridge") || [],
+		function(list){
+			setLocalStorage("fridge", list);
+			$scope.fridgeUpdateChecks();
+		}
+	);
 
 	$scope.fridgeAdd = function() {
-		$scope.ingredientListAddInput($scope.fridge);
+		$scope.fridge.addFromInput();
 	}
 
 	$scope.fridgeRemove = function() {
-		$scope.ingredientListRemove($scope.fridge);
+		$scope.fridge.remove();
 	}
 
 	$scope.fridgeMoveToGrocery = function() {
-		$scope.ingredientListMove($scope.fridge, $scope.grocery);
+		$scope.fridge.move($scope.grocery);
 		changePage("#groceryList");
+	}
+
+	$scope.fridgeUpdateChecks = function() {
+		$scope.fridge.updateChecks();
+		if($scope.fridge.numChecked > 0) {
+			footerShow();
+		}
+		else {
+			footerHide();
+		}
 	}
 
 	// Grocery
 
-	$scope.grocery = $scope.ingredientListCreate(function(list){setLocalStorage("grocery", list);}, getLocalStorage("grocery") || []);
+	$scope.grocery = new IngredientList(
+		getLocalStorage("grocery") || [],
+		function(list){
+			setLocalStorage("grocery", list);
+			$scope.groceryUpdateChecks();
+		}
+	);
 
 	$scope.groceryAdd = function() {
-		$scope.ingredientListAddInput($scope.grocery);
+		$scope.grocery.addFromInput();
 	}
 
 	$scope.groceryRemove = function() {
-		$scope.ingredientListRemove($scope.grocery);
+		$scope.grocery.remove();
 	}
 
 	$scope.groceryMoveToFridge = function() {
-		$scope.ingredientListMove($scope.grocery, $scope.fridge);
+		$scope.grocery.move($scope.fridge);
 		changePage("#fridge");
 	}
+
+	$scope.groceryUpdateChecks = function() {
+		$scope.grocery.updateChecks();
+		if($scope.grocery.numChecked > 0) {
+			footerShow();
+		}
+		else {
+			footerHide();
+		}
+	}
+
 
 	// Recipes
 
 	$scope.recipes = getLocalStorage("recipes") || [];
 
-	$scope.recipesAdd = function() {
-		var text = $scope.recipeInput;
-		$scope.recipeInput = "";
+	var recipeCompare = function(item1, item2){ return item1.name.toUpperCase() === item2.name.toUpperCase(); };
 
-		$scope.genericListAdd(text, function(){
-			var data = $scope.recipeCreate(text);
-			var index = getItemIndex($scope.recipes, data, function(item1, item2){ return item1.name.toUpperCase() === item2.name.toUpperCase(); });
-			if(index < 0) {
-				$scope.recipes.push(data);
-				saveComponent("recipes");
-				updateForms();
-				return true;
-			}
-		});
+	function RecipeList(list, save) {
+		this.list = list;
+		this.saveFunc = save;
+		this.triggerUpdate(true);
 	}
 
-	$scope.recipeCreate = function(name) {
-		return {
-			name : name,
-			ingredients: [],
-			// steps: [],
+	RecipeList.prototype = new GenericList();
+
+	RecipeList.prototype.update = function () {
+		this.saveFunc(this.list);
+		updateForms();
+	}
+
+	RecipeList.prototype.idToName = function (id) {
+		return $scope.recipes[id].name;
+	}
+
+	RecipeList.prototype.nameToId = function (name) {
+		return getItemIndex($scope.recipes, {name: name}, recipeCompare);
+	}
+
+	RecipeList.prototype.getOrCreate = function (recipeName) {
+		if(!isString(recipeName)) {
+			return -1;
+		}
+
+		var index = this.nameToId(recipeName);
+		if(index < 0) {
+			var recipe = {
+				name : recipeName,
+				ingredients: [],
+				// steps: [],
+			};
+			$scope.recipes.push(recipe);
+			saveComponent("recipes");
+			index = $scope.recipes.length - 1;
+		}
+		
+		return index;
+	}
+	
+	// Recipes page
+
+	$scope.recipe = new RecipeList(
+		getLocalStorage("recipe") || [],
+		function(list){
+			setLocalStorage("recipe", list);
+			$scope.recipeUpdateChecks();
+		}
+	);
+
+	$scope.recipeAdd = function() {
+		$scope.recipe.addFromInput();
+	}
+
+	$scope.recipeRemove = function() {
+		$scope.recipe.remove();
+	}
+
+	$scope.recipeCopeToGrocery = function() {
+		$scope.recipe.copy($scope.grocery);
+		showPopup("Items copied to grocery.");
+		//changePage("#fridge");
+	}
+
+	$scope.recipeUpdateChecks = function() {
+		$scope.recipe.updateChecks();
+		if($scope.recipe.numChecked > 0) {
+			footerShow();
+		}
+		else {
+			footerHide();
 		}
 	}
 
+/*
 	// Active Recipes
 
-	$scope.activeRecipe = {};
+	$scope.activeRecipe = null;
 
 	$scope.activeRecipeSet = function(recipe) {
 		$scope.activeRecipe = recipe;
-		$scope.ingredientListCreate(function(list){saveComponent("recipes");}, $scope.activeRecipe.ingredients);
+		if(recipe) {
+			$scope.genericListCreate(
+				recipe.ingredients, 
+				function(list){
+					saveComponent("recipes");
+					$scope.activeRecipeUpdateChecks();
+				},
+				$scope.ingredientGetIndex
+			);
+		}
 	}
 
 	$scope.activeRecipeAdd = function() {
-		$scope.ingredientListAddInput($scope.activeRecipe);
+		$scope.genericListAddInput($scope.activeRecipe, $scope.ingredientAddOrGet);
 	}
 
 	$scope.activeRecipeRemove = function() {
-		$scope.ingredientListRemove($scope.activeRecipe);
+		$scope.genericListRemove($scope.activeRecipe);
 	}
 
 	$scope.activeRecipeCopyToGrocery = function() {
-		$scope.ingredientListCopy($scope.activeRecipe, $scope.grocery);
-		showDialog("Done", "Items moved to grocery.");
+		$scope.genericListCopy($scope.activeRecipe, $scope.grocery);
+		showPopup("Items moved to grocery.");
 	}
+
+	$scope.activeRecipeUpdateChecks = function() {
+		$scope.genericListCheckedUpdate($scope.activeRecipe);
+		if($scope.activeRecipe.numChecked > 0) {
+			footerShow();
+		}
+		else {
+			footerHide();
+		}
+	}*/
 }
 
 localStorageInit();

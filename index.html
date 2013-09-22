@@ -45,7 +45,7 @@
 				</form>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in fridge.names" class="ui-checkbox">
-						<label class="listItem fridgeListItem"><input type="checkbox" ng-model="fridge.checked[item]" name="checkbox-0" />{{item}}</label>
+						<label class="listItem fridgeListItem"><input type="checkbox" ng-click="fridgeUpdateChecks()" ng-model="fridge.checked[item]" name="checkbox-0" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
@@ -84,7 +84,7 @@
 				</form>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in grocery.names" class="ui-checkbox">
-						<label class="listItem groceryListItem"><input type="checkbox" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
+						<label class="listItem groceryListItem"><input type="checkbox" ng-click="groceryUpdateChecks()" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
@@ -140,16 +140,16 @@
 				<form>
 					<table style='width:100%'><tr>
 						<td>
-							<input type="text" data-clear-btn="true" ng-model="recipeInput" size="30" placeholder="Add new item here">
+							<input type="text" data-clear-btn="true" ng-model="recipe.input" size="30" placeholder="Add new item here">
 						</td>
 						<td style='font-size:80%; width:7em'>
-							<a class="submit" data-role="button" data-icon="plus" data-inline="true" data-theme="a" ng-click="recipesAdd()">Add</a>
+							<a class="submit" data-role="button" data-icon="plus" data-inline="true" data-theme="a" ng-click="recipeAdd()">Add</a>
 						</td>
 					</tr></table>
 				</form>
 				<fieldset data-role="controlgroup" id="recipeList">
-					<div ng-repeat="item in recipes" class="ui-checkbox">
-						<label class="listItem recipeListItem"><input type="checkbox" name="checkbox-0" />{{item.name}}</label>
+					<div ng-repeat="item in recipe.names" class="ui-checkbox">
+						<label class="listItem recipeListItem"><input type="checkbox" ng-click="recipeUpdateChecks()" name="checkbox-0" ng-model="recipe.checked[item]" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
