@@ -23,13 +23,17 @@ function updateForms() {
 	}, 0);
 }
 
-function showDialog(header, content) {
-	$("#popup h2").text(header);
+function showPopup(content, autoDismiss) {
 	$("#popup p").text(content);
-	$("#popup").dialog({
-		closeBtn: "right"
+	$("#popup").popup().popup("open", {
+		transition: "pop",
+		history: false
 	});
-	$.mobile.changePage("#popup", { role: "dialog" });
+	if (autoDismiss) {
+		setTimeout(function() {
+			$("#popup").popup("close");
+		}, 1500);
+	}
 }
 
 $(document).on("submit", "form", function(e) {
