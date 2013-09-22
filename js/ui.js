@@ -34,6 +34,10 @@ function initPage() {
 	updateForms();
 }
 
+function deactivateBottons() {
+	$.mobile.activePage.find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
+}
+
 function updateForms() {
 	setTimeout(function(){
 		if($.mobile.activePage){
