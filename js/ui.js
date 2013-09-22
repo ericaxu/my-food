@@ -23,13 +23,13 @@ function updateForms() {
 	}, 0);
 }
 
-function showPopup(content, autoDismiss) {
+function showPopup(content, manualDismiss) {
 	$("#popup p").text(content);
 	$("#popup").popup().popup("open", {
 		transition: "pop",
 		history: false
 	});
-	if (autoDismiss) {
+	if (!manualDismiss) {
 		setTimeout(function() {
 			$("#popup").popup("close");
 		}, 1500);
