@@ -2,8 +2,10 @@ function MyFoodCtrl($scope) {
 	$scope.ingredients = getLocalStorage("ingredients") || [];
 	$scope.fridge = getLocalStorage("fridge") || [];
 	$scope.fridgeNames = [];
+	$scope.fridgeChecked = {};
 	$scope.grocery = getLocalStorage("grocery") || [];
 	$scope.groceryNames = [];
+	$scope.groceryChecked = {};
 	$scope.recipes = getLocalStorage("recipes") || [];
 
 	// Ingredients
@@ -29,17 +31,21 @@ function MyFoodCtrl($scope) {
 		return getItemIndex($scope.ingredients, ingredient, stringCompare);
 	}
 
-	$scope.cacheIngredientList = function(ingredients, list, output) {
-		output.length = 0;
+	$scope.cacheIngredientList = function(ingredients, list, outputNames, inputChecked) {
+		outputNames.length = 0;
+		outputChecked = {};
 		for (var i = 0; i < list.length; i++) {
-			output[i] = ingredients[list[i]];
+			outputNames[i] = ingredients[list[i]];
+			outputChecked[outputNames[i]] = inputChecked[outputNames[i]] || false;
 		};
+
+		return outputChecked;
 	}
 
 	// Fridge
 
 	$scope.updateFridge = function() {
-		$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
+		$scope.fridgeChecked = $scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames, $scope.fridgeChecked);
 		setLocalStorage("fridge", $scope.fridge);
 		updateForms();
 	}
@@ -71,7 +77,7 @@ function MyFoodCtrl($scope) {
 	// Grocery
 
 	$scope.updateGrocery = function() {
-		$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
+		$scope.groceryChecked = $scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames, $scope.groceryChecked);
 		setLocalStorage("grocery", $scope.grocery);
 		updateForms();
 	}
