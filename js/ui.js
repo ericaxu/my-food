@@ -8,12 +8,12 @@ function onReize() {
 	if (windowHeight < 350) {
 		if (!$(".link").eq(0).hasClass("noBgImg")) {
 			$(".link").addClass("noBgImg");
-			$(".link.noBgImg span").css({
-				"top": windowHeight / 4 * 0.35,
-				"font-size": "1.1em",
-				"font-weight": "bold"
-			});
-		}
+		}	
+		$(".link.noBgImg span").css({
+			"top": windowHeight / 4  * 0.35,
+			"font-size": "1.1em",
+			"font-weight": "bold"
+		});
 	} else {
 		$(".link span").css({
 			"top": windowHeight / 4 * 0.8,
@@ -26,7 +26,7 @@ function onReize() {
 	}
 
 	$(".link").css("height", windowHeight / 4);
-	$(".link").css("background-size", Math.min(110, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 120) + "px");
+	$(".link").css("background-size", Math.min(96, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 105) + "px");
 }
 
 function initPage() {
