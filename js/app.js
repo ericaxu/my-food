@@ -90,20 +90,24 @@ function MyFoodCtrl($scope) {
 	}
 
 	GenericList.prototype.addFromInput = function() {
-		this.add(this.input);
+		var result = this.add(this.input);
 		this.input = "";
+		return result;
 	}
 
 	GenericList.prototype.add = function(item) {
 		var thisLocal = this;
+		var result = null;
 		$scope.genericListAddWithCheck(item, function(){
 			var id = thisLocal.getOrCreate(item);
 			if(getItemIndex(thisLocal.list, id) < 0) {
 				thisLocal.list.push(id);
 				thisLocal.triggerUpdate();
+				result = item;
 				return true;
 			}
 		});
+		return result;
 	}
 
 	GenericList.prototype.remove = function() {
@@ -298,7 +302,10 @@ function MyFoodCtrl($scope) {
 	);
 
 	$scope.recipeAdd = function() {
-		$scope.recipe.addFromInput();
+		var result = $scope.recipe.addFromInput();
+		if(result) {
+			$scope.recipeIngredientsOpen(result);
+		}
 	}
 
 	$scope.recipeRemove = function() {
@@ -336,11 +343,7 @@ function MyFoodCtrl($scope) {
 			lastKey = key;
 		});
 
-		$scope.activeRecipeSet(lastKey);
-		setTimeout(function(){
-			$("#recipeIngredients").trigger("create");
-		}, 0);
-		changePage("#recipeIngredients");
+		$scope.recipeIngredientsOpen(lastKey);
 	}
 
 	$scope.mealRemove = function() {
@@ -362,9 +365,17 @@ function MyFoodCtrl($scope) {
 
 	$scope.recipeIngredients = null;
 
+	$scope.previousActiveRecipe = getLocalStorage("previousActiveRecipe");
+
+	$scope.recipeIngredientsOpen = function(recipe) {
+		$scope.activeRecipeSet(recipe);
+		changePage("#recipeIngredients");
+	}
+
 	$scope.activeRecipeSet = function(recipe) {
 		var id = $scope.recipe.nameToId(recipe);
 		recipe = $scope.recipes[id];
+		// Initialize the IngredientList
 		$scope.recipeIngredients = new IngredientList(
 			recipe.ingredients,
 			function(list){
@@ -372,7 +383,21 @@ function MyFoodCtrl($scope) {
 				$scope.groceryUpdateChecks();
 			}
 		);
-		$("#recipeIngredientsTitle").text(recipe + " ingredients");
+		// Set page title
+		$("#recipeIngredientsTitle").text("Ingredients for " + recipe.name);
+		// History
+		$scope.previousActiveRecipe = recipe.name;
+		saveComponent("previousActiveRecipe");
+		// Refresh view
+		setTimeout(function(){
+			ignoreError(function(){
+				$("#recipeIngredients").trigger("create");
+			});
+		}, 0);
+	}
+
+	if($scope.previousActiveRecipe) {
+		$scope.activeRecipeSet($scope.previousActiveRecipe);
 	}
 
 	$scope.recipeIngredientsAdd = function() {

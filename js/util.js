@@ -45,3 +45,8 @@ var stringCompare = function(item1, item2) {
 var changePage = function(page) {
 	$.mobile.changePage(page, { transition: "slide" });
 }
+
+var ignoreError = function(func) {
+	try { func(); } 
+	catch (error) {  }
+}
