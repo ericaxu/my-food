@@ -38,13 +38,13 @@ function MyFoodCtrl($scope) {
 
 	// Fridge
 
-	$scope.updateFridge();
-
 	$scope.updateFridge = function() {
 		$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
 		setLocalStorage("fridge", $scope.fridge);
 		updateForms();
 	}
+
+	$scope.updateFridge();
 
 	$scope.addToFridge = function() {
 		var text = $scope.fridgeItemName;
@@ -70,14 +70,13 @@ function MyFoodCtrl($scope) {
 
 	// Grocery
 
-	$scope.updateGrocery();
-
 	$scope.updateGrocery = function() {
 		$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
 		setLocalStorage("grocery", $scope.grocery);
 		updateForms();
 	}
 
+	$scope.updateGrocery();
 
 	$scope.addToGrocery = function() {
 		var text = $scope.groceryListItemName;
