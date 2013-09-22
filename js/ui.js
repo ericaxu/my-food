@@ -36,6 +36,14 @@ function showPopup(content, manualDismiss) {
 	}
 }
 
+function footerShow() {
+	$.mobile.activePage.find("div[data-role='footer']").slideDown(200);
+}
+
+function footerHide() {
+	$.mobile.activePage.find("div[data-role='footer']").slideUp(200);
+}
+
 $(document).on("submit", "form", function(e) {
 	var currentPage = $.mobile.activePage.attr("id")
 	$("#" + currentPage).find(".submit").click();

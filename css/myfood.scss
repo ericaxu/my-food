@@ -5,8 +5,9 @@
 	background-position: center center;
 }
 
-/* Background colors for each screen */
-
+div[data-role="footer"] {
+    display: none;
+}
 
 /* Styles for menu */
 
