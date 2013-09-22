@@ -72,7 +72,7 @@ function MyFoodCtrl($scope) {
 
 	$scope.ingredientListAdd = function(ingredientList, ingredient) {
 		if(!isString(ingredient)) {
-			console.log("invalid text");
+			showDialog("Error", "The input data is not valid");
 			return;
 		}
 		var id = $scope.ingredientAddOrGet(ingredient);
@@ -81,7 +81,7 @@ function MyFoodCtrl($scope) {
 			$scope.ingredientListUpdate(ingredientList);
 		}
 		else {
-			console.log(ingredient+ " already exists.");
+			showDialog("Error", ingredient + " already exists.");
 		}
 	}
 
@@ -136,7 +136,6 @@ function MyFoodCtrl($scope) {
 	}
 
 	// Recipes
-
 	$scope.recipes = getLocalStorage("recipes") || [];
 
 	$scope.recipesAdd = function() {
@@ -156,6 +155,7 @@ function MyFoodCtrl($scope) {
 			console.log(text + " already exists.");
 		}
 	}
+
 /*
 	$scope.activeRecipe = {};
 	$scope.activeRecipeIngredientsNames = [];
