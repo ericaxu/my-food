@@ -17,6 +17,7 @@
 }
 
 body {
+	height: 100%;
 	overflow: hidden;
 }
 
@@ -24,12 +25,8 @@ div[data-role="footer"] {
 	display: none;
 }
 
-div[data-role="page"], .ui-panel-content-wrap {
+div[data-role="page"] .ui-panel-content-wrap {
 	height: 100%;
-}
-
-fieldset[data-role="controlgroup"] {
-	margin-bottom: 75px;
 }
 
 .slide-menu {
