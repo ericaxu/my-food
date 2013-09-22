@@ -14,7 +14,7 @@ function MyFoodCtrl($scope) {
 
 	$scope.genericListAddWithCheck = function(item, callback) {
 		if(!isString(item)) {
-			showPopup("The input data cannot be empty.");
+			showPopup("The input cannot be empty.");
 			return;
 		}
 		if(!callback()) {
@@ -126,13 +126,13 @@ function MyFoodCtrl($scope) {
 				var index = getItemIndex(thisLocal.list, id);
 				if(index > -1) {
 					thisLocal.list.splice(index, 1);
-					thisLocal.triggerUpdate();
 				}
 			}
 			num++;
 		});
-		return num;
 		this.clearChecks();
+		thisLocal.triggerUpdate();
+		return num;
 	}
 
 	// Ingredients
@@ -193,7 +193,7 @@ function MyFoodCtrl($scope) {
 
 	$scope.fridgeMoveToGrocery = function() {
 		var num = $scope.fridge.move($scope.grocery);
-		showPopup(num + " items moved to grocery list.");
+		showPopup(num + " item" + (num > 1 ? "s" : "") + " moved to grocery list.");
 	}
 
 	$scope.fridgeUpdateChecks = function() {
@@ -226,7 +226,7 @@ function MyFoodCtrl($scope) {
 
 	$scope.groceryMoveToFridge = function() {
 		var num = $scope.grocery.move($scope.fridge);
-		showPopup(num + " items moved to my fridge.");
+		showPopup(num + " item" + (num > 1 ? "s" : "") + " moved to my fridge.");
 	}
 
 	$scope.groceryUpdateChecks = function() {
@@ -305,9 +305,9 @@ function MyFoodCtrl($scope) {
 		$scope.recipe.remove();
 	}
 
-	$scope.recipeCopYyToPlanner = function() {
-		var num = $scope.recipe.copy($scope.grocery);
-		showPopup(num + " items copied to grocery.");
+	$scope.recipeCopyToMeal = function() {
+		var num = $scope.recipe.copy($scope.meal);
+		showPopup(num + " item" + (num > 1 ? "s" : "") + " copied to Meal Planner.");
 	}
 
 	$scope.recipeUpdateChecks = function() {
@@ -319,48 +319,83 @@ function MyFoodCtrl($scope) {
 			footerHide();
 		}
 	}
+	
+	// Meal Planner page
 
-/*
-	// Active Recipes
-
-	$scope.activeRecipe = null;
-
-	$scope.activeRecipeSet = function(recipe) {
-		$scope.activeRecipe = recipe;
-		if(recipe) {
-			$scope.genericListCreate(
-				recipe.ingredients, 
-				function(list){
-					saveComponent("recipes");
-					$scope.activeRecipeUpdateChecks();
-				},
-				$scope.ingredientGetIndex
-			);
+	$scope.meal = new RecipeList(
+		getLocalStorage("meal") || [],
+		function(list){
+			setLocalStorage("meal", list);
+			$scope.mealUpdateChecks();
 		}
+	);
+
+	$scope.mealViewDetails = function() {
+		var lastKey = "";
+		$scope.meal.callChecks(function(key) {
+			lastKey = key;
+		});
+
+		$scope.activeRecipeSet(lastKey);
+		setTimeout(function(){
+			$("#recipeIngredients").trigger("create");
+		}, 0);
+		changePage("#recipeIngredients");
 	}
 
-	$scope.activeRecipeAdd = function() {
-		$scope.genericListAddInput($scope.activeRecipe, $scope.ingredientAddOrGet);
+	$scope.mealRemove = function() {
+		$scope.meal.remove();
 	}
 
-	$scope.activeRecipeRemove = function() {
-		$scope.genericListRemove($scope.activeRecipe);
-	}
-
-	$scope.activeRecipeCopyToGrocery = function() {
-		$scope.genericListCopy($scope.activeRecipe, $scope.grocery);
-		showPopup("Items moved to grocery.");
-	}
-
-	$scope.activeRecipeUpdateChecks = function() {
-		$scope.genericListCheckedUpdate($scope.activeRecipe);
-		if($scope.activeRecipe.numChecked > 0) {
+	$scope.mealUpdateChecks = function() {
+		$scope.meal.updateChecks();
+		if($scope.meal.numChecked > 0) {
 			footerShow();
 		}
 		else {
 			footerHide();
 		}
-	}*/
+	}
+
+
+	// Active Recipes
+
+	$scope.recipeIngredients = null;
+
+	$scope.activeRecipeSet = function(recipe) {
+		var id = $scope.recipe.nameToId(recipe);
+		recipe = $scope.recipes[id];
+		$scope.recipeIngredients = new IngredientList(
+			recipe.ingredients,
+			function(list){
+				saveComponent("recipes");
+				$scope.groceryUpdateChecks();
+			}
+		);
+	}
+
+	$scope.recipeIngredientsAdd = function() {
+		$scope.recipeIngredients.addFromInput();
+	}
+
+	$scope.recipeIngredientsRemove = function() {
+		$scope.recipeIngredients.remove();
+	}
+
+	$scope.recipeIngredientsCopyToGrocery = function() {
+		var num = $scope.recipeIngredients.copy($scope.grocery);
+		showPopup(num + " item" + (num > 1 ? "s" : "") + " copied to grocery list.");
+	}
+
+	$scope.recipeIngredientsUpdateChecks = function() {
+		$scope.recipeIngredients.updateChecks();
+		if($scope.recipeIngredients.numChecked > 0) {
+			footerShow();
+		}
+		else {
+			footerHide();
+		}
+	}
 }
 
 localStorageInit();

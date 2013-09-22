@@ -65,6 +65,7 @@ function showPopup(content, manualDismiss) {
 }
 
 function footerShow() {
+	deactivateBottons();
 	$.mobile.activePage.find("div[data-role='footer']").slideDown(200);
 }
 

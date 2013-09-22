@@ -109,15 +109,19 @@
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#mp-slide-menu" data-icon="bars">Menu</a>
 				<h1>Meal Planner</h1>
-				<a href="index.html" data-icon="plus">Add</a>
 			</div>
 			<div data-role="content">
+				<fieldset data-role="controlgroup" id="mealList">
+					<div ng-repeat="item in meal.names" class="ui-checkbox">
+						<label class="listItem recipeListItem"><input type="checkbox" ng-click="mealUpdateChecks()" name="checkbox-0" ng-model="meal.checked[item]" />{{item}}</label>
+					</div>
+				</fieldset>
 			</div>
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 				<div data-role="navbar">
 					<ul>
-						<li><a data-icon="gear">Move to Recipes</a></li>
-						<li><a data-icon="delete">Delete</a></li>
+						<li><a data-icon="gears" ng-click="mealViewDetails()">View details</a></li>
+						<li><a data-icon="delete" ng-click="mealRemove()">Delete</a></li>
 					</ul>
 				</div>
 			</div>
@@ -126,14 +130,14 @@
 
 		<!-- My Recipes -->
 		<div id="recipes" data-role="page">
-			<div data-role="panel" id="mr-slide-menu" class="slide-menu">
+			<div data-role="panel" id="r-slide-menu" class="slide-menu">
 				<div class="link fridge"><span>My Fridge</span></div>
 				<div class="link groceryList"><span>Grocery List</span></div>
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
 				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#mr-slide-menu" data-icon="bars">Menu</a>
+				<a href="#r-slide-menu" data-icon="bars">Menu</a>
 				<h1>Recipes</h1>
 			</div>
 			<div data-role="content">
@@ -156,8 +160,47 @@
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 				<div data-role="navbar">
 					<ul>
-						<li><a href="a.html">Move to Meal Planner</a></li>
-						<li><a data-icon="delete">Delete</a></li>
+						<li><a data-icon="gear" ng-click="recipeCopyToMeal()">Copy to Meal Planner</a></li>
+						<li><a data-icon="delete" ng-click="recipeRemove()">Delete</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- Recipe Ingredients -->
+		<div id="recipeIngredients" data-role="page">
+			<div data-role="panel" id="r-slide-menu" class="slide-menu">
+				<div class="link fridge"><span>My Fridge</span></div>
+				<div class="link groceryList"><span>Grocery List</span></div>
+				<div class="link mealPlanner"><span>Meal Planner</span></div>
+				<div class="link recipes"><span>My Recipes</span></div>
+			</div>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#r-slide-menu" data-icon="bars">Menu</a>
+				<h1>Recipe Ingredients</h1>
+			</div>
+			<div data-role="content">
+				<form>
+					<table style='width:100%'><tr>
+						<td>
+							<input type="text" data-clear-btn="true" ng-model="recipeIngredients.input" size="30" placeholder="Add new item here">
+						</td>
+						<td style='font-size:80%; width:7em'>
+							<a class="submit" data-role="button" data-icon="plus" data-inline="true" data-theme="a" ng-click="recipeIngredientsAdd()">Add</a>
+						</td>
+					</tr></table>
+				</form>
+				<fieldset data-role="controlgroup" id="recipeList">
+					<div ng-repeat="item in recipeIngredients.names" class="ui-checkbox">
+						<label class="listItem recipeListItem"><input type="checkbox" ng-click="recipeIngredientsUpdateChecks()" name="checkbox-0" ng-model="recipeIngredients.checked[item]" />{{item}}</label>
+					</div>
+				</fieldset>
+			</div>
+			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+				<div data-role="navbar">
+					<ul>
+						<li><a data-icon="gear" ng-click="recipeIngredientsCopyToGrocery()">Copy to Grocery List</a></li>
+						<li><a data-icon="delete" ng-click="recipeIngredientsRemove()">Delete</a></li>
 					</ul>
 				</div>
 			</div>
