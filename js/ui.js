@@ -30,6 +30,11 @@ function onReize() {
 }
 
 function initPage() {
+	if (window.location.hash === "") {
+		window.location.href += "#fridge";
+		$("body").hide();
+		location.reload();
+	}
 	onReize();
 	updateForms();
 }
