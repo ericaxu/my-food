@@ -4,9 +4,28 @@ function onReize() {
 	var bucketWidth = $("#left-bucket").width();
 	var bucketHeight = $("#left-bucket").height();
 
+	if (windowHeight < 350) {
+		if (!$(".link").eq(0).hasClass("noBgImg")) {
+			$(".link").addClass("noBgImg");
+			$(".link.noBgImg span").css({
+				"top": windowHeight / 4 * 0.35,
+				"font-size": "1.1em",
+				"font-weight": "bold"
+			});
+		}
+	} else {
+		$(".link span").css({
+			"top": windowHeight / 4 * 0.8,
+			"font-size": "1em",
+			"font-weight": "normal"
+		});
+		if ($(".link").eq(0).hasClass("noBgImg")) {
+			$(".link").removeClass("noBgImg");
+		}
+	}
+
 	$(".link").css("height", windowHeight / 4);
 	$(".link").css("background-size", Math.min(110, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 120) + "px");
-	$(".link span").css("top", windowHeight / 4 * 0.85);
 	$(".slide-menu, .ui-panel-inner").height(windowHeight);
 }
 

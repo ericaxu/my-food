@@ -2,11 +2,11 @@
 	background-image: url("../img/#{$name}.svg");
 	background-repeat: no-repeat;
 	background-size: 55% 60%;
-	background-position: center center;
+	background-position: 45% 30%;
 }
 
 div[data-role="footer"] {
-    display: none;
+	display: none;
 }
 
 /* Styles for menu */
@@ -30,8 +30,7 @@ div[data-role="footer"] {
 
 .link span {
 	position: relative;
-	top: 105px;
-	// text-align: center;
+	font-size: 1.1em;
 }
 
 .link.fridge {
@@ -49,6 +48,10 @@ div[data-role="footer"] {
 
 .link.recipes {
 	@include menu-background("pot");
+}
+
+div.link.noBgImg {
+	background-image: none;
 }
 
 input[type="checkbox"] {
