@@ -107,15 +107,16 @@ function MyFoodCtrl($scope) {
 	}
 
 	GenericList.prototype.remove = function() {
-		this.copy(false, true);
+		return this.copy(false, true);
 	}
 
 	GenericList.prototype.move = function(destination) {
-		this.copy(destination, true);
+		return this.copy(destination, true);
 	}
 
 	GenericList.prototype.copy = function(destination, del) {
 		var thisLocal = this;
+		var num = 0;
 		this.callChecks(function(key) {
 			if(destination) {
 				destination.add(key);
@@ -128,7 +129,9 @@ function MyFoodCtrl($scope) {
 					thisLocal.triggerUpdate();
 				}
 			}
+			num++;
 		});
+		return num;
 		this.clearChecks();
 	}
 
@@ -161,13 +164,13 @@ function MyFoodCtrl($scope) {
 		if(!isString(ingredient)) {
 			return -1;
 		}
-		var index = this.nameToId(ingredient);
-		if(index < 0) {
+		var id = this.nameToId(ingredient);
+		if(id < 0) {
 			$scope.ingredients.push(ingredient);
 			saveComponent("ingredients");
-			index = $scope.ingredients.length - 1;
+			id = $scope.ingredients.length - 1;
 		}
-		return index;
+		return id;
 	}
 
 	// Fridge
@@ -189,8 +192,8 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.fridgeMoveToGrocery = function() {
-		$scope.fridge.move($scope.grocery);
-		changePage("#groceryList");
+		var num = $scope.fridge.move($scope.grocery);
+		showPopup(num + " items moved to grocery list.");
 	}
 
 	$scope.fridgeUpdateChecks = function() {
@@ -222,8 +225,8 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.groceryMoveToFridge = function() {
-		$scope.grocery.move($scope.fridge);
-		changePage("#fridge");
+		var num = $scope.grocery.move($scope.fridge);
+		showPopup(num + " items moved to my fridge.");
 	}
 
 	$scope.groceryUpdateChecks = function() {
@@ -302,10 +305,9 @@ function MyFoodCtrl($scope) {
 		$scope.recipe.remove();
 	}
 
-	$scope.recipeCopeToGrocery = function() {
-		$scope.recipe.copy($scope.grocery);
-		showPopup("Items copied to grocery.");
-		//changePage("#fridge");
+	$scope.recipeCopYyToPlanner = function() {
+		var num = $scope.recipe.copy($scope.grocery);
+		showPopup(num + " items copied to grocery.");
 	}
 
 	$scope.recipeUpdateChecks = function() {
