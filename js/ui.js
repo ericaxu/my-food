@@ -30,10 +30,10 @@ function onReize() {
 }
 
 function initPage() {
-	if (window.location.hash === "") {
-		window.location.href += "#fridge";
-		$("body").hide();
-		location.reload();
+	if (!$.mobile.activePage || $.mobile.activePage.attr("id") === "loading") {
+		setTimeout(function(){
+			changePage("#fridge");
+		}, 0);
 	}
 	onReize();
 	updateForms();
