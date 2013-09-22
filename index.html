@@ -28,7 +28,7 @@
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
 				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
-			<div data-role="header">
+			<div data-role="header" data-position="fixed">
 				<a href="#mf-slide-menu" data-transition="slide" data-direction="reverse" data-icon="bars">Menu</a>
 				<h1>My Fridge</h1>
 			</div>
@@ -41,6 +41,14 @@
 					<label ng-repeat="item in fridgeNames" class="listItem fridgeListItem"><input type="checkbox" name="checkbox-0" />{{item}}</label>
 				</fieldset>
 			</div>
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar">
+					<ul>
+						<li><a data-icon="gear">Move to Grocery List</a></li>
+						<li><a data-icon="delete">Delete</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<!-- Grocery List -->
@@ -51,7 +59,7 @@
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
 				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
-			<div data-role="header">
+			<div data-role="header" data-position="fixed">
 				<a href="#gl-slide-menu" data-icon="bars">Menu</a>
 				<h1>Grocery List</h1>
 			</div>
@@ -64,6 +72,14 @@
 					<label ng-repeat="item in groceryNames" class="listItem groceryListItem"><input type="checkbox" name="checkbox-0" />{{item}}</label>
 				</fieldset>
 			</div>
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar">
+					<ul>
+						<li><a data-icon="gear">Move to Fridge</a></li>
+						<li><a data-icon="delete">Delete</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<!-- Meal Planner -->
@@ -74,12 +90,20 @@
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
 				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
-			<div data-role="header">
+			<div data-role="header" data-position="fixed">
 				<a href="#mp-slide-menu" data-icon="bars">Menu</a>
 				<h1>Meal Planner</h1>
 				<a href="index.html" data-icon="plus">Add</a>
 			</div>
 			<div data-role="content">
+			</div>
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar">
+					<ul>
+						<li><a data-icon="gear">Move to Recipes</a></li>
+						<li><a data-icon="delete">Delete</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 
@@ -92,7 +116,7 @@
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
 				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
-			<div data-role="header">
+			<div data-role="header" data-position="fixed">
 				<a href="#mr-slide-menu" data-icon="bars">Menu</a>
 				<h1>Recipes</h1>
 			</div>
@@ -104,6 +128,14 @@
 				<fieldset data-role="controlgroup" id="recipeList">
 					<label ng-repeat="item in recipes" class="listItem recipeListItem"><input type="checkbox" name="checkbox-0" />{{item.name}}</label>
 				</fieldset>
+			</div>
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="a.html">Move to Meal Planner</a></li>
+						<li><a data-icon="delete">Delete</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		
