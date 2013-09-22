@@ -5,6 +5,10 @@
 	background-position: 47.5% 30%;
 }
 
+body {
+	overflow: hidden;
+}
+
 div[data-role="footer"] {
 	display: none;
 }
@@ -15,6 +19,10 @@ div[data-role="page"], .ui-panel-content-wrap {
 
 fieldset[data-role="controlgroup"] {
 	margin-bottom: 75px;
+}
+
+.slide-menu {
+	position: fixed;
 }
 
 /* Styles for menu */
