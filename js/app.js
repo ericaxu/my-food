@@ -253,7 +253,9 @@ function MyFoodCtrl($scope) {
 	function RecipeList(list, save) {
 		this.list = list;
 		this.saveFunc = save;
-		this.triggerUpdate(true);
+		if(list) {
+			this.triggerUpdate(true);
+		}
 	}
 
 	RecipeList.prototype = new GenericList();
@@ -363,6 +365,30 @@ function MyFoodCtrl($scope) {
 
 	// Active Recipes
 
+	function RecipeIngredientList(list, save) {
+		this.list = list;
+		this.saveFunc = save;
+
+		this.inFridge = {};
+		this.inGrocery = {};
+
+		this.triggerUpdate(true);
+	}
+
+	RecipeIngredientList.prototype = new RecipeList();
+
+	RecipeIngredientList.prototype.cacheLists = function () {
+		for (var i = 0; i < this.names.length; i++) {
+			this.inFridge[this.names[i]] = getItemIndex($scope.grocery.names, this.names[i]) > -1;
+			this.inGrocery[this.names[i]] = getItemIndex($scope.fridge.names, this.names[i]) > -1;
+		}
+	}
+
+	RecipeIngredientList.prototype.update = function () {
+		this.cacheLists();
+		RecipeList.prototype.update.call(this);
+	}
+
 	$scope.recipeIngredients = null;
 
 	$scope.previousActiveRecipe = getLocalStorage("previousActiveRecipe");
@@ -372,7 +398,7 @@ function MyFoodCtrl($scope) {
 		changePage("#recipeIngredients");
 	}
 
-	$scope.activeRecipeSet = function(recipe) {
+	$scope.activeRecipeSet = function(recipe, preventNavigate) {
 		var id = $scope.recipe.nameToId(recipe);
 		recipe = $scope.recipes[id];
 		// Initialize the IngredientList
@@ -390,9 +416,9 @@ function MyFoodCtrl($scope) {
 		saveComponent("previousActiveRecipe");
 		// Refresh view
 		setTimeout(function(){
-			ignoreError(function(){
+			if($("#recipeIngredientList").hasClass("ui-controlgroup")) {
 				$("#recipeIngredients").trigger("create");
-			});
+			}
 		}, 0);
 	}
 

@@ -174,14 +174,14 @@
 
 		<!-- Recipe Ingredients -->
 		<div id="recipeIngredients" data-role="page">
-			<div data-role="panel" id="r-slide-menu" class="slide-menu">
+			<div data-role="panel" id="ri-slide-menu" class="slide-menu">
 				<div class="link fridge"><span>My Fridge</span></div>
 				<div class="link groceryList"><span>Grocery List</span></div>
 				<div class="link mealPlanner"><span>Meal Planner</span></div>
 				<div class="link recipes"><span>My Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#r-slide-menu" data-icon="bars">Menu</a>
+				<a href="#ri-slide-menu" data-icon="bars">Menu</a>
 				<h1 id="recipeIngredientsTitle">Recipe Ingredients</h1>
 			</div>
 			<div data-role="content">
@@ -195,9 +195,9 @@
 						</td>
 					</tr></table>
 				</form>
-				<fieldset data-role="controlgroup" id="recipeList">
+				<fieldset data-role="controlgroup" id="recipeIngredientList">
 					<div ng-repeat="item in recipeIngredients.names" class="ui-checkbox">
-						<label class="listItem recipeListItem"><input type="checkbox" ng-click="recipeIngredientsUpdateChecks()" name="checkbox-0" ng-model="recipeIngredients.checked[item]" />{{item}}</label>
+						<label class="listItem recipeListItem" ng-class="{inFridge: recipe.inFridge[item]}"><input type="checkbox" ng-click="recipeIngredientsUpdateChecks()" name="checkbox-0" ng-model="recipeIngredients.checked[item]" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
