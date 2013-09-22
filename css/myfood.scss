@@ -36,19 +36,19 @@ fieldset[data-role="controlgroup"] {
 	position: fixed;
 }
 
-#recipeIngredients .inFridge {
+.inFridge {
 	@include gradient(#def2c1, #d3f7aa);
 }
 
-#recipeIngredients .inGrocery {
+.inGrocery {
 	@include gradient(#f2eecd, #f2ecb0);
 }
 
-#recipeIngredients .missing {
+.missing {
 	@include gradient(#ffeaea, #ffd8d8);
 }
 
-#recipeIngredients .ui-icon-checkbox-off {
+.ui-icon-checkbox-off {
 	background-color: #EEE;
 }
 
