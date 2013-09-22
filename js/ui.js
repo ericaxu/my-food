@@ -1,74 +1,17 @@
-function detectDragAndDrop () {
-	var isDragging = false;
-	$("span").mousedown(function() {
-		$(window).mousemove(function() {
-			isDragging = true;
-			$(window).unbind("mousemove");
-		});
-	})
-	.mouseup(function() {
-		var wasDragging = isDragging;
-		isDragging = false;
-		$(window).unbind("mousemove");
-		if (!wasDragging) {
-			// ...
-		} else {
-			// ...
-		}
-	});
-}
-
 function onReize() {
 	var windowWidth = $(window).width();
 	var windowHeight = $(window).height();
 	var bucketWidth = $("#left-bucket").width();
 	var bucketHeight = $("#left-bucket").height();
-	// $(".bucket").css("top", (windowHeight - bucketHeight) / 2 - 5);
-	// $("#right-bucket").css("left", windowWidth - 2 * $("#left-bucket").width() + 5);
+
 	$(".link").css("height", windowHeight / 4);
 	$(".link").css("background-size", Math.min(110, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 120) + "px");
 	$(".link span").css("top", windowHeight / 4 * 0.85);
-	expandPanel(windowHeight);
-}
-
-function expandPanel(height) {
 	$(".slide-menu, .ui-panel-inner").height(height);
 }
 
-function initDraggables() {
-	var originalWidth = 0;
-	$(".listItem").draggable({
-		cursor: "move",
-		distance: 10,
-		opacity: 1,
-		stack: "*",
-		zIndex: 99999,
-		revert: "invalid",
-		revertDuration: 100,
-		start: function (evt, ui) {
-			originalWidth = $(this).width();
-			$(this).width(100);
-		},
-		stop: function (evt, ui) {
-			$(this).width(originalWidth);
-		},
-		cursorAt: { top: 20, left: 50 }
-	});
-}
-
-function initDroppables() {
-	$(".bucket").droppable({
-		accept: ".listItem",
-		tolerance: "touch",
-		hoverClass: "activeBucket"
-	});
-}
-
 function initPage() {
-	// var listItemWidth = $(".listItem").eq(0).width();
 	onReize();
-	// initDraggables(listItemWidth);
-	// initDroppables();
 	updateForms();
 }
 
@@ -89,8 +32,6 @@ function showDialog(header, content) {
 	$.mobile.changePage("#popup", { role: "dialog" });
 }
 
-detectDragAndDrop();
-
 $(document).on("submit", "form", function(e) {
 	var currentPage = $.mobile.activePage.attr("id")
 	$("#" + currentPage).find(".submit").click();
@@ -108,7 +49,6 @@ $(document).on("submit", "form", function(e) {
 }).on("pageinit", initPage);
 
 $("#popup").on("click", function () {
-	console.log("sfasdfas");//t
 	$(this).dialog("close");
 })
 
