@@ -34,8 +34,14 @@
 			</div>
 			<div data-role="content">
 				<form>
-					<input type="text" ng-model="fridge.input" size="30" placeholder="Add new item here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="fridgeAdd()">Add</a>
+					<table style='width:100%'><tr>
+						<td>
+							<input type="text" data-clear-btn="true" ng-model="fridge.input" size="30" placeholder="Add new item here">
+						</td>
+						<td style='font-size:80%; width:7em'>
+							<a class="submit" data-role="button" data-icon="plus" data-inline="true" data-theme="a" ng-click="fridgeAdd()">Add</a>
+						</td>
+					</tr></table>
 				</form>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in fridge.names" class="ui-checkbox">
@@ -67,8 +73,14 @@
 			</div>
 			<div data-role="content">
 				<form>
-					<input type="text" ng-model="grocery.input" size="30" placeholder="Add new item here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="groceryAdd()">Add</a>
+					<table style='width:100%'><tr>
+						<td>
+							<input type="text" data-clear-btn="true" ng-model="grocery.input" size="30" placeholder="Add new item here">
+						</td>
+						<td style='font-size:80%; width:7em'>
+							<a class="submit" data-role="button" data-icon="plus" data-inline="true" data-theme="a" ng-click="groceryAdd()">Add</a>
+						</td>
+					</tr></table>
 				</form>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in grocery.names" class="ui-checkbox">
@@ -126,8 +138,14 @@
 			</div>
 			<div data-role="content">
 				<form>
-					<input type="text" ng-model="recipeInput" size="30" placeholder="Add new recipe name here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="recipesAdd()">Add</a>
+					<table style='width:100%'><tr>
+						<td>
+							<input type="text" data-clear-btn="true" ng-model="recipeInput" size="30" placeholder="Add new item here">
+						</td>
+						<td style='font-size:80%; width:7em'>
+							<a class="submit" data-role="button" data-icon="plus" data-inline="true" data-theme="a" ng-click="recipesAdd()">Add</a>
+						</td>
+					</tr></table>
 				</form>
 				<fieldset data-role="controlgroup" id="recipeList">
 					<div ng-repeat="item in recipes" class="ui-checkbox">
