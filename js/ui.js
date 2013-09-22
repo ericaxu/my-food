@@ -1,8 +1,9 @@
 function onReize() {
 	var windowWidth = $(window).width();
 	var windowHeight = $(window).height();
-	var bucketWidth = $("#left-bucket").width();
-	var bucketHeight = $("#left-bucket").height();
+
+	// Menu panel adjustments
+	$(".slide-menu, .ui-panel-inner").height(windowHeight);
 
 	if (windowHeight < 350) {
 		if (!$(".link").eq(0).hasClass("noBgImg")) {
@@ -26,7 +27,6 @@ function onReize() {
 
 	$(".link").css("height", windowHeight / 4);
 	$(".link").css("background-size", Math.min(110, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 120) + "px");
-	$(".slide-menu, .ui-panel-inner").height(windowHeight);
 }
 
 function initPage() {
@@ -76,6 +76,9 @@ $(document).on("submit", "form", function(e) {
 	$.mobile.changePage("#"+newPage, {
 		transition: "slide"
 	});
+	if ($.mobile.activePage.attr("id") === newPage) {
+		$.mobile.activePage.find(".slide-menu").panel("close");
+	}
 	initPage();
 }).on("pageinit", initPage);
 
