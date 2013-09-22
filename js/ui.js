@@ -7,7 +7,7 @@ function onReize() {
 	$(".link").css("height", windowHeight / 4);
 	$(".link").css("background-size", Math.min(110, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 120) + "px");
 	$(".link span").css("top", windowHeight / 4 * 0.85);
-	$(".slide-menu, .ui-panel-inner").height(height);
+	$(".slide-menu, .ui-panel-inner").height(windowHeight);
 }
 
 function initPage() {
