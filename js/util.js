@@ -24,6 +24,9 @@ function setLocalStorage(name, data) {
 }
 
 function getItemIndex(array, item, compare) {
+	if(!compare) {
+		return array.indexOf(item);
+	}
 	for (var i = array.length - 1; i >= 0; i--) {
 		if(item === array[i]) {
 			return i;

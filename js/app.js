@@ -38,24 +38,46 @@ function MyFoodCtrl($scope) {
 
 	// Fridge
 
+	$scope.updateFridge();
+
+	$scope.updateFridge = function() {
+		$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
+		setLocalStorage("fridge", $scope.fridge);
+		updateForms();
+	}
+
 	$scope.addToFridge = function() {
 		var text = $scope.fridgeItemName;
 		if(!$scope.isString(text)) {
 			return;
 		}
 		$scope.fridgeItemName = "";
-		var index = $scope.addOrGetIngredient(text);
-		if(getItemIndex($scope.fridge, index) < 0) {
-			$scope.fridge.push(index);
-			$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
-			setLocalStorage("fridge", $scope.fridge);
-			updateForms();
+		var id = $scope.addOrGetIngredient(text);
+		if(getItemIndex($scope.fridge, id) < 0) {
+			$scope.fridge.push(id);
+			$scope.updateFridge();
 		}
 	}
 
-	$scope.cacheIngredientList($scope.ingredients, $scope.fridge, $scope.fridgeNames);
+	$scope.removeFromFridge = function(item) {
+		var id = $scope.getIngredientIndex(item);
+		var index = getItemIndex($scope.fridge, id);
+		if(index > -1) {
+			$scope.fridge.splice(index, 1);
+			$scope.updateFridge();
+		}
+	}
 
 	// Grocery
+
+	$scope.updateGrocery();
+
+	$scope.updateGrocery = function() {
+		$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
+		setLocalStorage("grocery", $scope.grocery);
+		updateForms();
+	}
+
 
 	$scope.addToGrocery = function() {
 		var text = $scope.groceryListItemName;
@@ -67,13 +89,18 @@ function MyFoodCtrl($scope) {
 		$scope.groceryListItemName = "";
 		if(getItemIndex($scope.grocery, index) < 0) {
 			$scope.grocery.push(index);
-			$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
-			setLocalStorage("grocery", $scope.grocery);
-			updateForms();
+			$scope.updateGrocery();
 		}
 	}
 
-	$scope.cacheIngredientList($scope.ingredients, $scope.grocery, $scope.groceryNames);
+	$scope.removeFromGrocery = function(item) {
+		var id = $scope.getIngredientIndex(item);
+		var index = getItemIndex($scope.grocery, id);
+		if(index > -1) {
+			$scope.grocery.splice(index, 1);
+			$scope.updateGrocery();
+		}
+	}
 
 	// Dishes
 
