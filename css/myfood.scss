@@ -1,8 +1,8 @@
 @mixin menu-background($name) {
-	background: url("../img/#{$name}.svg");
+	background-image: url("../img/#{$name}.svg");
 	background-repeat: no-repeat;
-	background-size: 60% 70%;
-	background-position: 20% 15%;
+	background-size: 55% 60%;
+	background-position: center center;
 }
 
 /* Styles for menu */
@@ -15,8 +15,24 @@
 	height: 25%;
 }
 
+.link {
+	position: relative;
+	text-align: center;
+}
+
+.link:hover {
+	background-color: #DDD;
+}
+
+.link span {
+	position: relative;
+	top: 105px;
+	// text-align: center;
+}
+
 .link.fridge {
 	@include menu-background("eggs");
+	background-size: 60% 80%;
 }
 
 .link.groceryList {
@@ -84,7 +100,7 @@ input[type="checkbox"] {
 
 /* Adjustments for left panel width */
 
-$left-panel-width: 10em;
+$left-panel-width: 200px;
  
 .ui-panel {
 	width: $left-panel-width;

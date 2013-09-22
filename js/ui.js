@@ -19,14 +19,15 @@ function detectDragAndDrop () {
 }
 
 function onReize() {
-	console.log("resize");//t
 	var windowWidth = $(window).width();
 	var windowHeight = $(window).height();
 	var bucketWidth = $("#left-bucket").width();
 	var bucketHeight = $("#left-bucket").height();
-	console.log(windowWidth - $("#left-bucket").width());
-	$(".bucket").css("top", (windowHeight-bucketHeight)/2-5)
-	$("#right-bucket").css("left", windowWidth - 2 * $("#left-bucket").width() + 5);
+	// $(".bucket").css("top", (windowHeight - bucketHeight) / 2 - 5);
+	// $("#right-bucket").css("left", windowWidth - 2 * $("#left-bucket").width() + 5);
+	$(".link").css("height", windowHeight / 4);
+	$(".link").css("background-size", Math.min(110, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 120) + "px");
+	$(".link span").css("top", windowHeight / 4 * 0.85);
 	expandPanel(windowHeight);
 }
 
