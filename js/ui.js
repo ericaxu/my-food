@@ -66,8 +66,8 @@ function initDroppables() {
 function initPage() {
 	var listItemWidth = $(".listItem").eq(0).width();
 	onReize();
-	initDraggables(listItemWidth);
-	initDroppables();
+	// initDraggables(listItemWidth);
+	// initDroppables();
 	updateForms();
 }
 

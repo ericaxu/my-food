@@ -1,34 +1,34 @@
 @mixin menu-background($name) {
-    background: url("../img/#{$name}.svg");
-    background-repeat: no-repeat;
-    background-size: 60% 70%;
-    background-position: 20% 15%;
+	background: url("../img/#{$name}.svg");
+	background-repeat: no-repeat;
+	background-size: 60% 70%;
+	background-position: 20% 15%;
 }
 
 /* Styles for menu */
 
 .ui-panel-inner {
-    padding: 0;
+	padding: 0;
 }
 
 .slide-menu .link {
-    height: 25%;
+	height: 25%;
 }
 
 .link.fridge {
-    @include menu-background("eggs");
+	@include menu-background("eggs");
 }
 
 .link.groceryList {
-    @include menu-background("cart");
+	@include menu-background("cart");
 }
 
 .link.mealPlanner {
-    @include menu-background("calendar");
+	@include menu-background("calendar");
 }
 
 .link.recipes {
-    @include menu-background("pot");
+	@include menu-background("pot");
 }
 
 input[type="checkbox"] {
@@ -38,44 +38,43 @@ input[type="checkbox"] {
 /* Styles for drag and drop */
 
 *[draggable=true] {
-    -moz-user-select:none;
-    -khtml-user-drag: element;
-    cursor: move;
-}
-
-.listItem {
+	-moz-user-select:none;
+	-khtml-user-drag: element;
 	cursor: move;
 }
 
+.listItem {
+	// cursor: move;
+}
+
 .bucket {
-    display: none;
-    position: relative;
-    float: left;
-    top: 250px;
-    width: 125px;
-    height: 200px;
-    border: 5px #777 dashed;
-    // z-index: 1;
-    background-color: rgba(175,175,175,.4);
-    background-repeat: no-repeat;
+	display: none;
+	position: relative;
+	float: left;
+	top: 250px;
+	width: 125px;
+	height: 200px;
+	border: 5px #777 dashed;
+	background-color: rgba(175,175,175,.4);
+	background-repeat: no-repeat;
 }
 
 #left-bucket {
-    background-image: url("../img/cart.svg");
-    background-position: right;
-    background-size: 100px;
-    background-position: 10px 50px;
-    border-radius: 0 50px 50px 0;
-    border-left: none;
+	background-image: url("../img/cart.svg");
+	background-position: right;
+	background-size: 100px;
+	background-position: 10px 50px;
+	border-radius: 0 50px 50px 0;
+	border-left: none;
 }
 
 #right-bucket {
-    background-image: url("../img/trash.svg");
-    background-position: left;
-    background-size: 76px 100px;
-    background-position: 35px 50px;
-    border-radius: 50px 0 0 50px;
-    border-right: none;
+	background-image: url("../img/trash.svg");
+	background-position: left;
+	background-size: 76px 100px;
+	background-position: 35px 50px;
+	border-radius: 50px 0 0 50px;
+	border-right: none;
 }
 
 .activeBucket {
@@ -88,40 +87,40 @@ input[type="checkbox"] {
 $left-panel-width: 10em;
  
 .ui-panel {
-    width: $left-panel-width;
+	width: $left-panel-width;
 }
  
 .ui-panel.ui-panel-closed {
-    width: 0;
+	width: 0;
 }
  
 .ui-panel-position-left {
-    left: -$left-panel-width;
+	left: -$left-panel-width;
 }
  
 .ui-panel-animate.ui-panel-position-left.ui-panel-display-overlay, .ui-panel-animate.ui-panel-position-left.ui-panel-display-push {
-    -webkit-transform: translate3d(-$left-panel-width, 0, 0);
-    -moz-transform: translate3d(-$left-panel-width, 0, 0);
-    transform: translate3d(-$left-panel-width, 0, 0)
+	-webkit-transform: translate3d(-$left-panel-width, 0, 0);
+	-moz-transform: translate3d(-$left-panel-width, 0, 0);
+	transform: translate3d(-$left-panel-width, 0, 0)
 }
  
 .ui-panel-content-fixed-toolbar-position-left.ui-panel-content-fixed-toolbar-open, .ui-panel-content-wrap-position-left.ui-panel-content-wrap-open, .ui-panel-dismiss-position-left.ui-panel-dismiss-open {
-    left: $left-panel-width;
+	left: $left-panel-width;
 }
  
 .ui-panel-animate.ui-panel-content-fixed-toolbar-position-left.ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal, .ui-panel-animate.ui-panel-content-fixed-toolbar-position-left.ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push, .ui-panel-animate.ui-panel-content-wrap-position-left.ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal, .ui-panel-animate.ui-panel-content-wrap-position-left.ui-panel-content-wrap-open.ui-panel-content-wrap-display-push {
-    -webkit-transform: translate3d($left-panel-width, 0, 0);
-    -moz-transform: translate3d($left-panel-width, 0, 0);
-    transform: translate3d($left-panel-width, 0, 0)
+	-webkit-transform: translate3d($left-panel-width, 0, 0);
+	-moz-transform: translate3d($left-panel-width, 0, 0);
+	transform: translate3d($left-panel-width, 0, 0)
 }
  
 .ui-panel-content-fixed-toolbar-position-right.ui-panel-content-fixed-toolbar-open, .ui-panel-content-wrap-position-right.ui-panel-content-wrap-open, .ui-panel-dismiss-position-right.ui-panel-dismiss-open {
-    left: -$left-panel-width;
+	left: -$left-panel-width;
 }
  
 @media (min-width:55em) {
  
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
-        margin-left: $left-panel-width
-    }
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+		margin-left: $left-panel-width
+	}
 }
