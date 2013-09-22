@@ -93,6 +93,6 @@ $(document).on("submit", "form", function(e) {
 
 $("#popup").on("click", function () {
 	$(this).dialog("close");
-})
+});
 
 $(window).resize(onReize);

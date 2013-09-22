@@ -13,6 +13,10 @@ div[data-role="page"], .ui-panel-content-wrap {
 	height: 100%;
 }
 
+fieldset[data-role="controlgroup"] {
+	margin-bottom: 75px;
+}
+
 /* Styles for menu */
 
 .ui-panel-inner {
@@ -26,7 +30,7 @@ div[data-role="page"], .ui-panel-content-wrap {
 .link {
 	position: relative;
 	text-align: center;
-	@include gradient(#F7F7F7, #DDD);
+	cursor: pointer;
 }
 
 .link:hover {
