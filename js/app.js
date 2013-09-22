@@ -55,6 +55,7 @@ function MyFoodCtrl($scope) {
 	$scope.addToFridge = function() {
 		var text = $scope.fridgeItemName;
 		if(!$scope.isString(text)) {
+			console.log("invalid text");
 			return;
 		}
 		$scope.fridgeItemName = "";
@@ -63,14 +64,21 @@ function MyFoodCtrl($scope) {
 			$scope.fridge.push(id);
 			$scope.updateFridge();
 		}
+		else {
+			console.log(text + " already exists.");
+		}
 	}
 
-	$scope.removeFromFridge = function(item) {
-		var id = $scope.getIngredientIndex(item);
-		var index = getItemIndex($scope.fridge, id);
-		if(index > -1) {
-			$scope.fridge.splice(index, 1);
-			$scope.updateFridge();
+	$scope.removeFromFridge = function() {
+		for(var key in $scope.fridgeChecked) {
+			if($scope.fridgeChecked[key]) {
+				var id = $scope.getIngredientIndex(key);
+				var index = getItemIndex($scope.fridge, id);
+				if(index > -1) {
+					$scope.fridge.splice(index, 1);
+					$scope.updateFridge();
+				}
+			}
 		}
 	}
 
@@ -87,6 +95,7 @@ function MyFoodCtrl($scope) {
 	$scope.addToGrocery = function() {
 		var text = $scope.groceryListItemName;
 		if(!$scope.isString(text)) {
+			console.log("invalid text");
 			return;
 		}
 		$scope.fridgeItemName = "";
@@ -96,20 +105,27 @@ function MyFoodCtrl($scope) {
 			$scope.grocery.push(index);
 			$scope.updateGrocery();
 		}
-	}
-
-	$scope.removeFromGrocery = function(item) {
-		var id = $scope.getIngredientIndex(item);
-		var index = getItemIndex($scope.grocery, id);
-		if(index > -1) {
-			$scope.grocery.splice(index, 1);
-			$scope.updateGrocery();
+		else {
+			console.log(text + " already exists.");
 		}
 	}
 
-	// Dishes
+	$scope.removeFromGrocery = function() {
+		for(var key in $scope.groceryChecked) {
+			if($scope.groceryChecked[key]) {
+				var id = $scope.getIngredientIndex(key);
+				var index = getItemIndex($scope.grocery, id);
+				if(index > -1) {
+					$scope.grocery.splice(index, 1);
+					$scope.updateGrocery();
+				}
+			}
+		}
+	}
 
-	$scope.addToRecipe = function() {
+	// Recipes
+
+	$scope.addToRecipes = function() {
 		var text = $scope.recipeInput;
 		if(!$scope.isString(text)) {
 			return;
@@ -122,11 +138,14 @@ function MyFoodCtrl($scope) {
 			setLocalStorage("recipes", $scope.recipes);
 			updateForms();
 		}
+		else {
+			console.log(text + " already exists.");
+		}
 	}
 
 	// Util
 	$scope.isString = function (obj) {
-		return Object.prototype.toString.call(obj) == '[object String]' && obj.trim() !== "";
+		return Object.prototype.toString.call(obj) == '[object String]' && obj !== "";
 	}
 }
 

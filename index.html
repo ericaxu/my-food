@@ -45,7 +45,7 @@
 				<div data-role="navbar">
 					<ul>
 						<li><a data-icon="gear">Move to Grocery List</a></li>
-						<li><a data-icon="delete">Delete</a></li>
+						<li><a data-icon="delete" ng-click="removeFromFridge()">Delete</a></li>
 					</ul>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 				<div data-role="navbar">
 					<ul>
 						<li><a data-icon="gear">Move to Fridge</a></li>
-						<li><a data-icon="delete">Delete</a></li>
+						<li><a data-icon="delete" ng-click="removeFromGrocery()">Delete</a></li>
 					</ul>
 				</div>
 			</div>
@@ -123,7 +123,7 @@
 			<div data-role="content">
 				<form>
 					<input type="text" ng-model="recipeInput" size="30" placeholder="Add new recipe name here">
-					<a class="submit" data-role="button" data-icon="plus" ng-click="addToRecipe()">Add</a>
+					<a class="submit" data-role="button" data-icon="plus" ng-click="addToRecipes()">Add</a>
 				</form>
 				<fieldset data-role="controlgroup" id="recipeList">
 					<label ng-repeat="item in recipes" class="listItem recipeListItem"><input type="checkbox" name="checkbox-0" />{{item.name}}</label>
