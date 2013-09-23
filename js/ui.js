@@ -125,7 +125,10 @@ $(document).on("submit", "form", function(e) {
 		$.mobile.activePage.find(".slide-menu").panel("close");
 	}
 	initPage();
-}).on("pageinit", initPage);
+}).on("pageinit", initPage)
+.on("pagebeforeshow", function(event) {
+	$(event.target).trigger("create");
+});
 
 $("#popup").on("click", function () {
 	$(this).dialog("close");

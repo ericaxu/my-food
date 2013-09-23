@@ -372,6 +372,10 @@ function MyFoodCtrl($scope) {
 		}
 	}
 	
+	$scope.recipeView = function(item) {
+		$scope.recipeIngredientsOpen(item);
+	}
+
 	// Planner
 
 	$scope.masterRecipe =  {
@@ -388,13 +392,8 @@ function MyFoodCtrl($scope) {
 		}
 	);
 
-	$scope.mealViewDetails = function() {
-		var lastKey = "";
-		$scope.meal.callChecks(function(key) {
-			lastKey = key;
-		});
-
-		$scope.recipeIngredientsOpen(lastKey);
+	$scope.mealMarkDone = function() {
+		$scope.meal.remove();
 	}
 
 	$scope.mealRemove = function() {

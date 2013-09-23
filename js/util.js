@@ -39,7 +39,7 @@ function getItemIndex(array, item, compare) {
 }
 
 var stringCompare = function(item1, item2) {
-	return item1.toUpperCase() === item2.toUpperCase();
+	return item1 === item2;
 }
 
 var changePage = function(page) {
