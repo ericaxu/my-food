@@ -69,12 +69,12 @@ function bindAutocomplete() {
 }
 
 function initPage() {
-	if (!$.mobile.activePage && (window.location.hash === "" || window.location.hash === "#" || window.location.hash === "#loading") || 
+	setTimeout(function(){
+		if (!$.mobile.activePage && (window.location.hash === "" || window.location.hash === "#" || window.location.hash === "#loading") || 
 		($.mobile.activePage && $.mobile.activePage.attr("id") === "loading")) {
-		setTimeout(function(){
 			changePage("#recipes");
-		}, 0);
-	}
+		}
+	}, 0);
 	onReize();
 	bindAutocomplete();
 	updateForms();
@@ -133,6 +133,7 @@ $(document).on("submit", "form", function(e) {
 	e.stopImmediatePropagation();
 }).bind("mobileinit", function () {
 	$.mobile.ajaxEnabled = false;
+	initPage();
 }).on("click", ".link", function() {
 	var newPage = $(this).attr("class").split(" ")[1];
 	$.mobile.changePage("#"+newPage, {
