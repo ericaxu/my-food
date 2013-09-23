@@ -26,13 +26,25 @@ function MyFoodCtrl($scope) {
 		history.back();
 	}
 
-	$scope.applyAndRefresh = function() {
+	$scope.applyAndRefresh = function(page) {
 		setTimeout(function(){
 			$scope.$apply();
-			if($.mobile.activePage){
+			if(page) {
+				page.trigger("create");
+			}
+			else if($.mobile.activePage){
 				$.mobile.activePage.trigger("create");
 			}
 		}, 0);
+	}
+
+	$scope.popupActionCompleted = function(result, message) {
+		if(typeof result === 'number') {
+			showPopup(result + " items " + message);
+		}
+		else {
+			showPopup(result + " " + message);
+		}
 	}
 
 	// GenericList
@@ -352,13 +364,12 @@ function MyFoodCtrl($scope) {
 
 	$scope.fridgeMoveToGrocery = function() {
 		var result = $scope.fridge.move($scope.grocery);
-		var message = " moved to Grocery.";
-		if(typeof result === 'number') {
-			showPopup(result + " items " + message);
-		}
-		else {
-			showPopup(result + " " + message);
-		}
+		$scope.popupActionCompleted(result, " moved to Grocery.");
+	}
+
+	$scope.fridgeCopyToGrocery = function() {
+		var result = $scope.fridge.copy($scope.grocery);
+		$scope.popupActionCompleted(result, " copied to Grocery.");
 	}
 
 	$scope.fridgeUpdateChecks = function() {
@@ -427,13 +438,7 @@ function MyFoodCtrl($scope) {
 
 	$scope.groceryMoveToFridge = function() {
 		var result = $scope.grocery.move($scope.fridge);
-		var message = " moved to Fridge.";
-		if(typeof result === 'number') {
-			showPopup(result + " items " + message);
-		}
-		else {
-			showPopup(result + " " + message);
-		}
+		$scope.popupActionCompleted(result, " moved to Fridge.");
 	}
 
 	$scope.groceryUpdateChecks = function() {
@@ -476,6 +481,7 @@ function MyFoodCtrl($scope) {
 	$scope.recipeAdd = function() {
 		var result = $scope.recipe.addFromInput();
 		if(result) {
+			$scope.applyAndRefresh($.mobile.activePage);
 			$scope.recipeIngredientsOpen(result);
 		}
 	}
@@ -486,13 +492,7 @@ function MyFoodCtrl($scope) {
 
 	$scope.recipeCopyToMeal = function() {
 		var result = $scope.recipe.copy($scope.meal);
-		var message = " copied to Planner.";
-		if(typeof result === 'number') {
-			showPopup(result + " items " + message);
-		}
-		else {
-			showPopup(result + " " + message);
-		}
+		$scope.popupActionCompleted(result, " copied to Planner.");
 	}
 
 	$scope.recipeUpdateChecks = function() {
@@ -674,13 +674,7 @@ function MyFoodCtrl($scope) {
 
 	$scope.recipeIngredientsCopyToGrocery = function() {
 		var result = $scope.recipeIngredients.copy($scope.grocery);
-		var message = " copied to Grocery.";
-		if(typeof result === 'number') {
-			showPopup(result + " items " + message);
-		}
-		else {
-			showPopup(result + " " + message);
-		}
+		$scope.popupActionCompleted(result, " copied to Grocery.");
 	}
 
 	$scope.recipeIngredientsUpdateChecks = function() {
