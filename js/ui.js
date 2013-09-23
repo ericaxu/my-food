@@ -29,6 +29,23 @@ function onReize() {
 	$(".link").css("background-size", Math.min(96, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 105) + "px");
 }
 
+function bindAutocomplete() {
+	$(".autocomplete").autocomplete({
+		source: commonFoodList,
+		messages: {
+			noResults: '',
+			results: function() {}
+		},
+		select: function (evt, ui) {
+			var element = $(this).val(ui.item.value).trigger("input");
+			angular.element($("body")).scope().$apply();
+			var currentPage = $.mobile.activePage.attr("id");
+			$("#" + currentPage).find(".submit").click();
+			evt.preventDefault();
+		}
+	});
+}
+
 function initPage() {
 	if (!$.mobile.activePage && (window.location.hash === "" || window.location.hash === "loading") || 
 		($.mobile.activePage && $.mobile.activePage.attr("id") === "loading")) {
@@ -37,6 +54,7 @@ function initPage() {
 		}, 0);
 	}
 	onReize();
+	bindAutocomplete();
 	updateForms();
 }
 

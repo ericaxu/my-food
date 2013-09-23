@@ -65,13 +65,8 @@ div[data-role="page"] .ui-panel-content-wrap {
 	cursor: pointer;
 }
 
-.link:hover {
-	background-color: #DDD;
-}
-
 .link span {
 	position: relative;
-	font-size: 1.1em;
 }
 
 .link.fridge {
@@ -99,6 +94,12 @@ div.link.noBgImg {
 
 input[type="checkbox"] {
 	display: none;
+}
+
+/* Auto complete */
+.ui-autocomplete {
+	font-family: Arial, sans-serif;
+	font-size: 16px;
 }
 
 

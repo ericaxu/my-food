@@ -50,3 +50,17 @@ var ignoreError = function(func) {
 	try { func(); } 
 	catch (error) {  }
 }
+
+var commonFoodList = [
+	"apples",
+	"avacado",
+	"almond",
+	"bacon",
+	"black beans",
+	"bagels",
+	"beer",
+	"bread",
+	"broccoli",
+	"cabbage",
+	"carrots"
+];
