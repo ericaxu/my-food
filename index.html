@@ -182,11 +182,11 @@
 				<div class="link recipes"><span>Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#ri-slide-menu" data-icon="bars">Menu</a>
+				<a href="#ri-slide-menu" ng-click="backMimic()" data-icon="bars">Back</a>
 				<h1 id="recipeIngredientsTitle">Recipe Ingredients</h1>
 			</div>
 			<div data-role="content">
-				<form>
+				<form id="recipeIngredientForm">
 					<table style='width:100%'><tr>
 						<td>
 							<input type="text" data-clear-btn="true" ng-model="recipeIngredients.input" size="30" class="autocomplete" placeholder="Add new item here">
@@ -203,10 +203,15 @@
 				</fieldset>
 			</div>
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-				<div data-role="navbar">
+				<div data-role="navbar" id="recipeIngredientNavbar">
 					<ul>
 						<li><a data-icon="gear" ng-click="recipeIngredientsCopyToGrocery()">Copy to Grocery</a></li>
 						<li><a data-icon="delete" ng-click="recipeIngredientsRemove()">Delete</a></li>
+					</ul>
+				</div>
+				<div data-role="navbar" id="recipeIngredientMasterNavbar">
+					<ul>
+						<li><a data-icon="gear" ng-click="recipeIngredientsCopyToGrocery()">Copy to Grocery</a></li>
 					</ul>
 				</div>
 			</div>

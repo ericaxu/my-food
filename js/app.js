@@ -22,6 +22,10 @@ function MyFoodCtrl($scope) {
 		}
 	}
 
+	$scope.backMimic = function() {
+		history.back();
+	}
+
 	// GenericList
 
 	function GenericList(list, save) {
@@ -348,7 +352,7 @@ function MyFoodCtrl($scope) {
 	// Meal Planner page
 
 	$scope.masterRecipe =  {
-		name : "All Recipes",
+		name : "All required ingredients",
 		ingredients: [],
 		// steps: [],
 	};
@@ -442,11 +446,21 @@ function MyFoodCtrl($scope) {
 			recipe.ingredients = ingredientList.filter(function (e, i, arr) {
 				return arr.lastIndexOf(e) === i;
 			});
+			$("#recipeIngredientForm").hide();
+			$("#recipeIngredientNavbar").hide();
+			$("#recipeIngredientMasterNavbar").show();
+			// Set page title
+			$("#recipeIngredientsTitle").text("All required ingredients");
 		}
 		else {
 			var id = $scope.recipe.nameToId(recipe);
 			recipe = $scope.recipes[id];
 			$scope.viewingMasterRecipe = false;
+			$("#recipeIngredientForm").show();
+			$("#recipeIngredientNavbar").show();
+			$("#recipeIngredientMasterNavbar").hide();
+			// Set page title
+			$("#recipeIngredientsTitle").text("Ingredients for " + recipe.name);
 		}
 		// Initialize the IngredientList
 		$scope.recipeIngredients = new RecipeIngredientList(
@@ -456,8 +470,6 @@ function MyFoodCtrl($scope) {
 				$scope.groceryUpdateChecks();
 			}
 		);
-		// Set page title
-		$("#recipeIngredientsTitle").text("Ingredients for " + recipe.name);
 		// History
 		$scope.previousActiveRecipe = recipe.name;
 		saveComponent("previousActiveRecipe");
@@ -470,7 +482,10 @@ function MyFoodCtrl($scope) {
 	}
 
 	if($scope.previousActiveRecipe) {
-		$scope.activeRecipeSet($scope.previousActiveRecipe);
+		if($scope.previousActiveRecipe === $scope.masterRecipe.name || $scope.recipe.nameToId($scope.previousActiveRecipe) > -1)
+		{
+			$scope.activeRecipeSet($scope.previousActiveRecipe);
+		}
 	}
 
 	$scope.recipeIngredientsAdd = function() {
