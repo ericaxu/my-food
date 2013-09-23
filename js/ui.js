@@ -50,7 +50,7 @@ function onReize() {
 function bindAutocomplete() {
 	$(".autocomplete").autocomplete({
 		source: function(request, response) {
-			var results = $.ui.autocomplete.filter(commonFoodList, request.term);
+			var results = $.ui.autocomplete.filter(completeIngredientList, request.term);
 
 			response(results.slice(0, AUTOCOMPLETE_LIMIT));
 		},

@@ -26,6 +26,15 @@ function MyFoodCtrl($scope) {
 		history.back();
 	}
 
+	$scope.applyAndRefresh = function() {
+		setTimeout(function(){
+			$scope.$apply();
+			if($.mobile.activePage){
+				$.mobile.activePage.trigger("create");
+			}
+		}, 0);
+	}
+
 	// GenericList
 
 	function GenericList(list, save) {
@@ -52,6 +61,15 @@ function MyFoodCtrl($scope) {
 	GenericList.prototype.nameToId = function (name) {
 	}
 
+	GenericList.prototype.addDependentList = function (list) {
+		this.dependent = this.dependent || [];
+		this.dependent.push(list);
+	}
+
+	GenericList.prototype.addToDependentList = function (list) {
+		list.addDependentList(this);
+	}
+
 	GenericList.prototype.getOrCreate = function (item) {
 		return 0;
 	}
@@ -59,6 +77,11 @@ function MyFoodCtrl($scope) {
 	GenericList.prototype.triggerUpdate = function (ignoreSave) {
 		this.cacheNames();
 		this.update();
+		if(this.dependent) {
+			for (var i = 0; i < this.dependent.length; i++) {
+				this.dependent[i].triggerUpdate(ignoreSave);
+			};
+		}
 		if(!ignoreSave) {
 			this.save(this.list);
 		}
@@ -75,11 +98,49 @@ function MyFoodCtrl($scope) {
 		this.names.sort();
 	}
 
-	GenericList.prototype.updateChecks = function() {
-		this.numChecked = 0;
+	GenericList.prototype.updateChecks = function(array) {
+		var countingChecks = false;
+		if(!array) {
+			array = this.checked;
+			countingChecks = true;
+		}
+		var numChecked = 0;
 		for (var i = 0; i < this.names.length; i++) {
-			if(this.checked[this.names[i]]) {
-				this.numChecked++;
+			if(array[this.names[i]]) {
+				numChecked++;
+			}
+		}
+		if(countingChecks) {
+			this.numChecked = numChecked;
+		}
+		return numChecked;
+	}
+
+	GenericList.prototype.checkAllChecks = function(array, invert) {
+		var allChecked = true;
+		var checked = this.checked;
+		this.callAllChecks(function(name){
+			if(!checked[name]) {
+				allChecked = false;
+				return true;
+			}
+		}, array, invert);
+		return allChecked;
+	}
+
+	GenericList.prototype.toggleAllChecks = function(array, invert) {
+		var allChecked = this.checkAllChecks(array, invert);
+		var checked = this.checked;
+		this.callAllChecks(function(name){
+			checked[name] = !allChecked;
+		}, array, invert);
+		$scope.applyAndRefresh();
+	}
+
+	GenericList.prototype.callAllChecks = function(callback, array, invert) {
+		for (var i = 0; i < this.names.length; i++) {
+			if((array && (array[this.names[i]] ^ invert)) || (!array)) {
+				if(callback(this.names[i])) break;
 			}
 		}
 	}
@@ -89,6 +150,7 @@ function MyFoodCtrl($scope) {
 			var name = this.idToName(this.list[i]);
 			this.checked[name] = false;
 		}
+		$scope.applyAndRefresh();
 	}
 
 	GenericList.prototype.callChecks = function(callback) {
@@ -168,7 +230,14 @@ function MyFoodCtrl($scope) {
 	IngredientList.prototype = new GenericList();
 
 	IngredientList.prototype.update = function () {
-		updateForms();
+		// Ingredients Auto complete
+		completeIngredientList = commonIngredientList.concat($scope.ingredients);
+
+		uniqueArray(completeIngredientList);
+
+		completeIngredientList.sort();
+
+		$scope.applyAndRefresh();
 	}
 
 	IngredientList.prototype.idToName = function (id) {
@@ -205,7 +274,7 @@ function MyFoodCtrl($scope) {
 	RecipeList.prototype = new GenericList();
 
 	RecipeList.prototype.update = function () {
-		updateForms();
+		$scope.applyAndRefresh();
 	}
 
 	RecipeList.prototype.idToName = function (id) {
@@ -238,13 +307,31 @@ function MyFoodCtrl($scope) {
 
 	// Fridge
 
-	$scope.fridge = new IngredientList(
+	function FridgeIngredientList(list, save) {
+		IngredientList.call(this, list, save);
+		this.checkAll = false;
+	}
+
+	FridgeIngredientList.prototype = new IngredientList();
+
+	FridgeIngredientList.prototype.update = function () {
+		IngredientList.prototype.update.call(this);
+		this.checkAll = this.checkAllChecks();
+	}
+
+	$scope.fridge = new FridgeIngredientList(
 		getLocalStorage("fridge") || [],
 		function(list){
 			setLocalStorage("fridge", list);
 			$scope.fridgeUpdateChecks();
 		}
 	);
+
+	$scope.fridgeToggleAll = function() {
+		$scope.fridge.toggleAllChecks();
+		$scope.fridgeUpdateChecks();
+		$scope.applyAndRefresh();
+	}
 
 	$scope.fridgeAdd = function() {
 		$scope.fridge.addFromInput();
@@ -279,6 +366,8 @@ function MyFoodCtrl($scope) {
 
 	function GroceryIngredientList(list, save) {
 		IngredientList.call(this, list, save);
+		this.checkAllFridge = false;
+		this.checkAll = false;
 	}
 
 	GroceryIngredientList.prototype = new IngredientList();
@@ -291,6 +380,9 @@ function MyFoodCtrl($scope) {
 		for (var i = 0; i < this.names.length; i++) {
 			this.inFridge[this.names[i]] = getItemIndex($scope.fridge.names, this.names[i]) > -1;
 		}
+
+		this.checkAllFridge = this.checkAllChecks(this.inFridge);
+		this.checkAll = this.checkAllChecks(this.inFridge, true);
 	}
 
 	$scope.grocery = new GroceryIngredientList(
@@ -301,6 +393,20 @@ function MyFoodCtrl($scope) {
 		}
 	);
 
+	$scope.grocery.addToDependentList($scope.fridge);
+
+	$scope.groceryToggleFridge = function() {
+		$scope.grocery.toggleAllChecks($scope.grocery.inFridge);
+		$scope.groceryUpdateChecks();
+		$scope.applyAndRefresh();
+	}
+
+	$scope.groceryToggleMissing = function() {
+		$scope.grocery.toggleAllChecks($scope.grocery.inFridge, true);
+		$scope.groceryUpdateChecks();
+		$scope.applyAndRefresh();
+	}
+
 	$scope.groceryAdd = function() {
 		$scope.grocery.addFromInput();
 	}
@@ -310,7 +416,7 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.groceryMoveToFridge = function() {
-		var result = $scope.fridge.move($scope.fridge);
+		var result = $scope.grocery.move($scope.fridge);
 		var message = " moved to Fridge.";
 		if(typeof result === 'number') {
 			showPopup(result + " items " + message);
@@ -419,6 +525,10 @@ function MyFoodCtrl($scope) {
 
 	function RecipeIngredientList(list, save) {
 		IngredientList.call(this, list, save);
+
+		this.checkAllFridge = false;
+		this.checkAllGrocery = false;
+		this.checkAllMissing = false;
 	}
 
 	RecipeIngredientList.prototype = new IngredientList();
@@ -437,6 +547,10 @@ function MyFoodCtrl($scope) {
 			this.inGrocery[this.names[i]] = (!inFridge && inGrocery);
 			this.missing[this.names[i]] = (!inFridge && !inGrocery);
 		}
+
+		this.checkAllFridge = this.checkAllChecks(this.inFridge);
+		this.checkAllGrocery = this.checkAllChecks(this.inGrocery);
+		this.checkAllMissing = this.checkAllChecks(this.missing);
 	}
 
 	$scope.recipeIngredients = null;
@@ -457,9 +571,7 @@ function MyFoodCtrl($scope) {
 			for (var i = 0; i < $scope.meal.list.length; i++) {
 				ingredientList = ingredientList.concat($scope.recipes[$scope.meal.list[i]].ingredients);
 			};
-			recipe.ingredients = ingredientList.filter(function (e, i, arr) {
-				return arr.lastIndexOf(e) === i;
-			});
+			recipe.ingredients = uniqueArray(ingredientList);
 			$("#recipeIngredientForm").hide();
 			$("#recipeIngredientNavbar").hide();
 			$("#recipeIngredientMasterNavbar").show();
@@ -504,6 +616,24 @@ function MyFoodCtrl($scope) {
 
 	$scope.recipeIngredientsAdd = function() {
 		$scope.recipeIngredients.addFromInput();
+	}
+
+	$scope.recipeIngredientsToggleFridge = function() {
+		$scope.recipeIngredients.toggleAllChecks($scope.recipeIngredients.inFridge);
+		$scope.recipeIngredientsUpdateChecks();
+		$scope.applyAndRefresh();
+	}
+
+	$scope.recipeIngredientsToggleGrocery = function() {
+		$scope.recipeIngredients.toggleAllChecks($scope.recipeIngredients.inGrocery);
+		$scope.recipeIngredientsUpdateChecks();
+		$scope.applyAndRefresh();
+	}
+
+	$scope.recipeIngredientsToggleMissing = function() {
+		$scope.recipeIngredients.toggleAllChecks($scope.recipeIngredients.missing);
+		$scope.recipeIngredientsUpdateChecks();
+		$scope.applyAndRefresh();
 	}
 
 	$scope.recipeIngredientsRemove = function() {

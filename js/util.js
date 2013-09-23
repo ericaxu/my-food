@@ -51,7 +51,21 @@ var ignoreError = function(func) {
 	catch (error) {  }
 }
 
-var commonFoodList = [
+var uniqueArray = function(array) {
+	return array.filter(function (e, i, arr) {
+		return arr.lastIndexOf(e) === i;
+	});
+}
+
+var invertBooleanObject = function(object) {
+	object = jQuery.extend({}, object);
+	for (var key in object) {
+		object[key] = !object[key];
+	};
+	return object;
+}
+
+var commonIngredientList = [
 	"Apples",
 	"Avacado",
 	"Almond",
@@ -91,4 +105,4 @@ var commonFoodList = [
 	"Green beans"
 ];
 
-commonFoodList.sort();
+var completeIngredientList = [];
