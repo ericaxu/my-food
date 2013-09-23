@@ -136,6 +136,56 @@ input[type="checkbox"] {
 	display: none;
 }
 
+/* Styles for select all */
+.ui-controlgroup .ui-checkbox .ui-btn.selectAll {
+	width: 60%;
+	margin: 15px 20%;
+	text-align: center;
+}
+
+.legend-container {
+	width: 100%;
+	.ui-checkbox .ui-btn-icon-left {
+		text-align: center;
+		.ui-btn-inner {
+			padding-left: 25%;
+		}
+	}
+}
+
+#grocery .legend-container {
+	margin: 0 20%;
+}
+
+#recipeIngredients .legend-container {
+	margin: 0 5%;
+}
+
+.legend {
+	position: relative;
+	display: inline-block;
+	width: 30%;
+
+	&.left .ui-btn {
+		-webkit-border-radius: 10px 0 0 10px;
+		border-radius: 10px 0 0 10px;
+	}
+	&.middle {
+		left: -6px;
+		 .ui-btn {
+			-webkit-border-radius: 0;
+			border-radius: 0;		 	
+		}
+	}
+	&.right {
+		left: -12px;
+		 .ui-btn {
+			-webkit-border-radius: 0 10px 10px 0;
+			border-radius: 0 10px 10px 0;
+		}
+	}
+}
+
 /* Auto complete */
 .ui-autocomplete {
 	font-family: Arial, sans-serif;
