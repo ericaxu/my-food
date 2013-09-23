@@ -275,7 +275,7 @@ function MyFoodCtrl($scope) {
 
 		uniqueArray(completeIngredientList);
 
-		completeIngredientList.sort();
+		Array.naturalSort.call(completeIngredientList);
 	}
 
 	IngredientList.prototype.idToName = function (id) {
