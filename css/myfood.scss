@@ -16,7 +16,7 @@
 }
 
 @mixin border-radius($corner) {
-	-webkit-border-radius: $corner;  
+	-webkit-border-radius: $corner;
 	border-radius: $corner;
 }
 
@@ -96,12 +96,12 @@ div[data-role="page"] .ui-panel-content-wrap {
 	background-position: 50% 50%;
 }
 
-.link.groceryList {
+.link.grocery {
 	@include menu-background("cart");
 	background-position: 50% 45%;
 }
 
-.link.mealPlanner {
+.link.planner {
 	@include menu-background("calendar");
 	background-position: 52.5% 40%;
 }
@@ -125,6 +125,30 @@ input[type="checkbox"] {
 	font-size: 16px;
 }
 
+/* "Details" button for recipes */
+.details {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+#planner .ui-controlgroup-controls > .ui-checkbox:first-child .details.ui-btn-corner-all {
+	-webkit-border-radius: 0 10px 0 0;
+	border-radius: 0 10px 0 0;
+	.ui-btn-inner {
+		-webkit-border-radius: 0 10px 0 0;
+		border-radius: 0 10px 0 0;
+	}
+}
+
+#planner .ui-controlgroup-controls > .ui-checkbox:last-child .details.ui-btn-corner-all {
+	-webkit-border-radius: 0 0 10px 0;
+	border-radius: 0 0 10px 0;
+	.ui-btn-inner {
+		-webkit-border-radius: 0 0 10px 0;
+		border-radius: 0 0 10px 0;
+	}
+}
 
 /* Adjustments for left panel width */
 
