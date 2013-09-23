@@ -146,6 +146,11 @@ input[type="checkbox"] {
 	.ui-checkbox .ui-btn-icon-left {
 		border-bottom-width: 1px;
 		text-align: center;
+		.ui-btn-inner {
+			padding-left: 35px;
+			padding-right: 10px;
+			font-size: 14px;
+		}
 	}
 }
 
