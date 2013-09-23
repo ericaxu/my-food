@@ -70,6 +70,12 @@ div[data-role="page"] .ui-panel-content-wrap {
 	background-color: #EEE;
 }
 
+// Header text is truncated too much
+.ui-header .ui-title {
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
 /* Styles for menu */
 
 .ui-panel-inner {
