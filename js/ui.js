@@ -131,10 +131,7 @@ $(document).on("submit", "form", function(e) {
 		$.mobile.activePage.find(".slide-menu").panel("close");
 	}
 	initPage();
-}).on("pageinit", initPage)
-.on("pagebeforeshow", function(event) {
-	$(event.target).trigger("create");
-});
+}).on("pageinit", initPage);
 
 $("#popup").on("click", function () {
 	$(this).dialog("close");
