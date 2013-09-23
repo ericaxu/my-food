@@ -1,32 +1,50 @@
 function onReize() {
 	var windowWidth = $(window).width();
 	var windowHeight = $(window).height();
-
+	console.log(windowHeight);//t
 	// Menu panel adjustments
 	$(".slide-menu, .ui-panel-inner").height(windowHeight);
 
+	var linkHeight = parseInt($(".link").css("height"));
+
 	if (windowHeight < 350) {
+		console.log("small");//t
+		var top = 0;
+		if (windowHeight > 250) {
+			top = linkHeight * 0.2;
+		} else if (windowHeight < 185) {
+			top = "-10px";
+		}
 		if (!$(".link").eq(0).hasClass("noBgImg")) {
 			$(".link").addClass("noBgImg");
-		}	
+		}   
 		$(".link.noBgImg span").css({
-			"top": windowHeight / 4  * 0.35,
-			"font-size": "1.1em",
-			"font-weight": "bold"
-		});
+			"top": top
+		}).show();
+		$(".link").css("margin", "10px");
+		var margin = parseInt($(".link").css("margin"));
+		$(".link").css("height", (windowHeight / 4 - margin * 3.75));
 	} else {
-		$(".link span").css({
-			"top": windowHeight / 4 * 0.8,
-			"font-size": "1em",
-			"font-weight": "normal"
-		});
+		$(".link").css("margin", "20px");
+		if (windowHeight < 520) {
+			console.log("medium");//t
+			$(".link span").hide();
+			$(".link").css("background-size", Math.min(105, linkHeight * 0.8) + "px " + Math.min(105, linkHeight * 0.8) + "px");
+		} else {
+			console.log("big");//t
+			$(".link span").css({
+				"top": linkHeight * 0.85
+			}).show();          
+			$(".link").css("background-size", Math.min(88, linkHeight * 0.7) + "px " + Math.min(88, linkHeight * 0.7) + "px");
+		}
+
 		if ($(".link").eq(0).hasClass("noBgImg")) {
 			$(".link").removeClass("noBgImg");
 		}
-	}
 
-	$(".link").css("height", windowHeight / 4);
-	$(".link").css("background-size", Math.min(96, windowHeight / 4 * 0.6) + "px " + Math.min(windowHeight / 4 * 0.65, 105) + "px");
+		var margin = parseInt($(".link").css("margin"));
+		$(".link").css("height", (windowHeight / 4 - margin * 2.5));
+	}
 }
 
 function bindAutocomplete() {

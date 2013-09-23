@@ -2,7 +2,6 @@
 	background-image: url("../img/#{$name}.svg");
 	background-repeat: no-repeat;
 	background-size: 55% 60%;
-	background-position: 47.5% 30%;
 }
 
 @mixin gradient($top, $bottom) {
@@ -14,6 +13,17 @@
 	background: -ms-linear-gradient(top, $top 0%,$bottom 100%); /* IE10+ */
 	background: linear-gradient(to bottom, $top 0%,$bottom 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$top}', endColorstr='#{$bottom}',GradientType=0 ); /* IE6-9 */
+}
+
+@mixin border-radius($corner) {
+	-webkit-border-radius: $corner;  
+	border-radius: $corner;
+}
+
+@mixin box-shadow($color) {
+	-moz-box-shadow:inset 0px 1px 0px 0px $color;
+	-webkit-box-shadow:inset 0px 1px 0px 0px $color;
+	box-shadow:inset 0px 1px 0px 0px $color;
 }
 
 body {
@@ -55,14 +65,25 @@ div[data-role="page"] .ui-panel-content-wrap {
 	padding: 0;
 }
 
-.slide-menu .link {
-	height: 25%;
+.slide-menu {
+	position: fixed;
+	background: #444;
 }
 
-.link {
+.slide-menu .link {
 	position: relative;
-	text-align: center;
+	margin: 20px;
+	padding: 10px;
 	cursor: pointer;
+	color: #EEE;
+	background-color: #333;
+	@include border-radius(10px);
+	border: 1px solid rgba(0,0,0,0.3);
+	-webkit-box-shadow: inset -1px -1px 0 rgba(255,255,255,0.15),inset 1px 1px 0 rgba(255,255,255,0.15);
+	box-shadow: inset -1px -1px 0 rgba(255,255,255,0.15),inset 1px 1px 0 rgba(255,255,255,0.15);    
+	text-align: center;
+	text-shadow: 1px 1px 1px #777;
+	 filter: dropshadow(color=#777, offx=1, offy=1);
 }
 
 .link span {
@@ -72,20 +93,22 @@ div[data-role="page"] .ui-panel-content-wrap {
 .link.fridge {
 	@include menu-background("eggs");
 	background-size: 60% 80%;
+	background-position: 50% 50%;
 }
 
 .link.groceryList {
 	@include menu-background("cart");
+	background-position: 50% 45%;
 }
 
 .link.mealPlanner {
 	@include menu-background("calendar");
-	background-position: 52.5% 30%;
+	background-position: 52.5% 40%;
 }
 
 .link.recipes {
 	@include menu-background("pot");
-	background-position: 50% 30%;
+	background-position: 50% 40%;
 }
 
 div.link.noBgImg {
