@@ -54,7 +54,7 @@
 				</div>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in fridge.names" class="ui-checkbox">
-						<label class="listItem fridgeListItem"><input type="checkbox" ng-click="fridgeUpdateChecks()" ng-model="fridge.checked[item]" name="checkbox-0" />{{item}}</label>
+						<label class="listItem fridgeListItem"><input type="checkbox" ng-click="fridge.updateCheck()" ng-model="fridge.checked[item]" name="checkbox-0" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
@@ -104,7 +104,7 @@
 				</div>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in grocery.names" class="ui-checkbox">
-						<label class="listItem groceryItem" ng-class="{inFridge: grocery.inFridge[item]}"><input type="checkbox" ng-click="groceryUpdateChecks()" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
+						<label class="listItem groceryItem" ng-class="{inFridge: grocery.inFridge[item]}"><input type="checkbox" ng-click="grocery.updateCheck()" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
@@ -146,7 +146,7 @@
 				</div>
 				<fieldset data-role="controlgroup" id="recipeList">
 					<div ng-repeat="item in recipe.names" class="ui-checkbox">
-						<label class="listItem recipeListItem"><input type="checkbox" ng-click="recipeUpdateChecks()" name="checkbox-0" ng-model="recipe.checked[item]" />{{item}}</label>
+						<label class="listItem recipeListItem"><input type="checkbox" ng-click="recipe.updateCheck()" name="checkbox-0" ng-model="recipe.checked[item]" />{{item}}</label>
 						<a class="details" ng-click="recipeView(item)" data-role="button" data-icon="arrow-r" data-inline="true">View</a>
 					</div>
 				</fieldset>
@@ -182,7 +182,7 @@
 				</div>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in meal.names" class="ui-checkbox">
-						<label class="listItem recipeListItem"><input type="checkbox" ng-click="mealUpdateChecks()" name="checkbox-0" ng-model="meal.checked[item]" />{{item}}</label>
+						<label class="listItem recipeListItem"><input type="checkbox" ng-click="meal.updateCheck()" name="checkbox-0" ng-model="meal.checked[item]" />{{item}}</label>
 						<a class="details" ng-click="recipeView(item)" data-role="button" data-icon="arrow-r" data-inline="true">View</a>
 					</div>
 				</fieldset>
@@ -237,19 +237,21 @@
 				</div>
 				<fieldset data-role="controlgroup" id="recipeIngredientList">
 					<div ng-repeat="item in recipeIngredients.names" class="ui-checkbox">
-						<label class="listItem recipeListItem" ng-class="{inFridge: recipeIngredients.inFridge[item], inGrocery: recipeIngredients.inGrocery[item], missing: recipeIngredients.missing[item]}"><input type="checkbox" ng-click="recipeIngredientsUpdateChecks()" name="checkbox-0" ng-model="recipeIngredients.checked[item]" />{{item}}</label>
+						<label class="listItem recipeListItem" ng-class="{inFridge: recipeIngredients.inFridge[item], inGrocery: recipeIngredients.inGrocery[item], missing: recipeIngredients.missing[item]}"><input type="checkbox" ng-click="recipeIngredients.updateCheck()" name="checkbox-0" ng-model="recipeIngredients.checked[item]" />{{item}}</label>
 					</div>
 				</fieldset>
 			</div>
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 				<div data-role="navbar" id="recipeIngredientNavbar">
 					<ul>
+						<li><a data-icon="plus" ng-click="recipeIngredientsCopyToFridge()">Add to Fridge</a></li>
 						<li><a data-icon="plus" ng-click="recipeIngredientsCopyToGrocery()">Add to Grocery</a></li>
 						<li><a data-icon="delete" ng-click="recipeIngredientsRemove()">Delete</a></li>
 					</ul>
 				</div>
 				<div data-role="navbar" id="recipeIngredientMasterNavbar">
 					<ul>
+						<li><a data-icon="plus" ng-click="recipeIngredientsCopyToFridge()">Add to Fridge</a></li>
 						<li><a data-icon="plus" ng-click="recipeIngredientsCopyToGrocery()">Add to Grocery</a></li>
 					</ul>
 				</div>

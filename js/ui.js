@@ -105,13 +105,25 @@ function showPopup(content, manualDismiss) {
 	}
 }
 
+var footerActionTimeout;
+
 function footerShow() {
-	deactivateBottons();
-	$.mobile.activePage.find("div[data-role='footer']").slideDown(200);
+	clearTimeout(footerActionTimeout);
+	footerActionTimeout = setTimeout(function(){
+		deactivateBottons();
+		if($.mobile.activePage) {
+			$.mobile.activePage.find("div[data-role='footer']").slideDown(200);
+		}
+	}, 0);
 }
 
 function footerHide() {
-	$.mobile.activePage.find("div[data-role='footer']").slideUp(200);
+	clearTimeout(footerActionTimeout);
+	footerActionTimeout = setTimeout(function(){
+		if($.mobile.activePage) {
+			$.mobile.activePage.find("div[data-role='footer']").slideUp(200);
+		}
+	}, 0);
 }
 
 $(document).on("submit", "form", function(e) {
