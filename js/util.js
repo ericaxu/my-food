@@ -51,44 +51,6 @@ var ignoreError = function(func) {
 	catch (error) {  }
 }
 
-var commonFoodList = [
-	"Apples",
-	"Avacado",
-	"Almond",
-	"Bacon",
-	"Black beans",
-	"Bagels",
-	"Barley",
-	"Beer",
-	"Bread",
-	"Broccoli",
-	"Cabbage",
-	"Carrots",
-	"Celery",
-	"Cheese",
-	"Chicken",
-	"Chicken breasts",
-	"Chicken drumsticks",
-	"Chickren legs",
-	"Clams",
-	"Coffee",
-	"Corns",
-	"Cupcakes",
-	"Crab",
-	"Cereal",
-	"Chocolate",
-	"Curry",
-	"Dates",
-	"Duck",
-	"Donuts",
-	"Eggs",
-	"Muffins",
-	"Salmon",
-	"Garlic",
-	"Ginger",
-	"Goose",
-	"Grapes",
-	"Green beans"
-];
+var commonFoodList = [ "Apples", "Avacados", "Almond", "Bacon", "Black beans", "Barley", "Beer", "Bread", "Broccoli", "Cabbage", "Carrots", "Celery", "Cheese", "Chicken", "Chicken breasts", "Chicken drumsticks", "Chickren legs", "Clams", "Coffee", "Corns", "Crab", "Cereal", "Chocolate", "Curry", "Dates", "Duck", "Eggs", "Salmon", "Garlic", "Ginger", "Goose", "Grapes", "Green beans", "Graham crackers", "Ham", "Honey", "Lobster", "Kiwi", "Ketchup", "Kidney beans", "Lamb", "Milk", "Pepperoni", "Spinach", "Spaghetti", "Wine", "Walnuts", "Yogurt", "Zucchinis", "Tomatoes", "Bean sprouts", "Strawberries", "Bananas", "Baking soda", "Baking powder", "Brandy", "Ground pork", "Ground beef", "Tofu", "Bay leaves", "Bok choy", "Butter", "Basil", "Flour", "Cherries", "Cream cheese", "Cranberries", "Cinnamon", "Coconuts", "Cheddar cheese", "Cod", "Dill", "Eels", "Eggplants", "Feta cheese", "Gelatin", "Grapefruits", "Green onions", "Gluten", "Heavy creen", "Lemons", "Limes", "Lavender", "Lettuce", "Light cream", "Lotus", "Lima beans", "Leeks", "Macaroni", "Mangoes", "Margarine", "Marshmallows", "Melons", "Mayonnaise", "Miso", "Mint", "Mussles", "Mushrooms", "Mustard", "Olives", "Octopus", "Onions", "Oranges", "Oysters", "Pesto", "Panko", "Papayas", "Parsley", "Pasta", "Peas", "Peaches", "Peanuts", "Pineapples", "Prawns", "Shrimp", "Poppy seeds", "Plums", "Pears", "Pumpkins", "Quinoa", "Rabbits", "Radishes", "Red beans", "Rice", "Rosemary", "Rose water", "Rice vinegar", "Red snapper", "Ricotta cheese", "Rum", "Saffron", "Sardines", "Sausages", "Snow peas", "Dry sherry", "Shallots", "Steaks", "Squid", "Soba noodles", "Swordfish", "Turkeys", "Thyme", "Tuna", "Udon noodles", "Vanilla", "Yeast", "White beans", "Watermelons", "Watercress", "Blackberries", "Blueberries", "Cucumbers", "Pork ribs", "Cilantro", "Soy bean", "Passion fruit", "Fish", "Beef", "Pork"];
 
 commonFoodList.sort();
