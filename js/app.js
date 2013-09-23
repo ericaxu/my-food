@@ -330,7 +330,7 @@ function MyFoodCtrl($scope) {
 		}
 	}
 	
-	// Recipes page
+	// Recipes
 
 	$scope.recipe = new RecipeList(
 		getLocalStorage("recipe") || [],
@@ -372,7 +372,7 @@ function MyFoodCtrl($scope) {
 		}
 	}
 	
-	// Meal Planner page
+	// Planner
 
 	$scope.masterRecipe =  {
 		name : "All required ingredients",

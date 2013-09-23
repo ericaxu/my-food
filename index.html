@@ -130,6 +130,7 @@
 				<fieldset data-role="controlgroup" id="recipeList">
 					<div ng-repeat="item in recipe.names" class="ui-checkbox">
 						<label class="listItem recipeListItem"><input type="checkbox" ng-click="recipeUpdateChecks()" name="checkbox-0" ng-model="recipe.checked[item]" />{{item}}</label>
+						<a class="details" ng-click="recipeView(item)" data-role="button" data-icon="arrow-r" data-inline="true">View</a>
 					</div>
 				</fieldset>
 			</div>
@@ -162,7 +163,7 @@
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in meal.names" class="ui-checkbox">
 						<label class="listItem recipeListItem"><input type="checkbox" ng-click="mealUpdateChecks()" name="checkbox-0" ng-model="meal.checked[item]" />{{item}}</label>
-						<a href="index.html" class="details" data-role="button" data-icon="arrow-r" data-inline="true">View</a>
+						<a class="details" ng-click="recipeView(item)" data-role="button" data-icon="arrow-r" data-inline="true">View</a>
 					</div>
 				</fieldset>
 			</div>
