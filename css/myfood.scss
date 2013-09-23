@@ -146,6 +146,7 @@ input[type="checkbox"] {
 .legend-container {
 	width: 100%;
 	.ui-checkbox .ui-btn-icon-left {
+		border-bottom-width: 1px;
 		text-align: center;
 		.ui-btn-inner {
 			padding-left: 25%;
@@ -154,11 +155,11 @@ input[type="checkbox"] {
 }
 
 #grocery .legend-container {
-	margin: 0 20%;
+	margin: 15px 20%;
 }
 
 #recipeIngredients .legend-container {
-	margin: 0 5%;
+	margin: 15px 5%;
 }
 
 .legend {
