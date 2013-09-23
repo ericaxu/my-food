@@ -132,21 +132,30 @@ input[type="checkbox"] {
 	right: 0px;
 }
 
-#planner .ui-controlgroup-controls > .ui-checkbox:first-child .details.ui-btn-corner-all {
-	-webkit-border-radius: 0 10px 0 0;
-	border-radius: 0 10px 0 0;
-	.ui-btn-inner {
+#planner, #recipes {
+	.ui-controlgroup-controls > .ui-checkbox:first-child .details.ui-btn-corner-all {
 		-webkit-border-radius: 0 10px 0 0;
 		border-radius: 0 10px 0 0;
+		.ui-btn-inner {
+			-webkit-border-radius: 0 10px 0 0;
+			border-radius: 0 10px 0 0;
+		}
 	}
-}
 
-#planner .ui-controlgroup-controls > .ui-checkbox:last-child .details.ui-btn-corner-all {
-	-webkit-border-radius: 0 0 10px 0;
-	border-radius: 0 0 10px 0;
-	.ui-btn-inner {
-		-webkit-border-radius: 0 0 10px 0;
-		border-radius: 0 0 10px 0;
+	.ui-controlgroup-controls > .ui-checkbox:last-child {
+		.listItem {
+			-webkit-border-radius: 0 0 10px 10px;
+			border-radius: 0 0 10px 10px;
+			border-bottom-width: 1px;
+		}
+		.details.ui-btn-corner-all {
+			-webkit-border-radius: 0 0 10px 0;
+			border-radius: 0 0 10px 0;
+			.ui-btn-inner {
+				-webkit-border-radius: 0 0 10px 0;
+				border-radius: 0 0 10px 0;
+			}
+		}
 	}
 }
 
