@@ -1,3 +1,5 @@
+var AUTOCOMPLETE_LIMIT = 5;
+
 function onReize() {
 	var windowWidth = $(window).width();
 	var windowHeight = $(window).height();
@@ -47,7 +49,11 @@ function onReize() {
 
 function bindAutocomplete() {
 	$(".autocomplete").autocomplete({
-		source: commonFoodList,
+		source: function(request, response) {
+			var results = $.ui.autocomplete.filter(commonFoodList, request.term);
+
+			response(results.slice(0, AUTOCOMPLETE_LIMIT));
+		},
 		messages: {
 			noResults: '',
 			results: function() {}
