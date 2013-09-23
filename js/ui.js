@@ -4,18 +4,16 @@ function onReize() {
 	// Menu panel adjustments
 	$(".slide-menu, .ui-panel-inner").height(windowHeight);
 
-	console.log("resize");//t
-	console.log($(".link").css("background-size"));//t
+	// Small view, show only text
 	if (windowHeight < 350) {
 		// Remove background image
 		if (!$(".link").eq(0).hasClass("noBgImg")) {
 			$(".link").addClass("noBgImg");
 		}
 
-		var margin = parseInt($(".link").css("margin"));
-		$(".link").css("height", (windowHeight / 4 - margin * 3.75));
-		var linkHeight = parseInt($(".link").css("height"));
-
+		$(".link").css("margin", "10px");
+		$(".link").css("height", (windowHeight / 4 - 37.5));
+		var linkHeight = $(".link").height();
 		var top = 0;
 		if (windowHeight > 250) {
 			top = linkHeight * 0.2;
@@ -25,17 +23,16 @@ function onReize() {
 		$(".link.noBgImg span").css({
 			"top": top
 		}).show();
-		$(".link").css("margin", "10px");
 	} else {
-		var margin = parseInt($(".link").css("margin"));
-		$(".link").css("height", (windowHeight / 4 - margin * 2.5));
-		var linkHeight = parseInt($(".link").css("height"));
-
 		$(".link").css("margin", "20px");
+		$(".link").css("height", (windowHeight / 4 - 50));
+		var linkHeight = $(".link").height();
+		// Medium view, show only icon
 		if (windowHeight < 520) {
 			$(".link span").hide();
 			$(".link").css("background-size", Math.min(105, linkHeight * 0.8) + "px " + Math.min(105, linkHeight * 0.8) + "px");
 		} else {
+			// Big view
 			$(".link span").css({
 				"top": linkHeight * 0.85
 			}).show();          
