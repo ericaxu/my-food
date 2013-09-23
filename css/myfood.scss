@@ -24,9 +24,7 @@
 	-moz-box-shadow:inset 0px 1px 0px 0px $color;
 	-webkit-box-shadow:inset 0px 1px 0px 0px $color;
 	box-shadow:inset 0px 1px 0px 0px $color;
-}
-
-
+}	
 
 * {
 	-webkit-touch-callout: none;
@@ -202,26 +200,30 @@ input[type="checkbox"] {
 
 #planner, #recipes {
 	.ui-controlgroup-controls > .ui-checkbox:first-child .details.ui-btn-corner-all {
-		-webkit-border-radius: 0 10px 0 0;
-		border-radius: 0 10px 0 0;
+		border-top-right-radius: 10px;
+		-webkit-border-top-right-radius: 10px;
 		.ui-btn-inner {
-			-webkit-border-radius: 0 10px 0 0;
-			border-radius: 0 10px 0 0;
+			border-top-right-radius: 10px;
+			-webkit-border-top-right-radius: 10px;
+			// -webkit-border-radius: 0 10px 0 0;
+			// border-radius: 0 10px 0 0;
 		}
 	}
 
 	.ui-controlgroup-controls > .ui-checkbox:last-child {
 		.listItem {
-			-webkit-border-radius: 0 0 10px 10px;
-			border-radius: 0 0 10px 10px;
+			border-bottom-left-radius: 10px;
+			-webkit-border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+			-webkit-border-bottom-right-radius: 10px;
 			border-bottom-width: 1px;
 		}
 		.details.ui-btn-corner-all {
-			-webkit-border-radius: 0 0 10px 0;
-			border-radius: 0 0 10px 0;
+			border-bottom-left-radius: 0px;
+			-webkit-border-bottom-left-radius: 0px;
 			.ui-btn-inner {
-				-webkit-border-radius: 0 0 10px 0;
-				border-radius: 0 0 10px 0;
+				border-bottom-left-radius: 0px;
+				-webkit-border-bottom-left-radius: 0px;
 			}
 		}
 	}
