@@ -25,17 +25,17 @@
 			</div>
 		</div>
 
-		<!-- My Fridge -->
+		<!-- Fridge -->
 		<div id="fridge" data-role="page">
-			<div data-role="panel" id="mf-slide-menu" class="slide-menu">
-				<div class="link fridge"><div><span>My Fridge</span></div></div>
-				<div class="link groceryList"><span>Grocery List</span></div>
-				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link recipes"><span>My Recipes</span></div>
+			<div data-role="panel" id="mf-slide-menu" class="slide-menu" data-display="push">
+				<div class="link fridge"><div><span>Fridge</span></div></div>
+				<div class="link groceryList"><span>Grocery</span></div>
+				<div class="link mealPlanner"><span>Planner</span></div>
+				<div class="link recipes"><span>Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#mf-slide-menu" data-transition="slide" data-direction="reverse" data-icon="bars">Menu</a>
-				<h1>My Fridge</h1>
+				<h1>Fridge</h1>
 			</div>
 			<div data-role="content">
 				<form>
@@ -57,24 +57,24 @@
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 				<div data-role="navbar">
 					<ul>
-						<li><a data-icon="gear" ng-click="fridgeMoveToGrocery()">Move to Grocery List</a></li>
+						<li><a data-icon="gear" ng-click="fridgeMoveToGrocery()">Move to Grocery</a></li>
 						<li><a data-icon="delete" ng-click="fridgeRemove()">Delete</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 
-		<!-- Grocery List -->
+		<!-- Grocery -->
 		<div id="groceryList" data-role="page">
-			<div data-role="panel" id="gl-slide-menu" class="slide-menu">
-				<div class="link fridge"><span>My Fridge</span></div>
-				<div class="link groceryList"><span>Grocery List</span></div>
-				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link recipes"><span>My Recipes</span></div>
+			<div data-role="panel" id="gl-slide-menu" class="slide-menu" data-display="push">
+				<div class="link fridge"><span>Fridge</span></div>
+				<div class="link groceryList"><span>Grocery</span></div>
+				<div class="link mealPlanner"><span>Planner</span></div>
+				<div class="link recipes"><span>Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#gl-slide-menu" data-icon="bars">Menu</a>
-				<h1>Grocery List</h1>
+				<h1>Grocery</h1>
 			</div>
 			<div data-role="content">
 				<form>
@@ -103,17 +103,17 @@
 			</div>
 		</div>
 
-		<!-- Meal Planner -->
+		<!-- Planner -->
 		<div id="mealPlanner" data-role="page">
-			<div data-role="panel" id="mp-slide-menu" class="slide-menu">
-				<div class="link fridge"><span>My Fridge</span></div>
-				<div class="link groceryList"><span>Grocery List</span></div>
-				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link recipes"><span>My Recipes</span></div>
+			<div data-role="panel" id="mp-slide-menu" class="slide-menu" data-display="push">
+				<div class="link fridge"><span>Fridge</span></div>
+				<div class="link groceryList"><span>Grocery</span></div>
+				<div class="link mealPlanner"><span>Planner</span></div>
+				<div class="link recipes"><span>Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#mp-slide-menu" data-icon="bars">Menu</a>
-				<h1>Meal Planner</h1>
+				<h1>Planner</h1>
 			</div>
 			<div data-role="content">
 				<fieldset data-role="controlgroup" id="mealList">
@@ -133,13 +133,13 @@
 		</div>
 
 
-		<!-- My Recipes -->
+		<!-- Recipes -->
 		<div id="recipes" data-role="page">
-			<div data-role="panel" id="r-slide-menu" class="slide-menu">
-				<div class="link fridge"><span>My Fridge</span></div>
-				<div class="link groceryList"><span>Grocery List</span></div>
-				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link recipes"><span>My Recipes</span></div>
+			<div data-role="panel" id="r-slide-menu" class="slide-menu" data-display="push">
+				<div class="link fridge"><span>Fridge</span></div>
+				<div class="link groceryList"><span>Grocery</span></div>
+				<div class="link mealPlanner"><span>Planner</span></div>
+				<div class="link recipes"><span>Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#r-slide-menu" data-icon="bars">Menu</a>
@@ -165,7 +165,7 @@
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 				<div data-role="navbar">
 					<ul>
-						<li><a data-icon="gear" ng-click="recipeCopyToMeal()">Copy to Meal Planner</a></li>
+						<li><a data-icon="gear" ng-click="recipeCopyToMeal()">Copy to Planner</a></li>
 						<li><a data-icon="delete" ng-click="recipeRemove()">Delete</a></li>
 					</ul>
 				</div>
@@ -174,11 +174,11 @@
 
 		<!-- Recipe Ingredients -->
 		<div id="recipeIngredients" data-role="page">
-			<div data-role="panel" id="ri-slide-menu" class="slide-menu">
-				<div class="link fridge"><span>My Fridge</span></div>
-				<div class="link groceryList"><span>Grocery List</span></div>
-				<div class="link mealPlanner"><span>Meal Planner</span></div>
-				<div class="link recipes"><span>My Recipes</span></div>
+			<div data-role="panel" id="ri-slide-menu" class="slide-menu" data-display="push">
+				<div class="link fridge"><span>Fridge</span></div>
+				<div class="link groceryList"><span>Grocery</span></div>
+				<div class="link mealPlanner"><span>Planner</span></div>
+				<div class="link recipes"><span>Recipes</span></div>
 			</div>
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#ri-slide-menu" data-icon="bars">Menu</a>
@@ -204,7 +204,7 @@
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 				<div data-role="navbar">
 					<ul>
-						<li><a data-icon="gear" ng-click="recipeIngredientsCopyToGrocery()">Copy to Grocery List</a></li>
+						<li><a data-icon="gear" ng-click="recipeIngredientsCopyToGrocery()">Copy to Grocery</a></li>
 						<li><a data-icon="delete" ng-click="recipeIngredientsRemove()">Delete</a></li>
 					</ul>
 				</div>
