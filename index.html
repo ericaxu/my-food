@@ -49,6 +49,9 @@
 						</td>
 					</tr></table>
 				</form>
+				<div data-role="controlgroup">
+					<label class="selectAll"><input type="checkbox" name="checkbox-0" />Select all</label>
+				</div>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in fridge.names" class="ui-checkbox">
 						<label class="listItem fridgeListItem"><input type="checkbox" ng-click="fridgeUpdateChecks()" ng-model="fridge.checked[item]" name="checkbox-0" />{{item}}</label>
@@ -88,6 +91,16 @@
 						</td>
 					</tr></table>
 				</form>
+				<div class="legend-container">
+					<div class="ui-checkbox legend left">
+						<label class="listItem recipeListItem inFridge">
+							<input type="checkbox" name="checkbox-0" />Fridge</label>
+					</div>
+					<div class="ui-checkbox legend right">
+						<label class="listItem recipeListItem">
+							<input type="checkbox" name="checkbox-0" />Grocery</label>
+					</div>
+				</div>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in grocery.names" class="ui-checkbox">
 						<label class="listItem groceryItem" ng-class="{inFridge: grocery.inFridge[item]}"><input type="checkbox" ng-click="groceryUpdateChecks()" name="checkbox-0" ng-model="grocery.checked[item]" />{{item}}</label>
@@ -127,6 +140,9 @@
 						</td>
 					</tr></table>
 				</form>
+				<div data-role="controlgroup">
+					<label class="selectAll"><input type="checkbox" name="checkbox-0" />Select all</label>
+				</div>
 				<fieldset data-role="controlgroup" id="recipeList">
 					<div ng-repeat="item in recipe.names" class="ui-checkbox">
 						<label class="listItem recipeListItem"><input type="checkbox" ng-click="recipeUpdateChecks()" name="checkbox-0" ng-model="recipe.checked[item]" />{{item}}</label>
@@ -160,6 +176,9 @@
 				<fieldset data-role="controlgroup">
 					<a href="#" data-role="button" ng-click="mealMasterRecipe()" data-iconpos="right" data-icon="arrow-r">{{masterRecipe.name}}</a>
 				</fieldset>
+				<div data-role="controlgroup">
+					<label class="selectAll"><input type="checkbox" name="checkbox-0" />Select all</label>
+				</div>
 				<fieldset data-role="controlgroup">
 					<div ng-repeat="item in meal.names" class="ui-checkbox">
 						<label class="listItem recipeListItem"><input type="checkbox" ng-click="mealUpdateChecks()" name="checkbox-0" ng-model="meal.checked[item]" />{{item}}</label>
@@ -200,6 +219,20 @@
 						</td>
 					</tr></table>
 				</form>
+				<div class="legend-container">
+					<div class="ui-checkbox legend left">
+						<label class="listItem recipeListItem inFridge">
+							<input type="checkbox" name="checkbox-0" />Fridge</label>
+					</div>
+					<div class="ui-checkbox legend middle">
+						<label class="listItem recipeListItem inGrocery">
+							<input type="checkbox" name="checkbox-0" />Grocery</label>
+					</div>
+					<div class="ui-checkbox legend right">
+						<label class="listItem recipeListItem missing">
+							<input type="checkbox" name="checkbox-0" />Missing</label>
+					</div>
+				</div>
 				<fieldset data-role="controlgroup" id="recipeIngredientList">
 					<div ng-repeat="item in recipeIngredients.names" class="ui-checkbox">
 						<label class="listItem recipeListItem" ng-class="{inFridge: recipeIngredients.inFridge[item], inGrocery: recipeIngredients.inGrocery[item], missing: recipeIngredients.missing[item]}"><input type="checkbox" ng-click="recipeIngredientsUpdateChecks()" name="checkbox-0" ng-model="recipeIngredients.checked[item]" />{{item}}</label>
