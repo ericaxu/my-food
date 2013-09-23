@@ -131,6 +131,7 @@ function MyFoodCtrl($scope) {
 	GenericList.prototype.copy = function(destination, del) {
 		var thisLocal = this;
 		var num = 0;
+		var lastItem = null;
 		this.callChecks(function(key) {
 			if(destination) {
 				destination.add(key);
@@ -142,12 +143,16 @@ function MyFoodCtrl($scope) {
 					thisLocal.list.splice(index, 1);
 				}
 			}
+			lastItem = key;
 			num++;
 		});
 		this.clearChecks();
 		this.triggerUpdate();
 		if(destination) {
 			destination.triggerUpdate();
+		}
+		if(num == 1) {
+			return lastItem;
 		}
 		return num;
 	}
@@ -250,8 +255,14 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.fridgeMoveToGrocery = function() {
-		var num = $scope.fridge.move($scope.grocery);
-		showPopup(num + " item" + (num > 1 ? "s" : "") + " moved to grocery list.");
+		var result = $scope.fridge.move($scope.grocery);
+		var message = " moved to Grocery.";
+		if(typeof result === 'number') {
+			showPopup(result + " items " + message);
+		}
+		else {
+			showPopup(result + " " + message);
+		}
 	}
 
 	$scope.fridgeUpdateChecks = function() {
@@ -299,8 +310,14 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.groceryMoveToFridge = function() {
-		var num = $scope.grocery.move($scope.fridge);
-		showPopup(num + " item" + (num > 1 ? "s" : "") + " moved to my fridge.");
+		var result = $scope.fridge.move($scope.fridge);
+		var message = " moved to Fridge.";
+		if(typeof result === 'number') {
+			showPopup(result + " items " + message);
+		}
+		else {
+			showPopup(result + " " + message);
+		}
 	}
 
 	$scope.groceryUpdateChecks = function() {
@@ -335,8 +352,14 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.recipeCopyToMeal = function() {
-		var num = $scope.recipe.copy($scope.meal);
-		showPopup(num + " item" + (num > 1 ? "s" : "") + " copied to Meal Planner.");
+		var result = $scope.recipe.copy($scope.meal);
+		var message = " copied to Planner.";
+		if(typeof result === 'number') {
+			showPopup(result + " items " + message);
+		}
+		else {
+			showPopup(result + " " + message);
+		}
 	}
 
 	$scope.recipeUpdateChecks = function() {
@@ -357,19 +380,7 @@ function MyFoodCtrl($scope) {
 		// steps: [],
 	};
 
-	function PlannerRecipeList(list, save) {
-		RecipeList.call(this, list, save);
-	}
-
-	PlannerRecipeList.prototype = new RecipeList();
-
-	PlannerRecipeList.prototype.update = function () {
-		RecipeList.prototype.update.call(this);
-		this.names.unshift($scope.masterRecipe.name);
-		this.checked[$scope.masterRecipe.name] = this.checked[$scope.masterRecipe.name] || false;
-	}
-
-	$scope.meal = new PlannerRecipeList(
+	$scope.meal = new RecipeList(
 		getLocalStorage("meal") || [],
 		function(list){
 			setLocalStorage("meal", list);
@@ -388,6 +399,10 @@ function MyFoodCtrl($scope) {
 
 	$scope.mealRemove = function() {
 		$scope.meal.remove();
+	}
+
+	$scope.mealMasterRecipe = function() {
+		$scope.recipeIngredientsOpen($scope.masterRecipe.name);
 	}
 
 	$scope.mealUpdateChecks = function() {
@@ -497,8 +512,14 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.recipeIngredientsCopyToGrocery = function() {
-		var num = $scope.recipeIngredients.copy($scope.grocery);
-		showPopup(num + " item" + (num > 1 ? "s" : "") + " copied to grocery list.");
+		var result = $scope.recipeIngredients.copy($scope.grocery);
+		var message = " copied to Grocery.";
+		if(typeof result === 'number') {
+			showPopup(result + " items " + message);
+		}
+		else {
+			showPopup(result + " " + message);
+		}
 	}
 
 	$scope.recipeIngredientsUpdateChecks = function() {
