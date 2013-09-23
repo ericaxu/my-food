@@ -24,13 +24,16 @@ function MyFoodCtrl($scope) {
 
 	// GenericList
 
-	function GenericList() {
-		this.list = [];
+	function GenericList(list, save) {
+		this.list = list;
+		this.save = save;
 		this.names = [];
 		this.checked = {};
 		this.numChecked = 0;
 		this.input = "";
-		this.triggerUpdate(true);
+		if(list) {
+			this.triggerUpdate(true);
+		}
 	}
 
 	GenericList.prototype.update = function () {
@@ -70,9 +73,8 @@ function MyFoodCtrl($scope) {
 
 	GenericList.prototype.updateChecks = function() {
 		this.numChecked = 0;
-		for (var i = 0; i < this.list.length; i++) {
-			var name = this.idToName(this.list[i]);
-			if(this.checked[name]) {
+		for (var i = 0; i < this.names.length; i++) {
+			if(this.checked[this.names[i]]) {
 				this.numChecked++;
 			}
 		}
@@ -139,7 +141,10 @@ function MyFoodCtrl($scope) {
 			num++;
 		});
 		this.clearChecks();
-		thisLocal.triggerUpdate();
+		this.triggerUpdate();
+		if(destination) {
+			destination.triggerUpdate();
+		}
 		return num;
 	}
 
@@ -148,11 +153,7 @@ function MyFoodCtrl($scope) {
 	$scope.ingredients = getLocalStorage("ingredients") || [];
 
 	function IngredientList(list, save) {
-		this.list = list;
-		this.save = save;
-		if(list) {
-			this.triggerUpdate(true);
-		}
+		GenericList.call(this, list, save);
 	}
 
 	IngredientList.prototype = new GenericList();
@@ -180,6 +181,50 @@ function MyFoodCtrl($scope) {
 			id = $scope.ingredients.length - 1;
 		}
 		return id;
+	}
+
+	// Recipes
+
+	$scope.recipes = getLocalStorage("recipes") || [];
+
+	var recipeCompare = function(item1, item2){ return item1.name.toUpperCase() === item2.name.toUpperCase(); };
+
+	function RecipeList(list, save) {
+		GenericList.call(this, list, save);
+	}
+
+	RecipeList.prototype = new GenericList();
+
+	RecipeList.prototype.update = function () {
+		updateForms();
+	}
+
+	RecipeList.prototype.idToName = function (id) {
+		return $scope.recipes[id].name;
+	}
+
+	RecipeList.prototype.nameToId = function (name) {
+		return getItemIndex($scope.recipes, {name: name}, recipeCompare);
+	}
+
+	RecipeList.prototype.getOrCreate = function (recipeName) {
+		if(!isString(recipeName)) {
+			return -1;
+		}
+
+		var index = this.nameToId(recipeName);
+		if(index < 0) {
+			var recipe = {
+				name : recipeName,
+				ingredients: [],
+				// steps: [],
+			};
+			$scope.recipes.push(recipe);
+			saveComponent("recipes");
+			index = $scope.recipes.length - 1;
+		}
+		
+		return index;
 	}
 
 	// Fridge
@@ -263,55 +308,6 @@ function MyFoodCtrl($scope) {
 			footerHide();
 		}
 	}
-
-
-	// Recipes
-
-	$scope.recipes = getLocalStorage("recipes") || [];
-
-	var recipeCompare = function(item1, item2){ return item1.name.toUpperCase() === item2.name.toUpperCase(); };
-
-	function RecipeList(list, save) {
-		this.list = list;
-		this.save = save;
-		if(list) {
-			this.triggerUpdate(true);
-		}
-	}
-
-	RecipeList.prototype = new GenericList();
-
-	RecipeList.prototype.update = function () {
-		updateForms();
-	}
-
-	RecipeList.prototype.idToName = function (id) {
-		return $scope.recipes[id].name;
-	}
-
-	RecipeList.prototype.nameToId = function (name) {
-		return getItemIndex($scope.recipes, {name: name}, recipeCompare);
-	}
-
-	RecipeList.prototype.getOrCreate = function (recipeName) {
-		if(!isString(recipeName)) {
-			return -1;
-		}
-
-		var index = this.nameToId(recipeName);
-		if(index < 0) {
-			var recipe = {
-				name : recipeName,
-				ingredients: [],
-				// steps: [],
-			};
-			$scope.recipes.push(recipe);
-			saveComponent("recipes");
-			index = $scope.recipes.length - 1;
-		}
-		
-		return index;
-	}
 	
 	// Recipes page
 
@@ -351,7 +347,25 @@ function MyFoodCtrl($scope) {
 	
 	// Meal Planner page
 
-	$scope.meal = new RecipeList(
+	$scope.masterRecipe =  {
+		name : "All Recipes",
+		ingredients: [],
+		// steps: [],
+	};
+
+	function PlannerRecipeList(list, save) {
+		RecipeList.call(this, list, save);
+	}
+
+	PlannerRecipeList.prototype = new RecipeList();
+
+	PlannerRecipeList.prototype.update = function () {
+		RecipeList.prototype.update.call(this);
+		this.names.unshift($scope.masterRecipe.name);
+		this.checked[$scope.masterRecipe.name] = this.checked[$scope.masterRecipe.name] || false;
+	}
+
+	$scope.meal = new PlannerRecipeList(
 		getLocalStorage("meal") || [],
 		function(list){
 			setLocalStorage("meal", list);
@@ -408,6 +422,7 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.recipeIngredients = null;
+	$scope.viewingMasterRecipe = false;
 
 	$scope.previousActiveRecipe = getLocalStorage("previousActiveRecipe");
 
@@ -417,8 +432,22 @@ function MyFoodCtrl($scope) {
 	}
 
 	$scope.activeRecipeSet = function(recipe, preventNavigate) {
-		var id = $scope.recipe.nameToId(recipe);
-		recipe = $scope.recipes[id];
+		if(recipe === $scope.masterRecipe.name) {
+			recipe = $scope.masterRecipe;
+			$scope.viewingMasterRecipe = true;
+			var ingredientList = [];
+			for (var i = 0; i < $scope.meal.list.length; i++) {
+				ingredientList = ingredientList.concat($scope.recipes[$scope.meal.list[i]].ingredients);
+			};
+			recipe.ingredients = ingredientList.filter(function (e, i, arr) {
+				return arr.lastIndexOf(e) === i;
+			});
+		}
+		else {
+			var id = $scope.recipe.nameToId(recipe);
+			recipe = $scope.recipes[id];
+			$scope.viewingMasterRecipe = false;
+		}
 		// Initialize the IngredientList
 		$scope.recipeIngredients = new RecipeIngredientList(
 			recipe.ingredients,
