@@ -134,6 +134,14 @@ input[type="checkbox"] {
 	display: none;
 }
 
+/* Styles for level progress bar */
+.progress-bar input[type=number], .ui-slider-handle {
+	display: none;
+}
+.progress-bar .ui-slider-track {
+	margin: 0px;
+}
+
 /* Styles for select all */
 .ui-controlgroup .ui-checkbox .ui-btn.selectAll {
 	width: 90%;
